@@ -1,17 +1,86 @@
-body{
-  background-color: #0E0F11 ;
+body {
+  background-color: #0E0F11;
   height: 100vh;
-  width: 100vh;
   margin: 0;
   color: white;
-}
-.orb{
-  height: 99vh;
-}
-.flex{
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.form{
-  margin: auto;
-  margin-left: 40%;
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: -1;/* Space between orb and form */
+}
+
+.form-container {
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+button[type="submit"],
+.google-signin-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #2ecc71;
+  color: #fff;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover,
+.google-signin-btn:hover {
+  background-color: #27ae60;
+}
+
+.separator {
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+  color: #ccc;
 }
