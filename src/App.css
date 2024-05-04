@@ -23,13 +23,16 @@ body {
 }
 
 .form-container {
-  max-width: 400px;
+  position: absolute;
+  width: 400px;
+  height: 500px;
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
+  background: linear-gradient(-30deg, #151515 -20%, #2A2A2A 100%);
   border-radius: 10px;
   padding: 40px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  left: 45%;
 }
 
 .form {
@@ -84,4 +87,8 @@ button[type="submit"]:hover,
   margin: 20px 0;
   font-weight: bold;
   color: #ccc;
+}
+
+h2{
+  margin-bottom: 100px;
 }
