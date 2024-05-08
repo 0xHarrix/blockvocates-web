@@ -2,11 +2,11 @@
 /* Login.css */
 .glassmorphism-container {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 620px;
-    height: 377.22px; /* Adjust the width as needed */
+    height: 650px; /* Adjust the width as needed */
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
     background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
@@ -35,5 +35,8 @@
   .error-message {
     color: red;
     margin-top: 10px;
+  }
+  .screen{
+    height: 100vh;
   }
   

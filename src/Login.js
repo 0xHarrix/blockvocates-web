@@ -39,13 +39,17 @@ const Login = () => {
 
   // Return the JSX for rendering
   return (
-    <div>
+    <div className='screen'>
+      <Box display="flex" height='100vh'>
+      <Box>
+        <Image src='orbs.png' height='100vh'></Image>
+      </Box>
       <Box
         className="glassmorphism-container"
         position="absolute"
-        top="20%"
-        left="50%"
-        transform="translate(-50%, 50%)"
+        top="3%"
+        left="70%"
+        transform="translate(-50%, 0%)"
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -89,6 +93,7 @@ const Login = () => {
         </form>
         {error && <Text color="red.500" mt={2}>{error}</Text>}
         <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>Don't have an account? SIGN-UP</Link>
+      </Box>
       </Box>
     </div>
   );
