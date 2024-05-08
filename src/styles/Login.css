@@ -1,0 +1,39 @@
+
+/* Login.css */
+.glassmorphism-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 620px;
+    height: 377.22px; /* Adjust the width as needed */
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+  }
+  
+  .glassmorphism-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .glassmorphism-container input,
+  .glassmorphism-container button {
+    width: 400px;
+    margin-top: 10px;
+  }
+  
+  .login-button:hover {
+    background-color: #f6b766;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  

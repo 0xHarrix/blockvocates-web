@@ -1,94 +1,133 @@
-body {
-  background-color: #0E0F11;
-  height: 100vh;
-  margin: 0;
-  color: white;
+.index {
+  background-color: #080808;
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  width: 100%;
 }
 
-.flex-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.index .div {
+  background-color: #080808;
+  height: 1024px;
+  position: relative;
+  width: 1440px;
 }
 
-.orb {
+.index .group {
+  height: 378px;
+  left: 410px;
   position: absolute;
+  top: 323px;
+  width: 620px;
+}
+
+.index .group-2 {
+  height: 20px;
+  left: 579px;
+  position: absolute;
+  top: 720px;
+  width: 286px;
+}
+
+.index .text-wrapper {
+  color: #ffffff;
+  font-family: "Black Han Sans", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
   left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
   top: 0;
-  height: 100vh;
-  z-index: -1;/* Space between orb and form */
 }
 
-.form-container {
+.index .text-wrapper-2 {
+  color: #00ffff;
+  font-family: "Black Han Sans", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  left: 210px;
+  letter-spacing: 0;
+  line-height: normal;
   position: absolute;
-  width: 400px;
-  height: 500px;
+  top: 0;
+}
+
+.glassbox {
+  position: relative;
+  width: 250px;
+  height: 250px; /* Adjust the width as needed */
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: linear-gradient(-30deg, #151515 -20%, #2A2A2A 100%);
-  border-radius: 10px;
-  padding: 40px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  left: 45%;
+  background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 20px;
 }
 
-.form {
+.totalbox
+{
+  padding-top: 9%;
+}
+
+.glassychat{
+  position: relative;
+  width: 250px;
+  height: 75px; /* Adjust the width as needed */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+.realglass{
+  position: relative;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Login.css */
+.glassmorphism-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 620px;
+  height: 377.22px; /* Adjust the width as needed */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+.glassmorphism-container form {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.form h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #fff;
+.glassmorphism-container input,
+.glassmorphism-container button {
+  width: 400px;
+  margin-top: 10px;
 }
 
-.form-group {
-  margin-bottom: 20px;
+.login-button:hover {
+  background-color: #f6b766;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  color: #fff;
-}
-
-.form-group input[type="email"],
-.form-group input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.2);
-  color: #fff;
-}
-
-button[type="submit"],
-.google-signin-btn {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #2ecc71;
-  color: #fff;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover,
-.google-signin-btn:hover {
-  background-color: #27ae60;
-}
-
-.separator {
-  text-align: center;
-  margin: 20px 0;
-  font-weight: bold;
-  color: #ccc;
-}
-
-h2{
-  margin-bottom: 100px;
+.error-message {
+  color: red;
+  margin-top: 10px;
 }

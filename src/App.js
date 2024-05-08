@@ -1,28 +1,22 @@
-import './App.css';
+// App.js
+import React from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+
+import theme from './theme';
+import Login from './Login';
 
 function App() {
   return (
-    <div className="App">
-      <div className="flex-container">
-        <img src='orbs.png' className="orb" alt="Orbs" />
-        <div className="form-container">
-          <div className="form">
-            <h2 className='login-text'>Login</h2>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="Enter your email" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="Enter your password" required />
-            </div>
-            <button type="submit" className="sign-in-btn">Sign In</button>
-            <div className="separator">or</div>
-            <button className="google-signin-btn">Sign In with Google</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ChakraProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/Login' element={<Login />} />
+
+        </Routes>
+      </Router>
+    </ChakraProvider>
   );
 }
 
