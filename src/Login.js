@@ -3,7 +3,9 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { app } from './firebaseConfig';
 import { Box, Text, Input, Stack, Button, Image, Link } from '@chakra-ui/react';
 import './styles/Login.css';
-import { useNavigate } from 'react-router-dom';  
+import { useNavigate } from 'react-router-dom'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'; 
 
 const Login = () => {
 
@@ -54,16 +56,10 @@ const Login = () => {
         flexDirection="column"
         alignItems="center"
       >
-        <Image
-          src="./avatar.png"
-          alt="Your Alt Text"
-          borderRadius="8px"
-          mb="4"
-          width="20%"
-          height="auto"
-        />
+        <Text className='Logintext'>Login</Text>
         <form onSubmit={handleLogin}>
           <Stack>
+            <label>Email</label>
             <Input
               type="email"
               value={email}
@@ -75,6 +71,7 @@ const Login = () => {
                 borderColor: '#00ffff',
               }}
             />
+                        <label>Password</label>
             <Input
               type="password"
               value={password}
@@ -86,13 +83,25 @@ const Login = () => {
                 borderColor: '#00ffff',
               }}
             />
-            <Button type="submit" colorScheme="custom" bg="#00ffff" size="lg" fontFamily="'Black Han Sans', sans-serif">
+            <Link ml='275px' color='#007AFF'>Forgot Password?</Link>
+            <Button type="submit" colorScheme="custom" size="md" bgGradient="linear(to-r, #086EDD, #010C0F)" fontFamily="'Black Han Sans', sans-serif" className='loginbutton'>
               Login
             </Button>
+            <Button
+    variant="solid"
+    bg="rgba(217, 217, 217, 0.1)"
+    color="white"
+    leftIcon={<FontAwesomeIcon icon={faGoogle} style={{ fontSize: '1.5em', color: 'white' }} />}
+    onClick={() => {
+      // Handle Google sign-in logic here
+    }}
+  >
+    Sign in with Google
+  </Button>
           </Stack>
         </form>
         {error && <Text color="red.500" mt={2}>{error}</Text>}
-        <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>Don't have an account? SIGN-UP</Link>
+        <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>Don't have an account? <span className='signuptext'>Sign Up</span></Link>
       </Box>
       </Box>
     </div>

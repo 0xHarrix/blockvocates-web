@@ -40,3 +40,20 @@
     height: 100vh;
   }
   
+  label{
+    color: white;
+  }
+  .Logintext{
+    color: white;
+    font-size: 35px;
+  }
+  .loginbutton{
+    background-color: (to right, #ff0000, #0000ff);
+    border-radius: 50px;
+  }
+  .signuptext{
+    color: #007AFF;
+  }
+  body{
+    font-family: 'Poppins';
+  }
