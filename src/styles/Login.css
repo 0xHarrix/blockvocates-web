@@ -1,20 +1,22 @@
 
 /* Login.css */
 .glassmorphism-container {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 620px;
-    height: 650px; /* Adjust the width as needed */
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background: linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%);
-    border-radius: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
-    padding: 20px;
-  }
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 470px;
+  height: 560px; /* Adjust the width as needed */
+  backdrop-filter: blur(20px) saturate(150%); /* Increased blur and saturation */
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)); /* Diagonal linear gradient */
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
+  padding: 20px;
+}
+
+
   
   .glassmorphism-container form {
     display: flex;
@@ -56,4 +58,7 @@
   }
   body{
     font-family: 'Poppins';
+  }
+  .tags{
+    font-size: 21px;
   }

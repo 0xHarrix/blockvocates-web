@@ -46,11 +46,12 @@ const Login = () => {
       <Box>
         <Image src='orbs.png' height='100vh'></Image>
       </Box>
+      <Image src='orb.png' position='absolute' left='87%'></Image>
       <Box
         className="glassmorphism-container"
         position="absolute"
-        top="3%"
-        left="70%"
+        top="10%"
+        left="63%"
         transform="translate(-50%, 0%)"
         display="flex"
         flexDirection="column"
@@ -59,19 +60,26 @@ const Login = () => {
         <Text className='Logintext'>Login</Text>
         <form onSubmit={handleLogin}>
           <Stack>
-            <label>Email</label>
+            <label className="tags">Email</label>
             <Input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              variant="filled"
-              color="white"
-              _focus={{
-                borderColor: '#00ffff',
-              }}
-            />
-                        <label>Password</label>
+  type="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  placeholder="Email"
+  variant="filled"
+  color="white"
+  _focus={{
+    borderColor: '#00ffff',
+  }}
+  bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
+  _hover={{
+    bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
+  }}
+  borderRadius='15px'
+/>
+
+
+                        <label className="tags">Password</label>
             <Input
               type="password"
               value={password}
@@ -82,19 +90,47 @@ const Login = () => {
               _focus={{
                 borderColor: '#00ffff',
               }}
+              bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
+              _hover={{
+                bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
+              }}
+              borderRadius='15px'
             />
             <Link ml='275px' color='#007AFF'>Forgot Password?</Link>
-            <Button type="submit" colorScheme="custom" size="md" bgGradient="linear(to-r, #086EDD, #010C0F)" fontFamily="'Black Han Sans', sans-serif" className='loginbutton'>
-              Login
-            </Button>
+            <Button
+  type="submit"
+  colorScheme="custom"
+  size="md"
+  borderRadius="10px"
+  bgGradient="linear(to-r, rgba(8, 110, 221, 0.6), #010C0F)"
+  fontFamily="'Black Han Sans', sans-serif"
+  className="loginbutton"
+  borderRadius='14px'
+  _hover={{
+    filter: 'brightness(200%)', // Dimming effect on hover
+    transition: 'filter 0.3s ease-in-out', // Smooth transition over 0.3 seconds
+  }}
+
+>
+  Login
+</Button>
+<Image src='or.png' width='350px' height='22px' margin='auto' mt='20px'></Image>
+
             <Button
     variant="solid"
     bg="rgba(217, 217, 217, 0.1)"
     color="white"
-    leftIcon={<FontAwesomeIcon icon={faGoogle} style={{ fontSize: '1.5em', color: 'white' }} />}
+    leftIcon={<img src="Google.png" alt="Google Icon" />}
     onClick={() => {
       // Handle Google sign-in logic here
     }}
+    borderRadius='15px'
+                  _hover={{
+                bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
+                filter: 'brightness(85%)', // Dimming effect on hover
+    opacity: 0.9, // Reduce opacity on hover
+    transition: 'filter 0.4s ease, opacity 0.4s ease',
+              }}
   >
     Sign in with Google
   </Button>
