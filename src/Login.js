@@ -46,7 +46,7 @@ const Login = () => {
       <Box>
         <Image src='orbs.png' height='100vh'></Image>
       </Box>
-      <Image src='orb.png' position='absolute' left='87%'></Image>
+      <Image src='orb.png' position='absolute' left='87.4%'></Image>
       <Box
         className="glassmorphism-container"
         position="absolute"
@@ -105,7 +105,6 @@ const Login = () => {
   bgGradient="linear(to-r, rgba(8, 110, 221, 0.6), #010C0F)"
   fontFamily="'Black Han Sans', sans-serif"
   className="loginbutton"
-  borderRadius='14px'
   _hover={{
     filter: 'brightness(200%)', // Dimming effect on hover
     transition: 'filter 0.3s ease-in-out', // Smooth transition over 0.3 seconds

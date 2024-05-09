@@ -1,4 +1,7 @@
-
+@font-face {
+  font-family: 'Poppins'; /* Name your custom font family */
+  src: url('C:\Users\Harris\Desktop\Harris\code\BlockVocates\blockvocates-web\public\Poppins-Regular.ttf') format('ttf');
+}
 /* Login.css */
 .glassmorphism-container {
   position: absolute;
