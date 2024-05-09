@@ -17,6 +17,11 @@
   animation-duration: 0.5s;
   animation-timing-function: ease-in;
 }
+.glassmorphism-container:hover{
+  transform: scale(1.03);
+  transition: ease-in;
+  transition-duration: 0.3s;
+}
 @keyframes slideIn {
   from {
     transform: translateX(-10%);
@@ -42,6 +47,11 @@
   animation-name: slideIn;
   animation-duration: 0.5s;
   animation-timing-function: ease-in;
+}
+.orb:hover{
+  transform: scale(1.03);
+  transition: ease-in-out;
+  transition-duration: 0.3s;
 }
 .orb1 {
   animation-name: slideIn1;
