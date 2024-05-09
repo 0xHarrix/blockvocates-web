@@ -13,7 +13,7 @@ const NavBar = () => {
 
   return (
       <Flex align="center" margin={7} position={"sticky"}>
-        <Link mt={2} className="logo" fontSize="xl" fontWeight="bold" color="white" onClick={() => navigate('/Home')}>
+        <Link mt={2} className="logo" _hover={{ textDecoration :' none'}} fontSize="xl" fontWeight="bold" color="white" onClick={() => navigate('/Home')}>
           BLOCKVOCATES
         </Link>
         <Spacer />
