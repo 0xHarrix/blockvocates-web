@@ -1,3 +1,7 @@
+@font-face {
+  font-family: 'DM Sans'; /* Name your custom font family */
+  src: url('../../public/DMSans_18pt-Regular.ttf') format('ttf');
+}
 .logo {
   text-decoration: none;
   font-size: xl;
@@ -9,4 +13,7 @@
 .logo:hover {
   transform: scale(1.1); /* Scale up when hovered */
   text-decoration: none; /* Remove underline on hover */
+}
+body{
+  font-family: 'DM Sans';
 }

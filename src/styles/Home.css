@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'DM Sans'; /* Name your custom font family */
+    src: url('../../public/DMSans_18pt-Regular.ttf') format('ttf');
+  }
 .body {
     background-image: url('../../public/bg.png');
     background-size: cover; /* Fit the background image to cover the entire viewport */
@@ -6,4 +10,6 @@
     height: 100vh;
     background-blend-mode: darken; /* Apply the darken blend mode */
   }
-  
+body{
+    font-family: 'DM Sans';
+}
