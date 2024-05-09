@@ -7,6 +7,7 @@ import theme from './theme';
 import Login from './Login';
 import SignUp from './SignUp';
 import Home from './Home';
+import Dashboard from './Dashboard';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/Login' element={<Login />} />
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/Home' element={<Home />}/>
+          <Route path='/Dashboard' element={<Dashboard />}/>
         </Routes>
       </Router>
     </ChakraProvider>
