@@ -1,0 +1,10 @@
+.logo {
+    font-size: xl;
+    font-weight: bold;
+    color: white;
+    transition: transform 0.3s ease-in-out; /* Add transition for smooth animation */
+  }
+  
+  .logo:hover {
+    transform: scale(1.1); /* Scale up when hovered */
+  }
