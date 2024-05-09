@@ -1,10 +1,11 @@
 import React from 'react';
 import NavBar from './components/NavBar';
 import { Box, Heading, Input, Text, Flex} from '@chakra-ui/react';
+import './styles/Home.css'
 
 const Home = () => {
   return (
-    <div>
+    <div className='body'>
       <NavBar />
       <Box padding={'30px'}>
         <Heading as="h1" size="xl" color='#FFF' textAlign="center">

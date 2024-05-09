@@ -1,0 +1,9 @@
+.body {
+    background-image: url('../../public/bg.png');
+    background-size: cover; /* Fit the background image to cover the entire viewport */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    height: 100vh;
+    background-blend-mode: darken; /* Apply the darken blend mode */
+  }
+  
