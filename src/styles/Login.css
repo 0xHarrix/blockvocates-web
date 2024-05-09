@@ -4,10 +4,6 @@
 }
 /* Login.css */
 .glassmorphism-container {
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 470px;
   height: 560px; /* Adjust the width as needed */
   backdrop-filter: blur(20px) saturate(150%); /* Increased blur and saturation */
@@ -18,28 +14,39 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
   padding: 20px;
   animation-name: slideIn;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
 }
-
 @keyframes slideIn {
   from {
-    transform: translateX(-100%);
-    opacity: 0;
+    transform: translateX(-10%);
+    opacity: 0%;
   }
   to {
-    transform: translateX(0);
-    opacity: 1;
+    transform: translateX(0%);
+    opacity: 100%;
   }
 }
+@keyframes slideIn1 {
+  from {
+    transform: translateX(10%);
+    opacity: 0%;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 100%;
+  }
+}
+
 .orb {
-  position: absolute;
-  left: 87.4%;
-  /* Animation for the orb */
-  animation-name: pulse;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation-name: slideIn;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
+}
+.orb1 {
+  animation-name: slideIn1;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
 }
 
   
@@ -83,6 +90,7 @@
   }
   body{
     font-family: 'Poppins';
+    overflow: hidden;
   }
   .tags{
     font-size: 21px;

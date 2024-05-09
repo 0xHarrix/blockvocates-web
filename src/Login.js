@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { app } from './firebaseConfig';
 import { Box, Text, Input, Stack, Button, Image, Link } from '@chakra-ui/react';
 import './styles/Login.css';
@@ -12,23 +12,17 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
-  const navigate= useNavigate();
-
-
+  const navigate = useNavigate();
 
   // Function to handle the login process
   const handleLogin = async (e) => {
     e.preventDefault();
-
     const auth = getAuth(app);
-
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('User logged in:', user);
       navigate('/Home');
-
     } catch (error) {
       setError(error.message);
       console.error('Login error:', error.message);
@@ -39,20 +33,34 @@ const Login = () => {
     navigate('/SignUp');
   };
 
+  // Function to handle Google sign-in
+  const handleGoogleSignIn = async () => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider(); // Create GoogleAuthProvider instance
+    try {
+      const result = await signInWithPopup(auth, provider); // Open Google sign-in popup
+      const user = result.user;
+      console.log('User signed in with Google:', user);
+      navigate('/Home');
+    } catch (error) {
+      setError(error.message);
+      console.error('Google sign-in error:', error.message);
+    }
+  };
+
   // Return the JSX for rendering
   return (
     <div className='screen'>
       <Box display="flex" height='100vh'>
       <Box>
-        <Image src='orbs.png' height='100vh'></Image>
+        <Image src='orbs.png' height='100vh' className='orb'></Image>
       </Box>
-      <Image src='orb.png' position='absolute' left='87.4%'></Image>
+      <Image src='orb.png' position='absolute' left='90.8%' top='-3%' className='orb1'></Image>
       <Box
         className="glassmorphism-container"
         position="absolute"
-        top="10%"
-        left="63%"
-        transform="translate(-50%, 0%)"
+        top="12%"
+        left="50%"
         display="flex"
         flexDirection="column"
         alignItems="center"
@@ -120,9 +128,7 @@ const Login = () => {
     bg="rgba(217, 217, 217, 0.1)"
     color="white"
     leftIcon={<img src="Google.png" alt="Google Icon" />}
-    onClick={() => {
-      // Handle Google sign-in logic here
-    }}
+    onClick={handleGoogleSignIn}
     borderRadius='15px'
                   _hover={{
                 bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
