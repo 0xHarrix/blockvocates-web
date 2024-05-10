@@ -46,8 +46,8 @@ const Home = () => {
                 background="linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%)"
                 width="200px"
                 margin="0 10px">
-              <Text fontSize="xl" color={"white"}>Community</Text>
-              <Text mt={4} color={"white"}>Join a vibrant community of blockchain enthusiasts.</Text>
+     
+              <Text mt={4} color={"white"}>Learn Blockchain with a community</Text>
             </Box>
             <Box
               className="glassbox"
@@ -61,8 +61,7 @@ const Home = () => {
               background="linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%)"
               width="200px"
               margin="0 10px">
-              <Text fontSize="xl" color={"white"}>Education</Text>
-              <Text mt={4} color={"white"}>Access educational resources to enhance your blockchain knowledge.</Text>
+              <Text mt={4} color={"white"}>Improve Public Speaking</Text>
             </Box>
             <Box 
               className="glassbox"
@@ -76,8 +75,7 @@ const Home = () => {
               background="linear-gradient(-30deg, #090909 -20%, #2A2A2A 100%)"
               width="200px"
               margin="0 10px">
-              <Text fontSize="xl" color={"white"}>Opportunities</Text>
-              <Text mt={4} color={"white"}>Discover opportunities for networking and collaboration.</Text>
+              <Text mt={4} color={"white"}>Get High paying Web3 Jobs</Text>
             </Box>
           </Flex>
         </Box>
