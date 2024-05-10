@@ -4,8 +4,6 @@ import { app } from './firebaseConfig';
 import { Box, Text, Input, Stack, Button, Image, Link } from '@chakra-ui/react';
 import './styles/Login.css';
 import { useNavigate } from 'react-router-dom'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'; 
 
 const Login = () => {
 
@@ -27,7 +25,7 @@ const Login = () => {
       setError(error.message);
       console.error('Login error:', error.message);
     }
-  };
+  };  
 
   const navigateToSignUp = () => {
     navigate('/SignUp');
@@ -149,5 +147,4 @@ const Login = () => {
   );
 };
 
-// Export the Login component
 export default Login;
