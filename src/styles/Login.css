@@ -105,3 +105,20 @@
   .tags{
     font-size: 21px;
   }
+  /* Dark mode scrollbar with sleek edges */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #333; /* Dark background color for the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; /* Dark color for the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #474747; /* Dark color for the scrollbar thumb on hover */
+}

@@ -2,14 +2,37 @@
     font-family: 'DM Sans'; /* Name your custom font family */
     src: url('../../public/DMSans_18pt-Regular.ttf') format('ttf');
   }
-.body {
+  .body {
     background-image: url('../../public/bg.png');
     background-size: cover; /* Fit the background image to cover the entire viewport */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent background image from repeating */
-    height: 100vh;
-    background-blend-mode: darken; /* Apply the darken blend mode */
-  }
+    /* height: 100vh; */ /* Remove or comment out this line */
+    min-height: 100vh; /* Set a minimum height to ensure content visibility */
+    background-blend-mode: screen; /* Apply the darken blend mode */
+}
+
 body{
     font-family: 'DM Sans';
+    overflow-y:auto;
 }
+.body2 {
+  background-image: url('../../public/bg.png');
+  background-size: cover; /* Fit the background image to cover the entire viewport */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent background image from repeating */
+  /* height: 100vh; */ /* Remove or comment out this line */
+  min-height: 100vh; /* Set a minimum height to ensure content visibility */
+  background-blend-mode: screen; 
+}
+.container.loaded .body,
+.container.loaded .body2 {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.body,
+.body2 {
+  opacity: 0;
+}
+

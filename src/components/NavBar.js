@@ -12,7 +12,8 @@ const NavBar = () => {
   };
 
   return (
-      <Flex align="center" margin={7} position={"sticky"}>
+    <Box className="sticky-nav">
+      <Flex align="center" margin={7} paddingBottom={30}>
         <Link mt={2} className="logo" _hover={{ textDecoration :' none'}} fontSize="xl" fontWeight="bold" color="white" onClick={() => navigate('/Home')}>
           BLOCKVOCATES
         </Link>
@@ -22,21 +23,21 @@ const NavBar = () => {
             HOME
           </Link>
           <Link color="white" fontWeight="bold" mr={20} onClick={() => navigate('/CoursePage')} _hover={{ color: '#00BAE2' }}>
-            MEMBERSHIP
+            ABOUT
           </Link>
           <Link color="white" fontWeight="bold" mr={20} onClick={() => navigate('/CourseSearch')} _hover={{ color: '#00BAE2' }}>
-            LEARN
+            FIND A CLUB
           </Link>
           <Link color="white" fontWeight="bold" onClick={() => navigate('/CourseSearch')} _hover={{ color: '#00BAE2' }}>
-            CLUBS
+            START A CLUB
           </Link>
         </Box>
         <Spacer />
-        <Button onClick={handleLogout} color={'white'} colorScheme="custom"  fontFamily="'Black Han Sans', sans-serif">
-          Profile
+        <Button onClick={handleLogout} color={'black'} >
+          Login
         </Button>
       </Flex>
-
+    </Box>
   );
 };
 

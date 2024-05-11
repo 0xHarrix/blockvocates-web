@@ -67,59 +67,59 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <Stack>
             <label className="tags">Email</label>
-            <Input
-  type="email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  placeholder="Email"
-  variant="filled"
-  color="white"
-  _focus={{
-    borderColor: '#00ffff',
-  }}
-  bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
-  _hover={{
-    bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-  }}
-  borderRadius='15px'
-/>
+                <Input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="Email"
+      variant="filled"
+      color="white"
+      _focus={{
+        borderColor: '#00ffff',
+      }}
+      bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
+      _hover={{
+        bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
+      }}
+      borderRadius='15px'
+    />
 
 
-                        <label className="tags">Password</label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              variant="filled"
-              color="white"
-              _focus={{
-                borderColor: '#00ffff',
-              }}
-              bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
-              _hover={{
-                bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-              }}
-              borderRadius='15px'
-            />
+            <label className="tags">Password</label>
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                variant="filled"
+                color="white"
+                _focus={{
+                  borderColor: '#00ffff',
+                }}
+                bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
+                _hover={{
+                  bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
+                }}
+                borderRadius='15px'
+              />
             <Link ml='275px' color='#007AFF'>Forgot Password?</Link>
-            <Button
-  type="submit"
-  colorScheme="custom"
-  size="md"
-  borderRadius="10px"
-  bgGradient="linear(to-r, rgba(8, 110, 221, 0.6), #010C0F)"
-  fontFamily="'Black Han Sans', sans-serif"
-  className="loginbutton"
-  _hover={{
-    filter: 'brightness(200%)', // Dimming effect on hover
-    transition: 'filter 0.3s ease-in-out', // Smooth transition over 0.3 seconds
-  }}
+              <Button
+    type="submit"
+    colorScheme="custom"
+    size="md"
+    borderRadius="10px"
+    bgGradient="linear(to-r, rgba(8, 110, 221, 0.6), #010C0F)"
+    fontFamily="'Black Han Sans', sans-serif"
+    className="loginbutton"
+    _hover={{
+      filter: 'brightness(200%)', // Dimming effect on hover
+      transition: 'filter 0.3s ease-in-out', // Smooth transition over 0.3 seconds
+    }}
 
->
-  Login
-</Button>
-<Image src='or.png' width='350px' height='22px' margin='auto' mt='20px'></Image>
+  >
+    Login
+  </Button>
+    <Image src='or.png' width='350px' height='22px' margin='auto' mt='20px'></Image>
 
             <Button
     variant="solid"
