@@ -19,7 +19,7 @@ const Home = () => {
     <div className={`container ${isLoaded ? "loaded" : ""}`}>
       <div className="body">
         <NavBar />
-        <Box padding={"30px"}>
+        <Box padding={"0px"}>
           <Heading as="h1" size="xl" color="#FFF" textAlign="center">
             Learn Blockchain, Improve your{" "}
             <span style={{ color: "#00BAE2" }}>Public Speaking</span>
@@ -75,6 +75,10 @@ const Home = () => {
                 backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Payment.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
+                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+                _hover={{
+                  transform: "scale(1.05)", // Increase scale on hover
+                }}
               >
                 <Text
                   color="white"
@@ -106,6 +110,10 @@ const Home = () => {
                 backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Publicspeaking.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
+                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+                _hover={{
+                  transform: "scale(1.05)", // Increase scale on hover
+                }}
               >
                 <Text
                   color="white"
@@ -136,6 +144,10 @@ const Home = () => {
                 backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Comm.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
+                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+                _hover={{
+                  transform: "scale(1.05)", // Increase scale on hover
+                }}
               >
                 <Text
                   color="white"

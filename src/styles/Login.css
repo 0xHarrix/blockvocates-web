@@ -6,8 +6,6 @@
 .glassmorphism-container {
   width: 470px;
   height: 560px; /* Adjust the width as needed */
-  backdrop-filter: blur(20px) saturate(150%); /* Increased blur and saturation */
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
   background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)); /* Diagonal linear gradient */
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.125);
