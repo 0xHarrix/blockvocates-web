@@ -1,11 +1,11 @@
 .container
 {
     background-image: url('../../public/bg.png');
-    height: 100vh;
+    height: 105vh;
 }
 .glassmorphism-container {
   width: 470px;
-  height: 560px; /* Adjust the width as needed */
+  height: 500px; /* Adjust the width as needed */
   background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)); /* Diagonal linear gradient */
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.125);

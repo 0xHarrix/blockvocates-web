@@ -85,7 +85,7 @@ const ClubSearch = () => {
         <Heading as="h1" size="lg" color="#FFF" textAlign="center">
           Find a Club
         </Heading>
-        <Box mt={10}>
+        <Box mt={5}>
           <Input
             placeholder="Location"
             value={location}
