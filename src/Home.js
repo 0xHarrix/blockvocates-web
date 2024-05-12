@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { Box, Heading, Input, Text, Flex, Button } from "@chakra-ui/react";
 import "./styles/Home.css";
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Simulate loading delay with setTimeout
@@ -200,7 +202,7 @@ const Home = () => {
                 professional seeking to expand your network, our meetings offer
                 a welcoming environment for all.
               </Text>
-              <Button mt={"10px"}>Find a Club</Button>
+              <Button mt={"10px"} onClick={() => navigate('/ClubSearch')} >Find a Club</Button>
             </Box>
             <Box flex="1" justifyContent="center" mt={120} ml={20}>
               <Box
