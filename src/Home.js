@@ -187,7 +187,7 @@ const Home = () => {
                 Attend meetings as a guest before <br />
                 <span style={{ color: "#00BAE2" }}>signing up</span> for free
               </Heading>
-              <Text color={"white"} textAlign="left" mt={4} width={'80%'}>
+              <Text color={"white"} textAlign="left" mt={4} width={'100%'}>
                 Experience the vibrant world of blockchain firsthand by
                 attending our meetings as a guest. Immerse yourself in engaging
                 discussions, where you'll explore the latest trends, challenges,
@@ -205,6 +205,7 @@ const Home = () => {
             <Box flex="1" justifyContent="center" mt={120} ml={20}>
               <Box
                 padding="20px"
+                marginRight="80px"
                 borderRadius="20px"
                 border="1px solid rgba(255, 255, 255, 0.2)"
                 boxShadow="0 8px 16px rgba(0, 0, 0, 0.2)"

@@ -8,6 +8,7 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Home from './Home';
 import Dashboard from './Dashboard';
+import ClubSearch from './ClubSearch';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/Home' element={<Home />}/>
           <Route path='/Dashboard' element={<Dashboard />}/>
+          <Route path='/ClubSearch' element={<ClubSearch/>}/>
         </Routes>
       </Router>
     </ChakraProvider>
