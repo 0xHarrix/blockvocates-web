@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "./components/NavBar";
+import './styles/ClubSearch.css';
 import {
   Box,
   Heading,
@@ -26,14 +27,11 @@ const ClubSearch = () => {
   return (
     <div className="container">
       <NavBar />
-      <Box padding={"50px"}>
-        <Heading as="h1" size="xl" color="#FFF" textAlign="center">
+      <Box padding={"30px"} className="glassmorphism-container">
+        <Heading as="h1" size="lg" color="#FFF" textAlign="center">
           Find a Club
         </Heading>
-        <Box mt={8}>
-          <Heading as="h2" size="lg" color="#FFF" className="club-search-heading">
-            Enter your location:
-          </Heading>
+        <Box mt={10}>
           <Input
             placeholder="Location"
             value={location}
@@ -56,39 +54,35 @@ const ClubSearch = () => {
           />
         </Box>
         <Box mt={4}>
-          <Heading as="h2" size="lg" color="#FFF" className="club-search-heading">
-            Select radius:
-          </Heading>
           <Select
             placeholder="Select radius"
             value={radius}
             onChange={(e) => setRadius(e.target.value)}
             mt={2}
             bg="rgba(255, 255, 255, 0.05)"
-            color="#FFF"
-            _placeholder={{ color: "#FFF" }}
+            _placeholder={{ color: "black" }}
+            color="white"
             _hover={{ borderColor: "#00BAE2" }}
             _focus={{
               borderColor: "#00BAE2",
               boxShadow: "0 0 0 1px #00BAE2",
+              color: "black"
             }}
             borderRadius="8px"
             py={3}
-            px={4}
-            width="100%"
+            px={0}
+            width="98%"
+            colorScheme="dark"
           >
-            <option value="5">5 miles</option>
+            <option value="5" color="black">5 miles</option>
             <option value="10">10 miles</option>
             <option value="15">15 miles</option>
             <option value="20">20 miles</option>
           </Select>
         </Box>
         <Box mt={4}>
-          <Heading as="h2" size="lg" color="#FFF" className="club-search-heading">
-            Meeting days:
-          </Heading>
-          <CheckboxGroup colorScheme="teal" mt={2}>
-            <Flex>
+          <CheckboxGroup colorScheme="teal" mt={5}>
+            <Flex justify={'space-between'}>
               <Checkbox
                 value="Monday"
                 onChange={(e) => setDays([...days, e.target.value])}
@@ -117,26 +111,42 @@ const ClubSearch = () => {
               >
                 Thursday
               </Checkbox>
+              </Flex>
+              <Flex justify={'center'}>
+              <Checkbox
+                value="Friday"
+                onChange={(e) => setDays([...days, e.target.value])}
+                color="#FFF"
+                mr={5}
+              >
+                Friday
+              </Checkbox>
+              <Checkbox
+                value="Friday"
+                onChange={(e) => setDays([...days, e.target.value])}
+                color="#FFF"
+                mr={5}
+              >
+                Saturday
+              </Checkbox>
               <Checkbox
                 value="Friday"
                 onChange={(e) => setDays([...days, e.target.value])}
                 color="#FFF"
               >
-                Friday
+                Sunday
               </Checkbox>
             </Flex>
           </CheckboxGroup>
         </Box>
-        <Box mt={4}>
-          <Heading as="h2" size="lg" color="#FFF" className="club-search-heading">
-            Meeting time:
-          </Heading>
-          <CheckboxGroup colorScheme="teal" mt={2}>
-            <Flex>
+        <Box mt={8}>
+          <CheckboxGroup colorScheme="teal" mt={0}>
+            <Flex direction={'column'}>
               <Checkbox
                 value="Morning"
                 onChange={(e) => setMeetingTime([...meetingTime, e.target.value])}
                 color="#FFF"
+                mr={2}
               >
                 Morning
               </Checkbox>
@@ -150,10 +160,7 @@ const ClubSearch = () => {
             </Flex>
           </CheckboxGroup>
         </Box>
-        <Box mt={4}>
-          <Heading as="h2" size="lg" color="#FFF" className="club-search-heading">
-            Club type:
-          </Heading>
+        <Box mt={0}>
           <Select
             placeholder="Select club type"
             value={clubType}
@@ -166,11 +173,12 @@ const ClubSearch = () => {
             _focus={{
               borderColor: "#00BAE2",
               boxShadow: "0 0 0 1px #00BAE2",
+              color: "black"
             }}
             borderRadius="8px"
             py={3}
-            px={4}
-            width="100%"
+            px={0}
+            width="98%"
           >
             <option value="Online">Online</option>
             <option value="In-person">In-person</option>
@@ -179,7 +187,7 @@ const ClubSearch = () => {
         <Button
           colorScheme="teal"
           onClick={handleSearch}
-          mt={8}
+          mt={6}
           bg="#00BAE2"
           _hover={{ bg: "#0597B7" }}
           _active={{ bg: "#008EAF" }}
