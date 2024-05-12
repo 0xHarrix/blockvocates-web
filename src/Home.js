@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { Box, Heading, Input, Text, Flex, Button } from "@chakra-ui/react";
 import "./styles/Home.css";
-import { SearchIcon } from "@chakra-ui/icons";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -13,6 +12,7 @@ const Home = () => {
       setIsLoaded(true);
     }, 1000);
 
+
     return () => clearTimeout(timer);
   }, []);
   return (
@@ -21,8 +21,8 @@ const Home = () => {
         <NavBar />
         <Box padding={"0px"}>
           <Heading as="h1" size="xl" color="#FFF" textAlign="center">
-            Learn Blockchain, Improve your{" "}
-            <span style={{ color: "#00BAE2" }}>Public Speaking</span>
+            Learn Blockchain, Improve your 
+            <span style={{ color: "#00BAE2" }}> Public Speaking</span>
           </Heading>
           <Heading as="h1" size="xl" color="#FFF" textAlign="center">
             Land Jobs in<span style={{ color: "#00BAE2" }}> Web3</span>
@@ -187,7 +187,7 @@ const Home = () => {
                 Attend meetings as a guest before <br />
                 <span style={{ color: "#00BAE2" }}>signing up</span> for free
               </Heading>
-              <Text color={"white"} textAlign="left" mt={4}>
+              <Text color={"white"} textAlign="left" mt={4} width={'80%'}>
                 Experience the vibrant world of blockchain firsthand by
                 attending our meetings as a guest. Immerse yourself in engaging
                 discussions, where you'll explore the latest trends, challenges,
