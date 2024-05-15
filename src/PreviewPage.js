@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import NavBar from "./components/NavBar";
-import { Box, Heading, Flex, Text, Popover, PopoverTrigger, PopoverContent, PopoverBody } from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Popover, PopoverTrigger, PopoverContent, PopoverBody, border } from "@chakra-ui/react";
 import './styles/PreviewPage.css'
+import { color } from "framer-motion";
 
 function PreviewPage() {
     const [isHovered, setIsHovered] = useState(false);
@@ -43,7 +44,11 @@ function PreviewPage() {
                             </Text>
                         </Box>
                     </PopoverTrigger>
-                    <PopoverContent>
+                    <PopoverContent  bg="rgba(255, 255, 255, 0.07)" // Glassmorphic background
+            boxShadow="0 8px 32px rgba(31, 38, 135, 0.37)" // Glassmorphic shadow
+            backdropFilter="blur(16px)"
+            borderRadius="16px"
+            color="white" border={'none'}>
                         <PopoverBody>
                             <Text>Description of Crypto Trader</Text>
                         </PopoverBody>
