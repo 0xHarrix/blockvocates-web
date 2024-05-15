@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebaseConfig"; // Import Firebase firestore
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from "firebase/firestore";
 import NavBar from "./components/NavBar";
-import './styles/ClubSearch.css';
+import "./styles/ClubSearch.css";
 import {
   Box,
+  Grid,
   Heading,
   Input,
   Flex,
@@ -13,10 +14,10 @@ import {
   Button,
   Select,
   Spinner,
-  Text 
+  Text,
+  Center,
 } from "@chakra-ui/react";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const ClubSearch = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const ClubSearch = () => {
     // Fetch clubs from Firestore
     const fetchClubs = async () => {
       try {
-        const clubsRef = collection(db, 'clubs');
+        const clubsRef = collection(db, "clubs");
         const clubsQuery = query(clubsRef, where("location", "==", location));
         const querySnapshot = await getDocs(clubsQuery);
         const fetchedClubs = querySnapshot.docs.map((doc) => doc.data());
@@ -56,27 +57,28 @@ const ClubSearch = () => {
     console.log("Days:", days);
     console.log("Meeting Time:", meetingTime);
     console.log("Club Type:", clubType);
-  
+
     // Filter clubs based on search criteria and update state
     const filteredClubs = clubs.filter((club) => {
       const matchesLocation = club.location.includes(location);
       const matchesDays = days.some((day) => club.meetingDays.includes(day));
       const matchesMeetingTime = club.meetingTime.includes(meetingTime);
       const matchesClubType = club.clubType === clubType;
-  
+
       console.log("Club:", club.clubName);
       console.log("Matches Location:", matchesLocation);
       console.log("Matches Days:", matchesDays);
       console.log("Matches Meeting Time:", matchesMeetingTime);
       console.log("Matches Club Type:", matchesClubType);
-  
-      return matchesLocation && matchesDays && matchesMeetingTime && matchesClubType;
+
+      return (
+        matchesLocation && matchesDays && matchesMeetingTime && matchesClubType
+      );
     });
-  
+
     console.log("Filtered Clubs:", filteredClubs);
     setClubs(filteredClubs);
   };
-  
 
   return (
     <div className="container">
@@ -109,7 +111,7 @@ const ClubSearch = () => {
         </Box>
         <Box mt={4}>
           <CheckboxGroup colorScheme="teal" mt={5}>
-            <Flex justify={'space-between'}>
+            <Grid templateColumns="repeat(3, 1fr)" gap={1}>
               <Checkbox
                 value="monday"
                 onChange={(e) => setDays([...days, e.target.value])}
@@ -145,13 +147,10 @@ const ClubSearch = () => {
               >
                 Friday
               </Checkbox>
-            </Flex>
-            <Flex justify={'center'}>
               <Checkbox
                 value="saturday"
                 onChange={(e) => setDays([...days, e.target.value])}
                 color="#FFF"
-                mr={5}
               >
                 Saturday
               </Checkbox>
@@ -162,15 +161,17 @@ const ClubSearch = () => {
               >
                 Sunday
               </Checkbox>
-            </Flex>
+            </Grid>
           </CheckboxGroup>
         </Box>
         <Box mt={8}>
           <CheckboxGroup colorScheme="teal" mt={0}>
-            <Flex direction={'column'}>
+            <Flex direction={"column"}>
               <Checkbox
                 value="morning"
-                onChange={(e) => setMeetingTime([...meetingTime, e.target.value])}
+                onChange={(e) =>
+                  setMeetingTime([...meetingTime, e.target.value])
+                }
                 color="#FFF"
                 mr={2}
               >
@@ -178,7 +179,9 @@ const ClubSearch = () => {
               </Checkbox>
               <Checkbox
                 value="evening"
-                onChange={(e) => setMeetingTime([...meetingTime, e.target.value])}
+                onChange={(e) =>
+                  setMeetingTime([...meetingTime, e.target.value])
+                }
                 color="#FFF"
               >
                 Evening
@@ -199,28 +202,29 @@ const ClubSearch = () => {
             _focus={{
               borderColor: "#00BAE2",
               boxShadow: "0 0 0 1px #00BAE2",
-              color: "black"
+              color: "white",
             }}
             borderRadius="8px"
             py={3}
             px={0}
-            width="98%"
+            width="100%"
           >
             <option value="online">Online</option>
             <option value="inperson">In-person</option>
           </Select>
         </Box>
-        <Button
-          colorScheme="teal"
-          onClick={handleSearch}
-          mt={6}
-          bg="#00BAE2"
-          _hover={{ bg: "#0597B7" }}
-          _active={{ bg: "#008EAF" }}
-        >
-          Search
-        </Button>
-
+        <Flex justify="center">
+          <Button
+            colorScheme="teal"
+            onClick={handleSearch}
+            mt={6}
+            bg="#00BAE2"
+            _hover={{ bg: "#0597B7" }}
+            _active={{ bg: "#008EAF" }}
+          >
+            Search
+          </Button>
+        </Flex>
         {/* Display Spinner while loading */}
         {loading && (
           <Flex justify="center" mt={6}>
@@ -232,8 +236,16 @@ const ClubSearch = () => {
         <Box mt={6}>
           {clubs.length > 0 ? (
             clubs.map((club, index) => (
-              <Box key={index} bg="rgba(255, 255, 255, 0.05)" p={4} my={2} borderRadius="md">
-                <Heading as="h2" size="md" color="#FFF">{club.clubName}</Heading>
+              <Box
+                key={index}
+                bg="rgba(255, 255, 255, 0.05)"
+                p={2}
+                my={2}
+                borderRadius="md"
+              >
+                <Heading as="h2" size="md" color="#FFF">
+                  {club.clubName}
+                </Heading>
                 {/* Display other club details */}
               </Box>
             ))
