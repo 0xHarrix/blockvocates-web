@@ -15,12 +15,12 @@ const Dashboard = () => {
     const fetchUserName = async () => {
       try {
         // Get the currently authenticated user's email
-        let currentUserEmail = 'kumarakabilan2004@gmail.com'; 
-        onAuthStateChanged(auth, (user) => {
+        let currentUserEmail = ''; 
+        const user = auth.currentUser;
+        console.log(user);
           if (user) {
             currentUserEmail = user.email;
-          }
-        });
+          };
 
         console.log(currentUserEmail);
 
