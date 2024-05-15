@@ -9,8 +9,8 @@ import {
   Heading,
   Input,
   Flex,
-  Checkbox,
-  CheckboxGroup,
+  Radio,
+  RadioGroup,
   Button,
   Select,
   Spinner,
@@ -25,8 +25,8 @@ const ClubSearch = () => {
   const [loading, setLoading] = useState(true); // State to track loading status
   const [location, setLocation] = useState("");
   const [radius, setRadius] = useState("");
-  const [days, setDays] = useState([]);
-  const [meetingTime, setMeetingTime] = useState([]);
+  const [days, setDays] = useState("");
+  const [meetingTime, setMeetingTime] = useState("");
   const [clubType, setClubType] = useState("");
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const ClubSearch = () => {
     // Filter clubs based on search criteria and update state
     const filteredClubs = clubs.filter((club) => {
       const matchesLocation = club.location.includes(location);
-      const matchesDays = days.some((day) => club.meetingDays.includes(day));
+      const matchesDays = club.meetingDays.includes(days);
       const matchesMeetingTime = club.meetingTime.includes(meetingTime);
       const matchesClubType = club.clubType === clubType;
 
@@ -90,7 +90,7 @@ const ClubSearch = () => {
         <Box mt={5}>
           <Input
             placeholder="Location"
-            value={location}
+            value={location.toLowerCase()}
             onChange={(e) => setLocation(e.target.value)}
             mt={2}
             variant="outline"
@@ -110,84 +110,84 @@ const ClubSearch = () => {
           />
         </Box>
         <Box mt={4}>
-          <CheckboxGroup colorScheme="teal" mt={5}>
+          <RadioGroup colorScheme="teal" mt={5}>
             <Grid templateColumns="repeat(3, 1fr)" gap={1}>
-              <Checkbox
+              <Radio
                 value="monday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Monday
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="tuesday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Tuesday
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="wednesday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Wednesday
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="thursday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Thursday
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="friday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Friday
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="saturday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Saturday
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="sunday"
-                onChange={(e) => setDays([...days, e.target.value])}
+                onChange={(e) => setDays((e.target.value))}
                 color="#FFF"
               >
                 Sunday
-              </Checkbox>
+              </Radio>
             </Grid>
-          </CheckboxGroup>
+          </RadioGroup>
         </Box>
         <Box mt={8}>
-          <CheckboxGroup colorScheme="teal" mt={0}>
+          <RadioGroup colorScheme="teal" mt={0}>
             <Flex direction={"column"}>
-              <Checkbox
+              <Radio
                 value="morning"
                 onChange={(e) =>
-                  setMeetingTime([...meetingTime, e.target.value])
+                  setMeetingTime((e.target.value))
                 }
                 color="#FFF"
                 mr={2}
               >
                 Morning
-              </Checkbox>
-              <Checkbox
+              </Radio>
+              <Radio
                 value="evening"
                 onChange={(e) =>
-                  setMeetingTime([...meetingTime, e.target.value])
+                  setMeetingTime((e.target.value))
                 }
                 color="#FFF"
               >
                 Evening
-              </Checkbox>
+              </Radio>
             </Flex>
-          </CheckboxGroup>
+          </RadioGroup>
         </Box>
         <Box mt={0}>
           <Select
