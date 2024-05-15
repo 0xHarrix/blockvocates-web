@@ -20,7 +20,7 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('User logged in:', user);
-      navigate('/Home');
+      navigate('/');
     } catch (error) {
       setError(error.message);
       console.error('Login error:', error.message);
@@ -39,7 +39,7 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider); // Open Google sign-in popup
       const user = result.user;
       console.log('User signed in with Google:', user);
-      navigate('/Home');
+      navigate('/');
     } catch (error) {
       setError(error.message);
       console.error('Google sign-in error:', error.message);
