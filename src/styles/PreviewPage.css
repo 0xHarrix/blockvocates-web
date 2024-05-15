@@ -21,3 +21,21 @@
     transition: ease-in;
     transition-duration: 0.3s;
   }
+  .PopoverContent {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  .PopoverBody {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .PopoverTrigger:focus + .PopoverContent {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
