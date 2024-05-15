@@ -79,7 +79,11 @@ function PreviewPage() {
                 </Text>
               </Box>
             </PopoverTrigger>
-            <PopoverContent bg="InfoText">
+            <PopoverContent bg="rgba(255, 255, 255, 0.07)" // Glassmorphic background
+            boxShadow="0 8px 32px rgba(31, 38, 135, 0.37)" // Glassmorphic shadow
+            backdropFilter="blur(16px)"
+            borderRadius="16px"
+            color="white">
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverBody>
