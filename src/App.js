@@ -9,6 +9,7 @@ import Signup from './SignUp';
 import Home from './Home';
 import Dashboard from './Dashboard';
 import ClubSearch from './ClubSearch';
+import PreviewPage from './PreviewPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/Signup' element={<Signup />} />
           <Route path='/Dashboard' element={<Dashboard />}/>
           <Route path='/ClubSearch' element={<ClubSearch/>}/>
+          <Route path='/PreviewPage' element={<PreviewPage/>}/>
         </Routes>
       </Router>
     </ChakraProvider>
