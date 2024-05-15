@@ -55,7 +55,7 @@ const Login = () => {
       </Box>
       <Image src='orb.png' position='absolute' left='90.8%' top='-3%' className='orb1'></Image>
       <Box
-        className="glassmorphism-container"
+        className="glassmorphism-container1"
         position="absolute"
         top="12%"
         left="50%"
