@@ -8,7 +8,7 @@ const Dashboard = () => {
     <div className="bg">
       <NavBar />
       <Box>
-        <Heading as="h1" size="xl" color="#FFF" paddingLeft={"20px"} mt={-4}>
+        <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4}>
           Welcome <span style={{ color: "#00BAE2" }}>YourName</span>
         </Heading>
 
