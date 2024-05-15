@@ -1,24 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import { Box, Heading, Flex, Text } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
+import { db } from './firebaseConfig'; // Import the Firestore instance
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getDocs, query, collection, where } from 'firebase/firestore'
 
 const Dashboard = () => {
+  const [userName, setUserName] = useState('');
+  const auth = getAuth(); // Get the auth instance
+
+  useEffect(() => {
+    // Function to fetch user's name from Firestore
+    const fetchUserName = async () => {
+      try {
+        // Get the currently authenticated user's email
+        let currentUserEmail = ''; 
+        const user = auth.currentUser;
+        console.log(user);
+          if (user) {
+            currentUserEmail = user.email;
+          };
+
+        console.log(currentUserEmail);
+
+        // Query Firestore to get the user document based on email
+        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUserEmail)));
+
+        // Extract user's name from the query result
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          setUserName(userData.name);
+        }
+      } catch (error) {
+        console.error('Error fetching user name:', error);
+      }
+    };
+
+    fetchUserName();
+  }, []);
+
+
   return (
     <div className="bg">
       <NavBar />
       <Box>
         <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4}>
-          Welcome <span style={{ color: "#00BAE2" }}>YourName</span>
+          Welcome <span style={{ color: "#00BAE2" }}>{userName}</span>
         </Heading>
 
         <Flex justifyContent="center" alignItems="center" mt={6}>
           <Flex direction={'column'}>
-        <Heading as="h1" size="xl" color="#FFF" textAlign="center" mr={12}>
-          You're a member of
-        </Heading>
-        <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Membership Number</Text>
-        </Flex>
+            <Heading as="h2" size="xl" color="#FFF" textAlign="center" mr={12}>
+              You're a member of
+            </Heading>
+            <Heading as="h1" size="xl" color="#FFF" textAlign="center" mr={12}>
+              Club Name
+            </Heading>
+            <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Membership Number</Text>
+          </Flex>
           <Box className="glassbox" padding="6" textAlign="center">
             <Text fontSize="xl" color="white" paddingTop={"48px"}>
               Club Name
