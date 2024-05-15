@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import theme from './theme';
 import Login from './Login';
-import SignUp from './SignUp';
+import Signup from './SignUp';
 import Home from './Home';
 import Dashboard from './Dashboard';
 import ClubSearch from './ClubSearch';
@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/Login' element={<Login />} />
-          <Route path='/SignUp' element={<SignUp />} />
+          <Route path='/Signup' element={<Signup />} />
           <Route path='/Home' element={<Home />}/>
           <Route path='/Dashboard' element={<Dashboard />}/>
           <Route path='/ClubSearch' element={<ClubSearch/>}/>
