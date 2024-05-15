@@ -15,7 +15,7 @@ const Dashboard = () => {
     const fetchUserName = async () => {
       try {
         // Get the currently authenticated user's email
-        let currentUserEmail = ''; 
+        let currentUserEmail = 'kumarakabilan2004@gmail.com'; 
         onAuthStateChanged(auth, (user) => {
           if (user) {
             currentUserEmail = user.email;
