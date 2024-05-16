@@ -20,7 +20,7 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('User logged in:', user);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       setError(error.message);
       console.error('Login error:', error.message);

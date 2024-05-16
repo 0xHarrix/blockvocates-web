@@ -92,11 +92,12 @@ const handleGoogleSignIn = async () => {
         <Box
           className="glassmorphism-container1"
           position="absolute"
-          top="12%"
+          top="8%"
           left="50%"
           display="flex"
           flexDirection="column"
           alignItems="center"
+          height="600px"
         >
           <Text className='Logintext'>Sign Up</Text>
           <form onSubmit={handleLogin}>
@@ -188,12 +189,12 @@ const handleGoogleSignIn = async () => {
                   transition: 'filter 0.4s ease, opacity 0.4s ease',
                 }}
               >
-                Sign in with Google
+                Sign Up with Google
               </Button>
             </Stack>
           </form>
           {error && <Text color="red.500" mt={2}>{error}</Text>}
-          <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>Already have an account? <span className='signuptext'>Login In</span></Link>
+          <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>Already have an account? <span className='signuptext'>Login</span></Link>
         </Box>
       </Box>
     </div>
