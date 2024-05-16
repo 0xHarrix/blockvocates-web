@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "./firebaseConfig"; // Import Firebase firestore
-import { collection, getDocs, query, where, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, getDoc, addDoc } from "firebase/firestore";
 import NavBar from "./components/NavBar";
 import "./styles/ClubSearch.css";
 import {
@@ -27,9 +27,9 @@ const ClubSearch = () => {
   const [days, setDays] = useState("");
   const [meetingTime, setMeetingTime] = useState("");
   const [clubType, setClubType] = useState("");
+  const [appliedClubs, setAppliedClubs] = useState([]);
 
   useEffect(() => {
-    // Fetch clubs from Firestore
     const fetchClubs = async () => {
       try {
         const clubsRef = collection(db, "clubs");
@@ -37,26 +37,40 @@ const ClubSearch = () => {
         const querySnapshot = await getDocs(clubsQuery);
         const fetchedClubs = querySnapshot.docs.map((doc) => doc.data());
         setClubs(fetchedClubs);
-        setLoading(false); // Set loading to false after clubs are fetched
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching clubs: ", error);
       }
     };
 
-    // Fetch clubs only if location is not empty
     if (location !== "") {
       fetchClubs();
     } else {
-      setLoading(false); // Set loading to false if location is empty
+      setLoading(false);
     }
   }, [location]);
 
-  const handleSearch = () => {
-    console.log("Location:", location);
-    console.log("Days:", days);
-    console.log("Meeting Time:", meetingTime);
-    console.log("Club Type:", clubType);
+  useEffect(() => {
+    const fetchAppliedClubs = async () => {
+      try {
+        const user = auth.currentUser;
+        const userId = user.email;
 
+        const querySnapshot = await getDocs(
+          query(collection(db, "clubApplications"), where("userId", "==", userId))
+        );
+
+        const appliedClubIds = querySnapshot.docs.map((doc) => doc.data().clubId);
+        setAppliedClubs(appliedClubIds);
+      } catch (error) {
+        console.error("Error fetching applied clubs:", error);
+      }
+    };
+
+    fetchAppliedClubs();
+  }, []);
+
+  const handleSearch = () => {
     // Filter clubs based on search criteria and update state
     const filteredClubs = clubs.filter((club) => {
       const matchesLocation = club.location.includes(location);
@@ -64,50 +78,44 @@ const ClubSearch = () => {
       const matchesMeetingTime = club.meetingTime.includes(meetingTime);
       const matchesClubType = club.clubType === clubType;
 
-      console.log("Club:", club.clubName);
-      console.log("Matches Location:", matchesLocation);
-      console.log("Matches Days:", matchesDays);
-      console.log("Matches Meeting Time:", matchesMeetingTime);
-      console.log("Matches Club Type:", matchesClubType);
-
       return (
         matchesLocation && matchesDays && matchesMeetingTime && matchesClubType
       );
     });
 
-    console.log("Filtered Clubs:", filteredClubs);
     setClubs(filteredClubs);
   };
 
+  const handleJoinClick = (clubId) => {
+    handleJoinClub(clubId);
+  };
 
   const handleJoinClub = async (clubId) => {
     try {
       const user = auth.currentUser;
-      // Get the current user's ID or email (You need to replace 'getCurrentUserId()' with your actual method to get the user ID)
       const userId = user.email;
-      console.log(userId)
   
-      // Check if the user has already applied to this club
-const existingApplicationRef = doc(db, 'clubApplications', userId);
-      const existingApplicationSnapshot = await getDoc(existingApplicationRef);
+      // Query clubApplications collection to check if user has already applied to this club
+      const querySnapshot = await getDocs(query(collection(db, 'clubApplications'), where('userId', '==', userId), where('clubId', '==', clubId)));
   
-      if (existingApplicationSnapshot.exists()) {
-        console.log('You have already applied to this club.');
-        return;
+      if (!querySnapshot.empty) {
+        // User has already applied to this club
+        console.log('User has already applied to this club.');
+        // You can display a message to the user or handle this case as per your requirement
+      } else {
+        // Create a new document in the clubApplications collection with a unique document ID
+        await addDoc(collection(db, 'clubApplications'), {
+          userId: userId,
+          clubId: clubId,
+          status: 'pending',
+        });
+        console.log('Application submitted successfully.');
       }
-  
-      // Create a new document in the clubApplications collection
-      await setDoc(doc(db, 'clubApplications', userId), {
-        userId: userId,
-        clubId: clubId,
-        status: 'pending',
-      });
-  
-      console.log('Application submitted successfully.');
     } catch (error) {
       console.error('Error joining club:', error);
     }
   };
+
   
 
   return (
@@ -275,16 +283,22 @@ const existingApplicationRef = doc(db, 'clubApplications', userId);
                 borderRadius="md"
               >
                 <Heading as="h2" size="md" color="#FFF">
-                  {club.clubName}
-                </Heading>
-                {/* Display other club details */}
-                <Button
-                  colorScheme="teal"
-                  onClick={() => handleJoinClub(club.id)}
-                  mt={2}
-                >
-                  Join
-                </Button>
+        {club.clubName}
+      </Heading>
+      {/* Display other club details */}
+      {appliedClubs.includes(club.clubId) ? (
+                  <Button colorScheme="teal" mt={2} isDisabled>
+                    Applied
+                  </Button>
+                ) : (
+                  <Button
+                    colorScheme="teal"
+                    onClick={() => handleJoinClick(club.clubId)}
+                    mt={2}
+                  >
+                    Join
+                  </Button>
+                )}
               </Box>
             ))
           ) : (
