@@ -10,6 +10,7 @@ import Home from './Home';
 import Dashboard from './Dashboard';
 import ClubSearch from './ClubSearch';
 import PreviewPage from './PreviewPage';
+import CreateClub from './CreateClub';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/Dashboard' element={<Dashboard />}/>
           <Route path='/ClubSearch' element={<ClubSearch/>}/>
           <Route path='/PreviewPage' element={<PreviewPage/>}/>
+          <Route path='/CreateClub' element={<CreateClub/>}/>
         </Routes>
       </Router>
     </ChakraProvider>

@@ -1,0 +1,24 @@
+.container
+{
+    background-image: url('../../public/bg.png');
+    height: 105vh;
+}
+
+  .glassmorphism-container3 {
+  width: 470px;
+  height: 540px; /* Adjust the width as needed */
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)); /* Diagonal linear gradient */
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
+  padding: 20px;
+  animation-name: slideIn;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in;
+  margin: auto;
+}
+.glassmorphism-container3:hover{
+    transform: scale(1.03);
+    transition: ease-in;
+    transition-duration: 0.3s;
+  }
