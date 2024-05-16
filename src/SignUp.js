@@ -22,7 +22,6 @@ const Signup = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('User logged in:', user);
-
       const usersRef = collection(db, 'users');
       const newUserRef = await addDoc(usersRef, {
         name: name,
@@ -59,7 +58,7 @@ const handleGoogleSignIn = async () => {
     // Extract user's name and email from the profile
     const name = user.displayName;
     const email = user.email;
-
+    
     // Add the user to Firestore database
     const usersRef = collection(db, 'users');
     const newUserRef = await addDoc(usersRef, {

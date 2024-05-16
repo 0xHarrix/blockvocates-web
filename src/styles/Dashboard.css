@@ -21,3 +21,17 @@
     transition: ease-in;
     transition-duration: 0.3s;
   }
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+    opacity: 1;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  

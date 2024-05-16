@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
-import { Box, Heading, Flex, Text } from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Spinner } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
 import { db } from './firebaseConfig'; // Import the Firestore instance
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -8,6 +8,7 @@ import { getDocs, query, collection, where } from 'firebase/firestore'
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
+  const [loading, setLoading] = useState(true); // State to track loading state
   const auth = getAuth(); // Get the auth instance
 
   useEffect(() => {
@@ -33,9 +34,12 @@ const Dashboard = () => {
             // User is signed out
             setUserName(''); // Clear the user's name if not signed in
           }
+
+          setLoading(false); // Set loading to false when done
         });
       } catch (error) {
         console.error('Error fetching user name:', error);
+        setLoading(false); // Set loading to false in case of error
       }
     };
 
@@ -47,10 +51,17 @@ const Dashboard = () => {
     <div className="bg">
       <NavBar />
       <Box>
-        <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4}>
-          Welcome <span style={{ color: "#00BAE2" }}>{userName} !</span>
-        </Heading>
-
+        {/* Conditionally render loading spinner */}
+        {loading ? (
+          <Flex justifyContent="center" alignItems="center" minHeight="100vh" paddingBottom={200}>
+            <Spinner size="xl" color="blue.500" />
+          </Flex>
+        ) : (
+          <div className="fade-in">
+            <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4} >
+              Welcome <span style={{ color: "#00BAE2" }}>{userName} !</span>
+            </Heading>
+        </div>)}
         <Flex justifyContent="center" alignItems="center" mt={6}>
           <Flex direction={'column'}>
             <Heading as="h2" size="xl" color="#FFF" textAlign="center" mr={12}>
