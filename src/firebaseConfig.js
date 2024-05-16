@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth } from "firebase/auth";
+import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { getAnalytics } from 'firebase/analytics';
 
@@ -18,8 +18,19 @@ const firebaseConfig = {
   };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
+
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {
+    // Session persistence set successfully
+  })
+  .catch((error) => {
+    // Error setting persistence
+    console.error('Error setting persistence:', error);
+  });
+
+
 const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
 export {app, analytics, auth, db};

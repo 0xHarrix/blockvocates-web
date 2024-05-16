@@ -14,31 +14,33 @@ const Dashboard = () => {
     // Function to fetch user's name from Firestore
     const fetchUserName = async () => {
       try {
-        // Get the currently authenticated user's email
-        let currentUserEmail = ''; 
-        const user = auth.currentUser;
-        console.log(user);
+        // Listen for changes in authentication state
+        onAuthStateChanged(auth, async (user) => {
           if (user) {
-            currentUserEmail = user.email;
-          };
+            // User is signed in
+            const currentUserEmail = user.email;
+            console.log(currentUserEmail);
 
-        console.log(currentUserEmail);
+            // Query Firestore to get the user document based on email
+            const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUserEmail)));
 
-        // Query Firestore to get the user document based on email
-        const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUserEmail)));
-
-        // Extract user's name from the query result
-        if (!querySnapshot.empty) {
-          const userData = querySnapshot.docs[0].data();
-          setUserName(userData.name);
-        }
+            // Extract user's name from the query result
+            if (!querySnapshot.empty) {
+              const userData = querySnapshot.docs[0].data();
+              setUserName(userData.name);
+            }
+          } else {
+            // User is signed out
+            setUserName(''); // Clear the user's name if not signed in
+          }
+        });
       } catch (error) {
         console.error('Error fetching user name:', error);
       }
     };
 
     fetchUserName();
-  }, []);
+  }, [auth]); // Make sure to include auth in the dependency array
 
 
   return (
