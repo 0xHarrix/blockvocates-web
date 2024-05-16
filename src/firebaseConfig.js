@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { getFirestore } from "firebase/firestore"
 import { getAnalytics } from 'firebase/analytics';
 
@@ -20,15 +20,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-setPersistence(auth, browserLocalPersistence)
+// Enable session persistence
+setPersistence(auth, browserSessionPersistence)
   .then(() => {
-    // Session persistence set successfully
+    console.log("Session persistence enabled");
   })
   .catch((error) => {
-    // Error setting persistence
-    console.error('Error setting persistence:', error);
+    console.error("Error enabling session persistence: ", error);
   });
-
 
 const db = getFirestore(app);
 const analytics = getAnalytics(app);

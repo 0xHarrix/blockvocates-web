@@ -71,6 +71,7 @@ const ClubSearch = () => {
   }, []);
 
   const handleSearch = () => {
+    
     // Filter clubs based on search criteria and update state
     const filteredClubs = clubs.filter((club) => {
       const matchesLocation = club.location.includes(location);
@@ -86,11 +87,11 @@ const ClubSearch = () => {
     setClubs(filteredClubs);
   };
 
-  const handleJoinClick = (clubId) => {
-    handleJoinClub(clubId);
+  const handleJoinClick = (clubId, clubLeader) => {
+    handleJoinClub(clubId, clubLeader);
   };
 
-  const handleJoinClub = async (clubId) => {
+  const handleJoinClub = async (clubId, clubLeader) => {
     try {
       const user = auth.currentUser;
       const userId = user.email;
@@ -105,6 +106,7 @@ const ClubSearch = () => {
       } else {
         // Create a new document in the clubApplications collection with a unique document ID
         await addDoc(collection(db, 'clubApplications'), {
+          clubLeader: clubLeader,
           userId: userId,
           clubId: clubId,
           status: 'pending',
@@ -293,7 +295,7 @@ const ClubSearch = () => {
                 ) : (
                   <Button
                     colorScheme="teal"
-                    onClick={() => handleJoinClick(club.clubId)}
+                    onClick={() => handleJoinClick(club.clubId, club.clubLeader)}
                     mt={2}
                   >
                     Join

@@ -1,79 +1,80 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom'; // Import Redirect from react-router-dom
+import { useNavigate } from 'react-router-dom';
 import NavBar from "./components/NavBar";
 import { Box, Heading, Flex, Text, Spinner } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
-import { db } from './firebaseConfig'; // Import the Firestore instance
+import { db } from './firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDocs, query, collection, where } from 'firebase/firestore';
+import { getDocs, doc, collection, where } from 'firebase/firestore';
 import { useToast } from "@chakra-ui/react";
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
-  const [loading, setLoading] = useState(true); // State to track loading state
-  const [userLoggedIn, setUserLoggedIn] = useState(true); // State to track user login status
+  const [userClubId, setUserClubId] = useState('');
+  const [clubName, setClubName] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [userLoggedIn, setUserLoggedIn] = useState(true);
   const auth = getAuth();
   const history = useNavigate();
-  const toast = useToast();  // Get the auth instance
+  const toast = useToast();
 
   useEffect(() => {
-    // Function to fetch user's name from Firestore
-    const fetchUserName = async () => {
+    const fetchUserData = async () => {
       try {
-        // Listen for changes in authentication state
         onAuthStateChanged(auth, async (user) => {
           if (user) {
-            // User is signed in
             const currentUserEmail = user.email;
-            console.log(currentUserEmail);
-
-            // Query Firestore to get the user document based on email
-            const querySnapshot = await getDocs(query(collection(db, 'users'), where('email', '==', currentUserEmail)));
-
-            // Extract user's name from the query result
+            const querySnapshot = await getDocs(collection(db, 'users'), where('email', '==', currentUserEmail));
+  
             if (!querySnapshot.empty) {
               const userData = querySnapshot.docs[0].data();
               setUserName(userData.name);
+              setUserClubId(userData.clubMembership);
+  
+              // Fetch club name based on club id
+              if (userData.clubMembership) {
+                const clubSnapshot = await getDocs(doc(db, 'clubs', userData.clubMembership));
+                if (clubSnapshot.exists()) {
+                  const clubData = clubSnapshot.data();
+                  setClubName(clubData.clubName);
+                }
+              }
             }
           } else {
-            // User is signed out
-            setUserName(''); // Clear the user's name if not signed in
-            setUserLoggedIn(false); // Set userLoggedIn state to false
+            setUserName('');
+            setUserClubId('');
+            setUserLoggedIn(false);
           }
-
-          setLoading(false); // Set loading to false when done
+  
+          setLoading(false);
         });
       } catch (error) {
-        console.error('Error fetching user name:', error);
-        setLoading(false); // Set loading to false in case of error
+        console.error('Error fetching user data:', error);
+        setLoading(false);
       }
     };
-
-    fetchUserName();
-  }, [auth]); // Make sure to include auth in the dependency array
+  
+    fetchUserData();
+  }, [auth]);
+  
 
   if (!userLoggedIn) {
-    // Display toast notification
     toast({
       title: "Please sign in to access the dashboard.",
       status: "error",
-      duration: 3000, // 3000 milliseconds (3 seconds) duration for the toast
+      duration: 3000,
       isClosable: true,
     });
-  
-    // Redirect to login page after a delay
+
     setTimeout(() => {
       history('/login');
-    }, 3000); // 3000 milliseconds (3 seconds) delay before redirection
+    }, 3000);
   }
-  // Make sure to include auth in the dependency array
-
 
   return (
     <div className="bg">
       <NavBar />
       <Box>
-        {/* Conditionally render loading spinner */}
         {loading ? (
           <Flex justifyContent="center" alignItems="center" minHeight="100vh" paddingBottom={200}>
             <Spinner size="xl" color="blue.500" />
@@ -83,20 +84,21 @@ const Dashboard = () => {
             <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4} >
               Welcome <span style={{ color: "#00BAE2" }}>{userName} !</span>
             </Heading>
-        </div>)}
+          </div>
+        )}
         <Flex justifyContent="center" alignItems="center" mt={6}>
           <Flex direction={'column'}>
             <Heading as="h2" size="xl" color="#FFF" textAlign="center" mr={12}>
               You're a member of
             </Heading>
             <Heading as="h1" size="xl" color="#FFF" textAlign="center" mr={12}>
-              Club Name
+              {clubName} {/* Display Club Name */}
             </Heading>
             <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Membership Number</Text>
           </Flex>
           <Box className="glassbox" padding="6" textAlign="center">
             <Text fontSize="xl" color="white" paddingTop={"48px"}>
-              Club Name
+              {userClubId}
             </Text>
             <Text fontSize="md" color="white" mt={2}>
               Club Number: XXXX
