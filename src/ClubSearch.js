@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebaseConfig"; // Import Firebase firestore
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, getDoc, setDoc } from "firebase/firestore";
 import NavBar from "./components/NavBar";
 import "./styles/ClubSearch.css";
 import {
@@ -24,7 +24,6 @@ const ClubSearch = () => {
   const [clubs, setClubs] = useState([]);
   const [loading, setLoading] = useState(true); // State to track loading status
   const [location, setLocation] = useState("");
-  const [radius, setRadius] = useState("");
   const [days, setDays] = useState("");
   const [meetingTime, setMeetingTime] = useState("");
   const [clubType, setClubType] = useState("");
@@ -80,10 +79,39 @@ const ClubSearch = () => {
     setClubs(filteredClubs);
   };
 
+  
+  const handleJoinClub = async (clubId) => {
+    try {
+      // Get the current user's ID or email (You need to replace 'getCurrentUserId()' with your actual method to get the user ID)
+      const userId = '';
+  
+      // Check if the user has already applied to this club
+      const existingApplicationRef = doc(db, 'clubApplications', userId);
+      const existingApplicationSnapshot = await getDoc(existingApplicationRef);
+  
+      if (existingApplicationSnapshot.exists()) {
+        console.log('You have already applied to this club.');
+        return;
+      }
+  
+      // Create a new document in the clubApplications collection
+      await setDoc(doc(db, 'clubApplications', userId), {
+        userId: userId,
+        clubId: clubId,
+        status: 'pending',
+      });
+  
+      console.log('Application submitted successfully.');
+    } catch (error) {
+      console.error('Error joining club:', error);
+    }
+  };
+  
+
   return (
     <div className="container">
       <NavBar />
-      <Box padding={"30px"} className="glassmorphism-container">
+      <Box padding={"30px"} className="glassmorphism-container2">
         <Heading as="h1" size="lg" color="#FFF" textAlign="center">
           Find a Club
         </Heading>
@@ -217,7 +245,8 @@ const ClubSearch = () => {
           <Button
             colorScheme="teal"
             onClick={handleSearch}
-            mt={6}
+            mt={2}
+            width="100%"
             bg="#00BAE2"
             _hover={{ bg: "#0597B7" }}
             _active={{ bg: "#008EAF" }}
@@ -247,6 +276,13 @@ const ClubSearch = () => {
                   {club.clubName}
                 </Heading>
                 {/* Display other club details */}
+                <Button
+                  colorScheme="teal"
+                  onClick={() => handleJoinClub(club.id)}
+                  mt={2}
+                >
+                  Join
+                </Button>
               </Box>
             ))
           ) : (

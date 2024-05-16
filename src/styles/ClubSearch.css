@@ -3,9 +3,10 @@
     background-image: url('../../public/bg.png');
     height: 105vh;
 }
-.glassmorphism-container {
+
+  .glassmorphism-container2 {
   width: 470px;
-  height: 500px; /* Adjust the width as needed */
+  height: 520px; /* Adjust the width as needed */
   background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2)); /* Diagonal linear gradient */
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.125);
@@ -16,7 +17,7 @@
   animation-timing-function: ease-in;
   margin: auto;
 }
-.glassmorphism-container:hover{
+.glassmorphism-container2:hover{
     transform: scale(1.03);
     transition: ease-in;
     transition-duration: 0.3s;
