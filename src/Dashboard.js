@@ -46,7 +46,7 @@ const Dashboard = () => {
       <NavBar />
       <Box>
         <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4}>
-          Welcome <span style={{ color: "#00BAE2" }}>{userName}</span>
+          Welcome <span style={{ color: "#00BAE2" }}>{userName} !</span>
         </Heading>
 
         <Flex justifyContent="center" alignItems="center" mt={6}>
@@ -86,7 +86,7 @@ const Dashboard = () => {
                 width="200px"
                 height="200px"
                 margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Payment.png')"
+                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Crypto-Trader.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
@@ -120,7 +120,7 @@ const Dashboard = () => {
                 width="200px"
                 height="200px"
                 margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Publicspeaking.png')"
+                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Designer.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
@@ -154,7 +154,7 @@ Designer
                 width="200px"
                 height="200px"
                 margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Comm.png')"
+                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Developer.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
@@ -188,7 +188,7 @@ Designer
                 width="200px"
                 height="200px"
                 margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Publicspeaking.png')"
+                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Community.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
@@ -203,7 +203,7 @@ Designer
                   textAlign="left"
                   marginBottom="10px"
                 >
-                  Community builder
+                  Community
                 </Text>
               </Box>
               <Box
@@ -221,7 +221,7 @@ Designer
                 width="200px"
                 height="200px"
                 margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Comm.png')"
+                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Marketing.png')"
                 backgroundPosition="center"
                 backgroundSize="cover"
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
