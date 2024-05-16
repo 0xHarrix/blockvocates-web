@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db } from "./firebaseConfig"; // Import Firebase firestore
+import { auth, db } from "./firebaseConfig"; // Import Firebase firestore
 import { collection, getDocs, query, where, doc, getDoc, setDoc } from "firebase/firestore";
 import NavBar from "./components/NavBar";
 import "./styles/ClubSearch.css";
@@ -79,14 +79,16 @@ const ClubSearch = () => {
     setClubs(filteredClubs);
   };
 
-  
+
   const handleJoinClub = async (clubId) => {
     try {
+      const user = auth.currentUser;
       // Get the current user's ID or email (You need to replace 'getCurrentUserId()' with your actual method to get the user ID)
-      const userId = '';
+      const userId = user.email;
+      console.log(userId)
   
       // Check if the user has already applied to this club
-      const existingApplicationRef = doc(db, 'clubApplications', userId);
+const existingApplicationRef = doc(db, 'clubApplications', userId);
       const existingApplicationSnapshot = await getDoc(existingApplicationRef);
   
       if (existingApplicationSnapshot.exists()) {
