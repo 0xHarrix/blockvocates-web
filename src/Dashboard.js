@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'; // Import Redirect from react-router-dom
 import NavBar from "./components/NavBar";
 import { Box, Heading, Flex, Text, Spinner } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
 import { db } from './firebaseConfig'; // Import the Firestore instance
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDocs, query, collection, where } from 'firebase/firestore'
+import { getDocs, query, collection, where } from 'firebase/firestore';
+import { useToast } from "@chakra-ui/react";
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(true); // State to track loading state
-  const auth = getAuth(); // Get the auth instance
+  const [userLoggedIn, setUserLoggedIn] = useState(true); // State to track user login status
+  const auth = getAuth();
+  const history = useNavigate();
+  const toast = useToast();  // Get the auth instance
 
   useEffect(() => {
     // Function to fetch user's name from Firestore
@@ -33,6 +38,7 @@ const Dashboard = () => {
           } else {
             // User is signed out
             setUserName(''); // Clear the user's name if not signed in
+            setUserLoggedIn(false); // Set userLoggedIn state to false
           }
 
           setLoading(false); // Set loading to false when done
@@ -45,6 +51,22 @@ const Dashboard = () => {
 
     fetchUserName();
   }, [auth]); // Make sure to include auth in the dependency array
+
+  if (!userLoggedIn) {
+    // Display toast notification
+    toast({
+      title: "Please sign in to access the dashboard.",
+      status: "error",
+      duration: 3000, // 3000 milliseconds (3 seconds) duration for the toast
+      isClosable: true,
+    });
+  
+    // Redirect to login page after a delay
+    setTimeout(() => {
+      history('/login');
+    }, 3000); // 3000 milliseconds (3 seconds) delay before redirection
+  }
+  // Make sure to include auth in the dependency array
 
 
   return (
