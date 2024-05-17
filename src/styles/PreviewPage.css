@@ -20,22 +20,17 @@
     transform: scale(1.03);
     transition: ease-in;
     transition-duration: 0.3s;
+    box-shadow: 0 8px 32px rgba(35, 45, 187, 0.452);
   }
-  .PopoverContent {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-  
-  .PopoverBody {
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  
-  .PopoverTrigger:focus + .PopoverContent {
+  .description-card {
     opacity: 1;
-    pointer-events: auto;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
   }
   
+  .glassbox:not(:hover) .description-card {
+    opacity: 0;
+  }
