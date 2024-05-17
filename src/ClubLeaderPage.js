@@ -32,7 +32,7 @@ const ClubLeaderPage = () => {
           return;
         }
 
-        console.log("User :",userId);
+        console.log("User :", userId);
         const querySnapshot = await getDocs(
           query(collection(db, "clubApplications"), where("clubLeader", "==", userId))
         );
@@ -57,7 +57,7 @@ const ClubLeaderPage = () => {
     try {
       // Query the clubs collection to find clubs where the user is listed as the club leader
       const querySnapshot = await getDocs(query(collection(db, "clubs"), where("clubLeader", "==", userId)));
-  
+
       // Check if the query returned any clubs
       if (!querySnapshot.empty) {
         // If the user is listed as the club leader in at least one club, return true
@@ -78,19 +78,19 @@ const ClubLeaderPage = () => {
       await updateDoc(doc(db, "clubApplications", applicationId), {
         status: "accepted"
       });
-  
+
       // Add the user to the clubMembers collection
       await addMemberToClub(userId, clubId);
-  
+
       // Find the user document with the specified email
       const userQuerySnapshot = await getDocs(query(collection(db, "users"), where("email", "==", userId)));
-  
+
       // Check if the query returned any documents
       if (!userQuerySnapshot.empty) {
         // Get the first document (assuming email is unique)
         const userDoc = userQuerySnapshot.docs[0];
         const userDocId = userDoc.id;
-  
+
         // Update the clubMembership field in the user's document
         await updateDoc(doc(db, "users", userDocId), {
           clubMembership: clubId
@@ -98,7 +98,7 @@ const ClubLeaderPage = () => {
       } else {
         console.error("No user document found with email:", userId);
       }
-  
+
       // Update the accepted status in state
       const updatedApplications = [...applications];
       updatedApplications[index].accepted = true;
@@ -151,7 +151,7 @@ const ClubLeaderPage = () => {
             applications.map((application, index) => (
               <Box
                 key={index}
-                bg="rgba(255, 255, 255, 0.05)"
+                bg="rgba(255 , 255, 255, 0.05)"
                 p={2}
                 my={2}
                 borderRadius="md"
@@ -160,33 +160,33 @@ const ClubLeaderPage = () => {
                 <Text color="#FFF">Club ID: {application.clubId}</Text>
                 <Text color="#FFF">Status: {application.status}</Text>
                 {application.status === "accepted" ? (
-                <Button colorScheme="teal" isDisabled mt={2} mr={2}>
+                  <Button colorScheme="teal" isDisabled mt={2} mr={2}>
                     Accepted
-                </Button>
+                  </Button>
                 ) : (
-                <>
+                  <>
                     <Button
-                    colorScheme="teal"
-                    onClick={() => handleAccept(application.id, application.userId, application.clubId, index)}
-                    mt={2}
-                    mr={2}
+                      colorScheme="teal"
+                      onClick={() => handleAccept(application.id, application.userId, application.clubId, index)}
+                      mt={2}
+                      mr={2}
                     >
-                    Accept
+                      Accept
                     </Button>
                     <Button
-                    colorScheme="red"
-                    onClick={() => handleReject(application.id)}
-                    mt={2}
+                      colorScheme="red"
+                      onClick={() => handleReject(application.id)}
+                      mt={2}
                     >
-                    Reject
+                      Reject
                     </Button>
-                </>
+                  </>
                 )}
-            </Box>
+              </Box>
             ))
-        ) : (
-            <Text color="white">No applications found.</Text>
-        )}
+          ) : (
+            <Text color="white ">No applications found.</Text>
+          )}
         </Box>
       </Box>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "./firebaseConfig"; // Import Firebase firestore
-import { doc, setDoc, getDoc, runTransaction } from "firebase/firestore";
+import { doc, setDoc, getDoc, addDoc, collection, getDocs } from "firebase/firestore";
 import NavBar from "./components/NavBar";
 import "./styles/CreateClub.css";
 import {
@@ -26,53 +26,34 @@ const CreateClub = () => {
   const [clubType, setClubType] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Fetch the current club ID counter from Firestore
-    const fetchCounter = async () => {
-      const counterDocRef = doc(db, "counters", "clubIdCounter");
-      const counterDocSnap = await getDoc(counterDocRef);
-      const counterData = counterDocSnap.data();
-      if (!counterData) {
-        // If the counter doesn't exist, create it with an initial value of 1
-        await setDoc(counterDocRef, { value: 1 });
-      }
-    };
 
-    fetchCounter();
-  }, []);
+   
 
   const handleCreateClub = async () => {
     try {
       setLoading(true);
-  
+
       // Get current user
       const user = auth.currentUser;
       const userId = user.email;
-  
-      // Increment the club ID counter
-      const counterDocRef = doc(db, "counters", "clubIdCounter");
-      await runTransaction(db, async (transaction) => {
-        const counterDoc = await transaction.get(counterDocRef);
-        const newClubId = counterDoc.data().value + 1;
-  
-        // Generate auto ID for club document
-        const clubRef = doc(db, "clubs"); // No need to specify document ID
-  
-        // Create a new document in the "clubs" collection with auto-generated ID
-        await setDoc(clubRef, {
-          clubId: newClubId, // Include clubId field
-          clubName: clubName,
-          location: location,
-          meetingDays: days,
-          meetingTime: meetingTime,
-          clubType: clubType,
-          clubLeader: userId,
-        });
-  
-        // Update the club ID counter
-        transaction.update(counterDocRef, { value: newClubId });
+
+      // Get the current number of documents in the 'clubs' collection
+      const clubsCollection = collection(db, "clubs");
+      const clubsSnapshot = await getDocs(clubsCollection);
+      const clubCount = clubsSnapshot.size;
+      const newClubId = clubCount + 1;
+
+      // Add a new document to the 'clubs' collection
+      await addDoc(clubsCollection, {
+        clubId: newClubId,
+        clubLeader: userId,
+        clubName: clubName,
+        clubType: clubType,
+        location: location,
+        meetingTime: meetingTime,
+        meetingDays: days,
       });
-  
+
       console.log("Club created successfully.");
       navigate("/"); // Redirect to home page or any other page
     } catch (error) {
@@ -81,6 +62,7 @@ const CreateClub = () => {
       setLoading(false);
     }
   };
+
   
 
   return (

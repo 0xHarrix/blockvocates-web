@@ -5,7 +5,7 @@ import { Box, Heading, Flex, Text, Spinner } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
 import { db } from './firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDocs, doc, collection, where } from 'firebase/firestore';
+import { getDocs, doc, collection, where, getDoc, query } from 'firebase/firestore';
 import { useToast } from "@chakra-ui/react";
 
 const Dashboard = () => {
@@ -24,34 +24,42 @@ const Dashboard = () => {
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             const currentUserEmail = user.email;
-            console.log(currentUserEmail)
-            const querySnapshot = await getDocs(
+            console.log('Current user email:', currentUserEmail);
+
+            // Create a query against the collection
+            const userQuery = query(
               collection(db, 'users'),
               where('email', '==', currentUserEmail)
-          );
-            console.log(querySnapshot)
-  
+            );
+            const querySnapshot = await getDocs(userQuery);
+            console.log('Query snapshot:', querySnapshot);
+
             if (!querySnapshot.empty) {
               const userData = querySnapshot.docs[0].data();
-              console.log(userData)
+              console.log('User data:', userData);
               setUserName(userData.name);
               setUserClubId(userData.clubMembership);
-  
+
               // Fetch club name based on club id
               if (userData.clubMembership) {
-                const clubSnapshot = await getDocs(doc(db, 'clubs', userData.clubMembership));
+                const clubDoc = doc(db, 'clubs', userData.clubMembership);
+                const clubSnapshot = await getDoc(clubDoc);
                 if (clubSnapshot.exists()) {
                   const clubData = clubSnapshot.data();
                   setClubName(clubData.clubName);
                 }
               }
+
+              setUserLoggedIn(true);
+            } else {
+              console.log('No user document found for email:', currentUserEmail);
             }
           } else {
             setUserName('');
             setUserClubId('');
             setUserLoggedIn(false);
           }
-  
+
           setLoading(false);
         });
       } catch (error) {
@@ -59,7 +67,7 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-  
+
     fetchUserData();
   }, [auth]);
   
