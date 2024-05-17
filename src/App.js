@@ -13,6 +13,7 @@ import PreviewPage from './PreviewPage';
 import ClubLeaderPage from './ClubLeaderPage';
 import CreateClub from './CreateClub';
 import WorkingPage from './WorkingPage';
+import DashboardMain from './DashboardMain';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='/ClubLeaderPage' element={<ClubLeaderPage/>}/>
           <Route path='/CreateClub' element={<CreateClub/>}/>
           <Route path='/WorkingPage' element={<WorkingPage/>}/>
+          <Route path='/DashboardMain' element={<DashboardMain/>}/>
         </Routes>
       </Router>
     </ChakraProvider>
