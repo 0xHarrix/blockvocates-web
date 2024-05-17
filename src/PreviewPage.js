@@ -1,7 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
-import { Box, Flex, Text, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  Button, 
+  Spinner
+} from "@chakra-ui/react";
 import "./styles/PreviewPage.css";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "./firebaseConfig"; // Import Firebase firestore
+import { collection, getDocs, query, where, updateDoc, doc } from "firebase/firestore";
 
 const cards = [
   {
@@ -33,6 +48,60 @@ const cards = [
 
 function PreviewPage() {
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const userId = user.email;
+        console.log("User:", userId);
+
+        const usersCollection = collection(db, "users");
+        const q = query(usersCollection, where("email", "==", userId));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0];
+          setUserData({ id: userDoc.id, ...userDoc.data() });
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleSelectPath = async (cardPathId) => {
+    try {
+      setLoading(true);
+
+      if (!userData) {
+        console.error("User data not found.");
+        return;
+      }
+
+      await updateDoc(doc(db, "users", userData.id), {
+        pathId: cardPathId
+      });
+
+      console.log("Path selected successfully.");
+      navigate("/DashboardMain"); // Redirect to home page or any other page
+    } catch (error) {
+      console.error("Error selecting path:", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg">
@@ -75,6 +144,7 @@ function PreviewPage() {
               mt={5}
               width="100%"
               bg="#00BAE2"
+              onClick={() => handleSelectPath(card.id)}
               _hover={{ bg: "#0597B7" }}
               _active={{ bg: "#008EAF" }}
             >
