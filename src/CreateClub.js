@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "./firebaseConfig"; // Import Firebase firestore
-import { collection, getDocs, query, where, doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, runTransaction } from "firebase/firestore";
 import NavBar from "./components/NavBar";
 import "./styles/CreateClub.css";
 import {
   Box,
-  Grid,
   Heading,
   Input,
   Flex,
@@ -13,99 +12,73 @@ import {
   RadioGroup,
   Button,
   Select,
-  Spinner,
-  Text,
-  Center,
+  Grid,
+  Spinner, Text
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const CreateClub = () => {
   const navigate = useNavigate();
-  const [clubs, setClubs] = useState([]);
-  const [loading, setLoading] = useState(true); // State to track loading status
+  const [clubName, setclubName] = useState("");
   const [location, setLocation] = useState("");
   const [days, setDays] = useState("");
   const [meetingTime, setMeetingTime] = useState("");
   const [clubType, setClubType] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch clubs from Firestore
-    const fetchClubs = async () => {
-      try {
-        const clubsRef = collection(db, "clubs");
-        const clubsQuery = query(clubsRef, where("location", "==", location));
-        const querySnapshot = await getDocs(clubsQuery);
-        const fetchedClubs = querySnapshot.docs.map((doc) => doc.data());
-        setClubs(fetchedClubs);
-        setLoading(false); // Set loading to false after clubs are fetched
-      } catch (error) {
-        console.error("Error fetching clubs: ", error);
+    // Fetch the current club ID counter from Firestore
+    const fetchCounter = async () => {
+      const counterDocRef = doc(db, "counters", "clubIdCounter");
+      const counterDocSnap = await getDoc(counterDocRef);
+      const counterData = counterDocSnap.data();
+      if (!counterData) {
+        // If the counter doesn't exist, create it with an initial value of 1
+        await setDoc(counterDocRef, { value: 1 });
       }
     };
 
-    // Fetch clubs only if location is not empty
-    if (location !== "") {
-      fetchClubs();
-    } else {
-      setLoading(false); // Set loading to false if location is empty
-    }
-  }, [location]);
+    fetchCounter();
+  }, []);
 
-  const handleSearch = () => {
-    console.log("Location:", location);
-    console.log("Days:", days);
-    console.log("Meeting Time:", meetingTime);
-    console.log("Club Type:", clubType);
-
-    // Filter clubs based on search criteria and update state
-    const filteredClubs = clubs.filter((club) => {
-      const matchesLocation = club.location.includes(location);
-      const matchesDays = club.meetingDays.includes(days);
-      const matchesMeetingTime = club.meetingTime.includes(meetingTime);
-      const matchesClubType = club.clubType === clubType;
-
-      console.log("Club:", club.clubName);
-      console.log("Matches Location:", matchesLocation);
-      console.log("Matches Days:", matchesDays);
-      console.log("Matches Meeting Time:", matchesMeetingTime);
-      console.log("Matches Club Type:", matchesClubType);
-
-      return (
-        matchesLocation && matchesDays && matchesMeetingTime && matchesClubType
-      );
-    });
-
-    console.log("Filtered Clubs:", filteredClubs);
-    setClubs(filteredClubs);
-  };
-
-
-  const handleJoinClub = async (clubId) => {
+  const handleCreateClub = async () => {
     try {
+      setLoading(true);
+  
+      // Get current user
       const user = auth.currentUser;
-      // Get the current user's ID or email (You need to replace 'getCurrentUserId()' with your actual method to get the user ID)
       const userId = user.email;
-      console.log(userId)
   
-      // Check if the user has already applied to this club
-const existingApplicationRef = doc(db, 'clubApplications', userId);
-      const existingApplicationSnapshot = await getDoc(existingApplicationRef);
+      // Increment the club ID counter
+      const counterDocRef = doc(db, "counters", "clubIdCounter");
+      await runTransaction(db, async (transaction) => {
+        const counterDoc = await transaction.get(counterDocRef);
+        const newClubId = counterDoc.data().value + 1;
   
-      if (existingApplicationSnapshot.exists()) {
-        console.log('You have already applied to this club.');
-        return;
-      }
+        // Generate auto ID for club document
+        const clubRef = doc(db, "clubs"); // No need to specify document ID
   
-      // Create a new document in the clubApplications collection
-      await setDoc(doc(db, 'clubApplications', userId), {
-        userId: userId,
-        clubId: clubId,
-        status: 'pending',
+        // Create a new document in the "clubs" collection with auto-generated ID
+        await setDoc(clubRef, {
+          clubId: newClubId, // Include clubId field
+          clubName: clubName,
+          location: location,
+          meetingDays: days,
+          meetingTime: meetingTime,
+          clubType: clubType,
+          clubLeader: userId,
+        });
+  
+        // Update the club ID counter
+        transaction.update(counterDocRef, { value: newClubId });
       });
   
-      console.log('Application submitted successfully.');
+      console.log("Club created successfully.");
+      navigate("/"); // Redirect to home page or any other page
     } catch (error) {
-      console.error('Error joining club:', error);
+      console.error("Error creating club: ", error);
+    } finally {
+      setLoading(false);
     }
   };
   
@@ -120,8 +93,8 @@ const existingApplicationRef = doc(db, 'clubApplications', userId);
         <Box mt={5}>
           <Input
             placeholder="Club Name"
-            value={location.toLowerCase()}
-            onChange={(e) => setLocation(e.target.value)}
+            value={clubName}
+            onChange={(e) => setclubName(e.target.value)}
             mt={2}
             variant="outline"
             color="#FFF"
@@ -268,7 +241,7 @@ const existingApplicationRef = doc(db, 'clubApplications', userId);
         <Flex justify="center">
           <Button
             colorScheme="teal"
-            onClick={handleSearch}
+            onClick={handleCreateClub}
             mt={2}
             width="100%"
             bg="#00BAE2"
@@ -284,35 +257,6 @@ const existingApplicationRef = doc(db, 'clubApplications', userId);
             <Spinner size="lg" color="teal" />
           </Flex>
         )}
-
-        {/* Display Clubs */}
-        <Box mt={6}>
-          {clubs.length > 0 ? (
-            clubs.map((club, index) => (
-              <Box
-                key={index}
-                bg="rgba(255, 255, 255, 0.05)"
-                p={2}
-                my={2}
-                borderRadius="md"
-              >
-                <Heading as="h2" size="md" color="#FFF">
-                  {club.clubName}
-                </Heading>
-                {/* Display other club details */}
-                <Button
-                  colorScheme="teal"
-                  onClick={() => handleJoinClub(club.id)}
-                  mt={2}
-                >
-                  Join
-                </Button>
-              </Box>
-            ))
-          ) : (
-            <Text color="white">No clubs found.</Text>
-          )}
-        </Box>
       </Box>
     </div>
   );

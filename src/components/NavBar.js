@@ -51,7 +51,7 @@ const NavBar = () => {
             color="white"
             fontWeight="bold"
             mr={20}
-            onClick={() => navigate('/CoursePage')}
+            onClick={() => navigate('/Dashboard')}
             _hover={{ color: '#00BAE2' }}
           >
             ABOUT
@@ -65,7 +65,7 @@ const NavBar = () => {
           >
             FIND A CLUB
           </Link>
-          <Link color="white" fontWeight="bold" onClick={() => navigate('/CourseSearch')} _hover={{ color: '#00BAE2' }}>
+          <Link color="white" fontWeight="bold" onClick={() => navigate('/CreateClub')} _hover={{ color: '#00BAE2' }}>
             START A CLUB
           </Link>
         </Box>

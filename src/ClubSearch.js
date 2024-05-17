@@ -38,6 +38,7 @@ const ClubSearch = () => {
         const fetchedClubs = querySnapshot.docs.map((doc) => doc.data());
         setClubs(fetchedClubs);
         setLoading(false);
+        console.log(fetchedClubs)
       } catch (error) {
         console.error("Error fetching clubs: ", error);
       }
@@ -58,7 +59,9 @@ const ClubSearch = () => {
 
         const querySnapshot = await getDocs(
           query(collection(db, "clubApplications"), where("userId", "==", userId))
+
         );
+
 
         const appliedClubIds = querySnapshot.docs.map((doc) => doc.data().clubId);
         setAppliedClubs(appliedClubIds);
@@ -115,6 +118,7 @@ const ClubSearch = () => {
       }
     } catch (error) {
       console.error('Error joining club:', error);
+
     }
   };
 

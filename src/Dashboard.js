@@ -24,10 +24,16 @@ const Dashboard = () => {
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             const currentUserEmail = user.email;
-            const querySnapshot = await getDocs(collection(db, 'users'), where('email', '==', currentUserEmail));
+            console.log(currentUserEmail)
+            const querySnapshot = await getDocs(
+              collection(db, 'users'),
+              where('email', '==', currentUserEmail)
+          );
+            console.log(querySnapshot)
   
             if (!querySnapshot.empty) {
               const userData = querySnapshot.docs[0].data();
+              console.log(userData)
               setUserName(userData.name);
               setUserClubId(userData.clubMembership);
   
