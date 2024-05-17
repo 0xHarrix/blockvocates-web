@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
-import {
-  Box,
-  Flex,
-  Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverBody,
-  Button, 
-  Spinner
-} from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Spinner } from "@chakra-ui/react";
 import "./styles/PreviewPage.css";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "./firebaseConfig"; // Import Firebase firestore
@@ -20,30 +8,46 @@ import { collection, getDocs, query, where, updateDoc, doc } from "firebase/fire
 
 const cards = [
   {
+    id: "crypto-trader",
     title: "Crypto Trader",
-    description: "Trading in cryptocurrency is substantially different from traditional markets - 24/7 with no downtimes. And instead of traditional metrics like EPS (earnings per share) a lot of crypto price movement is driven by token-related factors. The TRADER journey will cover the fundamentals of blockchain, basics of project research and tokenomics, wallet setup for DEX (decentralized) and CEX (centralized) exchange trading, technical analysis, choosing your specialization, gaining asymmetric advantages and managing risk.",
+    description: "Trading in cryptocurrency is substantially different from traditional markets...",
     image: "Crypto-Trader.png",
   },
   {
+    id: "marketing",
     title: "Marketing",
     description: "Description of Marketing",
     image: "Marketing.png",
   },
   {
+    id: "community",
     title: "Community",
     description: "Description of Community",
     image: "Community.png",
   },
   {
+    id: "developer",
     title: "Developer",
     description: "Description of Developer",
     image: "Developer.png",
   },
   {
+    id: "designer",
     title: "Designer",
     description: "Description of Designer",
     image: "Designer.png",
   },
+];
+
+const modules = [
+  "M1: Read, Write, Own.",
+  "M2: Identity Creation",
+  "M3: Wallets, Interface, DEX, CEX.",
+  "M4: Research Report",
+  "M5: Trading Style (Low - Mid - High)",
+  "M6: Managing Risk",
+  "M7: Public Trading Challenge.",
+  "M8: Summarizing Learnings.",
 ];
 
 function PreviewPage() {
@@ -90,11 +94,11 @@ function PreviewPage() {
       }
 
       await updateDoc(doc(db, "users", userData.id), {
-        pathId: cardPathId
+        pathId: cardPathId,
       });
 
       console.log("Path selected successfully.");
-      navigate("/DashboardMain"); // Redirect to home page or any other page
+      navigate("/DashboardMain");
     } catch (error) {
       console.error("Error selecting path:", error);
       setLoading(false);
@@ -115,7 +119,7 @@ function PreviewPage() {
             flexDirection="column"
             justifyContent="flex-end"
             alignItems="center"
-            padding="6"
+            padding="5"
             borderRadius="16px"
             border="1px solid rgba(255, 255, 255, 0.125)"
             boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
@@ -123,12 +127,13 @@ function PreviewPage() {
             color={"white"}
             WebkitBackdropFilter="blur(16px) saturate(180%)"
             cursor={"pointer"}
-            width="200px"
-            height="200px"
+            width="300px" // Increased width
+            height="300px" // Increased height
             margin="0 10px"
-            backgroundImage={`linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url(${card.image})`}
-            backgroundPosition="center"
-            backgroundSize="cover"
+            backgroundImage={`url(${card.image})`}
+            backgroundRepeat={"no-repeat"}
+            backgroundPosition="top"
+            backgroundSize="75%"
             transition="transform 0.3s ease-in-out"
             _hover={{
               transform: "scale(1.05)",
@@ -136,7 +141,7 @@ function PreviewPage() {
             onMouseEnter={() => setHoveredCard(index)}
             onMouseLeave={() => setHoveredCard(null)}
           >
-            <Text fontSize="lg" fontWeight={700} marginBottom={-4}>
+            <Text fontSize="lg" fontWeight={700} marginBottom={-2}>
               {card.title}
             </Text>
             <Button
@@ -147,134 +152,67 @@ function PreviewPage() {
               onClick={() => handleSelectPath(card.id)}
               _hover={{ bg: "#0597B7" }}
               _active={{ bg: "#008EAF" }}
+              marginBottom={-2}
             >
               Select
             </Button>
           </Box>
         ))}
       </Flex>
-      <Box
+      {hoveredCard !== null && (
+        <Box
   className="description-card"
   position="absolute"
   marginTop={50}
   left="50%"
   transform="translateX(-50%)"
-  width="1050px"
+  width="1000px"
   padding="10px"
   borderRadius="8px"
   backgroundColor="rgba(255, 255, 255, 0.05)"
   color="white"
   zIndex="999"
-  style={{ opacity: hoveredCard !== null ? 1 : 0, pointerEvents: "none" }}
+  style={{ opacity: 1, pointerEvents: "none" }}
+  textAlign="center" // Center align the description heading
 >
-  {hoveredCard !== null && <Text>{cards[hoveredCard].description}</Text>}
+  <Text fontSize="xl" fontWeight="bold" marginBottom="10px">
+    {cards[hoveredCard].title} Description
+  </Text>
+  <Text>{cards[hoveredCard].description}</Text>
   <Flex flexWrap="wrap" justifyContent="center" mt={7}>
-  <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-        M1: Read, Write, Own.
-      </Box>
+    {modules.map((module, index) => (
       <Box
-        width="100px"
-        height="100px"
+        key={index}
+        width="102px"
+        height="102px"
         backgroundColor="rgba(255, 255, 255, 0.1)"
         border="1px solid rgba(255, 255, 255, 0.2)"
         display="flex"
+        flexDirection="column"
         justifyContent="center"
         alignItems="center"
         fontSize="md"
         margin="10px"
+        borderRadius="8px"
+        boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+        color="white"
+        transition="transform 0.2s, box-shadow 0.2s"
+        _hover={{
+          transform: "translateY(-5px)",
+          boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
       >
-M2: Identity Creation
+        <Text fontWeight="bold" marginBottom="5px">
+          {module.split(":")[0]}
+        </Text>
+        <Text textAlign="center">{module.split(":")[1]}</Text>
       </Box>
-      <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-M3: Wallets, Interface, DEX, CEX.
-      </Box>
-      <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-M4: Research Report
-      </Box>
-      <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-M5: Trading Style (Low - Mid - High)
-      </Box>
-      <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-M6: Managing Risk
-      </Box>
-      <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-M7: Public Trading Challenge.
-      </Box>
-      <Box
-        width="100px"
-        height="100px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-      >
-M8: Summarizing Learnings.
-      </Box>
+    ))}
   </Flex>
 </Box>
+
+      )}
+      {loading && <Spinner />}
     </div>
   );
 }
