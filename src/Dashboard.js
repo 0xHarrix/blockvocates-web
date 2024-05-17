@@ -306,7 +306,7 @@ const Dashboard = () => {
               textAlign="left"
               marginBottom="10px"
             >
-              Marketing
+              Marketingg
             </Text>
           </Box>
         </Flex>
