@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { Box, Heading, Flex, Text, Spinner } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
@@ -9,9 +9,9 @@ import { getDocs, doc, collection, where, query, getDoc } from 'firebase/firesto
 import { useToast } from "@chakra-ui/react";
 
 const Dashboard = () => {
-  const [userName, setUserName] = useState('');
-  const [userClubId, setUserClubId] = useState('');
-  const [clubName, setClubName] = useState('');
+  const [userName, setUserName] = useState("");
+  const [userClubId, setUserClubId] = useState("");
+  const [clubName, setClubName] = useState("");
   const [loading, setLoading] = useState(true);
   const [userLoggedIn, setUserLoggedIn] = useState(true);
   const auth = getAuth();
@@ -24,7 +24,7 @@ const Dashboard = () => {
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             const currentUserEmail = user.email;
-            console.log('Current user email:', currentUserEmail);
+            console.log("Current user email:", currentUserEmail);
 
             // Query to get the user data
             const usersCollection = collection(db, "users");
@@ -88,18 +88,29 @@ const Dashboard = () => {
       <NavBar />
       <Box>
         {loading ? (
-          <Flex justifyContent="center" alignItems="center" minHeight="100vh" paddingBottom={200}>
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            minHeight="100vh"
+            paddingBottom={200}
+          >
             <Spinner size="xl" color="blue.500" />
           </Flex>
         ) : (
           <div className="fade-in">
-            <Heading as="h1" size="xl" color="#FFF" paddingLeft={"100px"} mt={-4} >
+            <Heading
+              as="h1"
+              size="xl"
+              color="#FFF"
+              paddingLeft={"100px"}
+              mt={-4}
+            >
               Welcome <span style={{ color: "#00BAE2" }}>{userName} !</span>
             </Heading>
           </div>
         )}
         <Flex justifyContent="center" alignItems="center" mt={6}>
-          <Flex direction={'column'}>
+          <Flex direction={"column"}>
             <Heading as="h2" size="xl" color="#FFF" textAlign="center" mr={12}>
               You're a member of
             </Heading>
@@ -117,7 +128,16 @@ const Dashboard = () => {
             </Text>
           </Box>
         </Flex>
-        <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Choose your Blockvocates Journey (Journey cannot be changed once picked)</Text>
+        <Text
+          fontSize={28}
+          fontWeight={"bold"}
+          textAlign={"center"}
+          mt={4}
+          color={"white"}
+        >
+          Choose your Blockvocates Journey (Journey cannot be changed once
+          picked)
+        </Text>
         <Flex justifyContent="center" mt={7}>
           <Box
             className="glassbox"
