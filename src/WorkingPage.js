@@ -42,7 +42,7 @@ const cards = [
   },
 ];
 
-function PreviewPage() {
+function WorkingPage() {
   return (
     <div className="bg">
       <NavBar />
@@ -108,4 +108,4 @@ function PreviewPage() {
   );
 }
 
-export default PreviewPage;
+export default WorkingPage;

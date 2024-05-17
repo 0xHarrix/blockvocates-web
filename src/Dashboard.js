@@ -5,7 +5,7 @@ import { Box, Heading, Flex, Text, Spinner } from "@chakra-ui/react";
 import "./styles/Dashboard.css";
 import { db } from './firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { getDocs, doc, collection, where, getDoc, query } from 'firebase/firestore';
+import { getDocs, doc, collection, where, query, getDoc } from 'firebase/firestore';
 import { useToast } from "@chakra-ui/react";
 
 const Dashboard = () => {
@@ -26,64 +26,62 @@ const Dashboard = () => {
             const currentUserEmail = user.email;
             console.log('Current user email:', currentUserEmail);
 
-            // Create a query against the collection
-            const userQuery = query(
-              collection(db, 'users'),
-              where('email', '==', currentUserEmail)
-            );
-            const querySnapshot = await getDocs(userQuery);
-            console.log('Query snapshot:', querySnapshot);
+            // Query to get the user data
+            const usersCollection = collection(db, "users");
+            const q = query(usersCollection, where("email", "==", currentUserEmail));
+            const querySnapshot = await getDocs(q);
 
             if (!querySnapshot.empty) {
               const userData = querySnapshot.docs[0].data();
-              console.log('User data:', userData);
               setUserName(userData.name);
-              setUserClubId(userData.clubMembership);
+              setUserClubId(userData.clubMembership.toString());
 
-              // Fetch club name based on club id
-              if (userData.clubMembership) {
-                const clubDoc = doc(db, 'clubs', userData.clubMembership);
-                const clubSnapshot = await getDoc(clubDoc);
-                if (clubSnapshot.exists()) {
-                  const clubData = clubSnapshot.data();
-                  setClubName(clubData.clubName);
-                }
+              // Query to get the club data
+              const clubsCollection = collection(db, "clubs");
+              const clubDoc = query(clubsCollection, where("clubId","==",userData.clubMembership));
+              const clubSnap = await getDocs(clubDoc);
+
+              console.log(clubSnap);
+
+              if (!clubSnap.empty) {
+                const clubData = clubSnap.docs[0].data();
+                setClubName(clubData.clubName);
+              } else {
+                console.log("No such club!");
               }
-
-              setUserLoggedIn(true);
             } else {
-              console.log('No user document found for email:', currentUserEmail);
+              console.log("No such user!");
             }
-          } else {
-            setUserName('');
-            setUserClubId('');
-            setUserLoggedIn(false);
-          }
 
-          setLoading(false);
+            setLoading(false);
+          } else {
+            setUserLoggedIn(false);
+            setLoading(false);
+          }
         });
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
         setLoading(false);
       }
     };
 
     fetchUserData();
   }, [auth]);
-  
 
-  if (!userLoggedIn) {
-    toast({
-      title: "Please sign in to access the dashboard.",
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-    });
+  useEffect(() => {
+    if (!userLoggedIn) {
+      toast({
+        title: "Please sign in to access the dashboard.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
 
-    setTimeout(() => {
-      history('/login');
-    }, 3000);
-  }
+      setTimeout(() => {
+        history('/login');
+      }, 3000);
+    }
+  }, [userLoggedIn, history, toast]);
 
   return (
     <div className="bg">
@@ -108,189 +106,189 @@ const Dashboard = () => {
             <Heading as="h1" size="xl" color="#FFF" textAlign="center" mr={12}>
               {clubName} {/* Display Club Name */}
             </Heading>
-            <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Membership Number</Text>
+           {/* <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Membership Number</Text>  */} 
           </Flex>
           <Box className="glassbox" padding="6" textAlign="center">
             <Text fontSize="xl" color="white" paddingTop={"48px"}>
-              {userClubId}
+              {clubName}
             </Text>
             <Text fontSize="md" color="white" mt={2}>
-              Club Number: XXXX
+              Club Number: 00{userClubId}
             </Text>
           </Box>
         </Flex>
         <Text fontSize={28} fontWeight={'bold'} textAlign={'center'} mt={4} color={'white'}>Choose your Blockvocates Journey (Journey cannot be changed once picked)</Text>
         <Flex justifyContent="center" mt={7}>
-        <Box
-                className="glassbox"
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end" // Align content at the bottom
-                padding="6"
-                borderRadius="16px"
-                border="1px solid rgba(255, 255, 255, 0.125)"
-                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-                position="relative"
-                cursor={'pointer'}
-                backdropFilter="blur(16px) saturate(180%)"
-                WebkitBackdropFilter="blur(16px) saturate(180%)"
-                width="200px"
-                height="200px"
-                margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Crypto-Trader.png')"
-                backgroundPosition="center"
-                backgroundSize="cover"
-                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
-                _hover={{
-                  transform: "scale(1.05)", // Increase scale on hover
-                }}
-              >
-                <Text
-                  color="white"
-                  fontSize={"lg"}
-                  textAlign="left"
-                  fontWeight={700}
-                  marginBottom="10px"
-                >
-                  Crypto Trader
-                </Text>
-              </Box>
-              <Box
-                className="glassbox"
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end" // Align content at the bottom
-                padding="6"
-                borderRadius="16px"
-                border="1px solid rgba(255, 255, 255, 0.125)"
-                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-                position="relative"
-                backdropFilter="blur(16px) saturate(180%)"
-                WebkitBackdropFilter="blur(16px) saturate(180%)"
-                cursor={'pointer'}
-                width="200px"
-                height="200px"
-                margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Designer.png')"
-                backgroundPosition="center"
-                backgroundSize="cover"
-                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
-                _hover={{
-                  transform: "scale(1.05)", // Increase scale on hover
-                }}
-              >
-                <Text
-                  color="white"
-                  fontSize={"lg"}
-                  fontWeight={700}
-                  textAlign="left"
-                  marginBottom="10px"
-                >
-Designer
-                </Text>
-              </Box>
-              <Box
-                className="glassbox"
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end" // Align content at the bottom
-                padding="6"
-                borderRadius="16px"
-                border="1px solid rgba(255, 255, 255, 0.125)"
-                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-                position="relative"
-                cursor={'pointer'}
-                backdropFilter="blur(16px) saturate(180%)"
-                WebkitBackdropFilter="blur(16px) saturate(180%)"
-                width="200px"
-                height="200px"
-                margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Developer.png')"
-                backgroundPosition="center"
-                backgroundSize="cover"
-                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
-                _hover={{
-                  transform: "scale(1.05)", // Increase scale on hover
-                }}
-              >
-                <Text
-                  color="white"
-                  fontSize={"lg"}
-                  fontWeight={700}
-                  textAlign="left"
-                  marginBottom="10px"
-                >
-                  Developer
-                </Text>
-              </Box>
-              <Box
-                className="glassbox"
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end" // Align content at the bottom
-                padding="6"
-                borderRadius="16px"
-                border="1px solid rgba(255, 255, 255, 0.125)"
-                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-                position="relative"
-                cursor={'pointer'}
-                backdropFilter="blur(16px) saturate(180%)"
-                WebkitBackdropFilter="blur(16px) saturate(180%)"
-                width="200px"
-                height="200px"
-                margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Community.png')"
-                backgroundPosition="center"
-                backgroundSize="cover"
-                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
-                _hover={{
-                  transform: "scale(1.05)", // Increase scale on hover
-                }}
-              >
-                <Text
-                  color="white"
-                  fontSize={"lg"}
-                  fontWeight={700}
-                  textAlign="left"
-                  marginBottom="10px"
-                >
-                  Community
-                </Text>
-              </Box>
-              <Box
-                className="glassbox"
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end" // Align content at the bottom
-                padding="6"
-                borderRadius="16px"
-                border="1px solid rgba(255, 255, 255, 0.125)"
-                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-                position="relative"
-                backdropFilter="blur(16px) saturate(180%)"
-                WebkitBackdropFilter="blur(16px) saturate(180%)"
-                width="200px"
-                height="200px"
-                margin="0 10px"
-                backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Marketing.png')"
-                backgroundPosition="center"
-                backgroundSize="cover"
-                transition="transform 0.3s ease-in-out" // Add transition for smooth effect
-                _hover={{
-                  transform: "scale(1.05)", // Increase scale on hover
-                }}
-                cursor={'pointer'}
-              >
-                <Text
-                  color="white"
-                  fontSize={"lg"}
-                  fontWeight={700}
-                  textAlign="left"
-                  marginBottom="10px"
-                >
-Marketing
-                </Text>
-              </Box>
+          <Box
+            className="glassbox"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end" // Align content at the bottom
+            padding="6"
+            borderRadius="16px"
+            border="1px solid rgba(255, 255, 255, 0.125)"
+            boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+            position="relative"
+            cursor={'pointer'}
+            backdropFilter="blur(16px) saturate(180%)"
+            WebkitBackdropFilter="blur(16px) saturate(180%)"
+            width="200px"
+            height="200px"
+            margin="0 10px"
+            backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Crypto-Trader.png')"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+            _hover={{
+              transform: "scale(1.05)", // Increase scale on hover
+            }}
+          >
+            <Text
+              color="white"
+              fontSize={"lg"}
+              textAlign="left"
+              fontWeight={700}
+              marginBottom="10px"
+            >
+              Crypto Trader
+            </Text>
+          </Box>
+          <Box
+            className="glassbox"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end" // Align content at the bottom
+            padding="6"
+            borderRadius="16px"
+            border="1px solid rgba(255, 255, 255, 0.125)"
+            boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+            position="relative"
+            cursor={'pointer'}
+            backdropFilter="blur(16px) saturate(180%)"
+            WebkitBackdropFilter="blur(16px) saturate(180%)"
+            width="200px"
+            height="200px"
+            margin="0 10px"
+            backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Designer.png')"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+            _hover={{
+              transform: "scale(1.05)", // Increase scale on hover
+            }}
+          >
+            <Text
+              color="white"
+              fontSize={"lg"}
+              fontWeight={700}
+              textAlign="left"
+              marginBottom="10px"
+            >
+              Designer
+            </Text>
+          </Box>
+          <Box
+            className="glassbox"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end" // Align content at the bottom
+            padding="6"
+            borderRadius="16px"
+            border="1px solid rgba(255, 255, 255, 0.125)"
+            boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+            position="relative"
+            cursor={'pointer'}
+            backdropFilter="blur(16px) saturate(180%)"
+            WebkitBackdropFilter="blur(16px) saturate(180%)"
+            width="200px"
+            height="200px"
+            margin="0 10px"
+            backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Developer.png')"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+            _hover={{
+              transform: "scale(1.05)", // Increase scale on hover
+            }}
+          >
+            <Text
+              color="white"
+              fontSize={"lg"}
+              fontWeight={700}
+              textAlign="left"
+              marginBottom="10px"
+            >
+              Developer
+            </Text>
+          </Box>
+          <Box
+            className="glassbox"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end" // Align content at the bottom
+            padding="6"
+            borderRadius="16px"
+            border="1px solid rgba(255, 255, 255, 0.125)"
+            boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+            position="relative"
+            cursor={'pointer'}
+            backdropFilter="blur(16px) saturate(180%)"
+            WebkitBackdropFilter="blur(16px) saturate(180%)"
+            width="200px"
+            height="200px"
+            margin="0 10px"
+            backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Community.png')"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+            _hover={{
+              transform: "scale(1.05)", // Increase scale on hover
+            }}
+          >
+            <Text
+              color="white"
+              fontSize={"lg"}
+              fontWeight={700}
+              textAlign="left"
+              marginBottom="10px"
+            >
+              Community
+            </Text>
+          </Box>
+          <Box
+            className="glassbox"
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end" // Align content at the bottom
+            padding="6"
+            borderRadius="16px"
+            border="1px solid rgba(255, 255, 255, 0.125)"
+            boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+            position="relative"
+            cursor={'pointer'}
+            backdropFilter="blur(16px) saturate(180%)"
+            WebkitBackdropFilter="blur(16px) saturate(180%)"
+            width="200px"
+            height="200px"
+            margin="0 10px"
+            backgroundImage="linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('Marketing.png')"
+            backgroundPosition="center"
+            backgroundSize="cover"
+            transition="transform 0.3s ease-in-out" // Add transition for smooth effect
+            _hover={{
+              transform: "scale(1.05)", // Increase scale on hover
+            }}
+          >
+            <Text
+              color="white"
+              fontSize={"lg"}
+              fontWeight={700}
+              textAlign="left"
+              marginBottom="10px"
+            >
+              Marketing
+            </Text>
+          </Box>
         </Flex>
       </Box>
     </div>

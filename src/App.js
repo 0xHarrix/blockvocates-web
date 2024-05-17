@@ -12,6 +12,7 @@ import ClubSearch from './ClubSearch';
 import PreviewPage from './PreviewPage';
 import ClubLeaderPage from './ClubLeaderPage';
 import CreateClub from './CreateClub';
+import WorkingPage from './WorkingPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path='/PreviewPage' element={<PreviewPage/>}/>
           <Route path='/ClubLeaderPage' element={<ClubLeaderPage/>}/>
           <Route path='/CreateClub' element={<CreateClub/>}/>
+          <Route path='/WorkingPage' element={<WorkingPage/>}/>
         </Routes>
       </Router>
     </ChakraProvider>
