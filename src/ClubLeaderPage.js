@@ -54,7 +54,6 @@ const ClubLeaderPage = () => {
 
   const checkIfClubLeader = async (userId) => {
     try {
-      // Query the clubs collection to find clubs where the user is listed as the club leader
       const querySnapshot = await getDocs(query(collection(db, "clubs"), where("clubLeader", "==", userId)));
 
       // Check if the query returned any clubs
