@@ -43,7 +43,6 @@ const Dashboard = () => {
               );
               const clubSnap = await getDocs(clubDoc);
 
-              console.log(clubSnap);
 
               if (!clubSnap.empty) {
                 const clubData = clubSnap.docs[0].data();
