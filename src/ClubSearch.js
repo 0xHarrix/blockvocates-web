@@ -38,7 +38,7 @@ const ClubSearch = () => {
         const fetchedClubs = querySnapshot.docs.map((doc) => doc.data());
         setClubs(fetchedClubs);
         setLoading(false);
-        console.log(fetchedClubs)
+
       } catch (error) {
         console.error("Error fetching clubs: ", error);
       }
