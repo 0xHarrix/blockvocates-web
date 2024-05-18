@@ -27,7 +27,6 @@ const ClubLeaderPage = () => {
         // Check if the user is a club leader
         const isClubLeader = await checkIfClubLeader(userId);
         if (!isClubLeader) {
-          // If not a club leader, redirect to the home page
           navigate("/");
           return;
         }
