@@ -33,7 +33,6 @@ const Dashboard = () => {
 
             if (!querySnapshot.empty) {
               const userData = querySnapshot.docs[0].data();
-              console.log("User data:", userData);
               setUserName(userData.name);
               setUserClubId(userData.clubMembership.toString());
 
