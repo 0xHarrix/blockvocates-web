@@ -56,7 +56,6 @@ const ClubLeaderPage = () => {
     try {
       const querySnapshot = await getDocs(query(collection(db, "clubs"), where("clubLeader", "==", userId)));
 
-      // Check if the query returned any clubs
       if (!querySnapshot.empty) {
         // If the user is listed as the club leader in at least one club, return true
         return true;
