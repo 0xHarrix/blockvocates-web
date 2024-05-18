@@ -23,7 +23,7 @@ const Dashboard = () => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
           if (user) {
             const currentUserEmail = user.email;
-            console.log("Current user email:", currentUserEmail);
+
 
             const userQuery = query(
               collection(db, "users"),
