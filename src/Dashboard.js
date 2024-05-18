@@ -30,7 +30,6 @@ const Dashboard = () => {
               where("email", "==", currentUserEmail)
             );
             const querySnapshot = await getDocs(userQuery);
-            console.log("Query snapshot:", querySnapshot);
 
             if (!querySnapshot.empty) {
               const userData = querySnapshot.docs[0].data();
