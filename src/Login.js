@@ -42,7 +42,7 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       setError(error.message);
-      console.error('Google sign-in error:', error.message);
+      console.error('Google sign-in error: ', error.message);
     }
   };
 
