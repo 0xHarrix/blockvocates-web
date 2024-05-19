@@ -8,31 +8,31 @@ import { collection, getDocs, query, where, updateDoc, doc } from "firebase/fire
 
 const cards = [
   {
-    id: "crypto-trader",
+    id: "1",
     title: "Crypto Trader",
     description: "Trading in cryptocurrency is substantially different from traditional markets...",
     image: "Crypto-Trader.png",
   },
   {
-    id: "marketing",
+    id: "2",
     title: "Marketing",
     description: "Description of Marketing",
     image: "Marketing.png",
   },
   {
-    id: "community",
+    id: "3",
     title: "Community",
     description: "Description of Community",
     image: "Community.png",
   },
   {
-    id: "developer",
+    id: "4",
     title: "Developer",
     description: "Description of Developer",
     image: "Developer.png",
   },
   {
-    id: "designer",
+    id: "5",
     title: "Designer",
     description: "Description of Designer",
     image: "Designer.png",
