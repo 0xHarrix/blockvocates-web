@@ -41,6 +41,7 @@ const ClubSearch = () => {
 
       } catch (error) {
         console.error("Error fetching clubs: ", error);
+        console.error("Error fetching clubs: ", error);
       }
     };
 
