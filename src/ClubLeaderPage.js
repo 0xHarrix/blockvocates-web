@@ -19,10 +19,10 @@ const ClubLeaderPage = () => {
   const [loading, setLoading] = useState(true); // State to track loading status
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        const user = auth.currentUser;
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
         const userId = user.email;
+        console.log("User :", userId);
 
         // Check if the user is a club leader
         const isClubLeader = await checkIfClubLeader(userId);
@@ -44,12 +44,13 @@ const ClubLeaderPage = () => {
 
         setApplications(fetchedApplications);
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching applications: ", error);
+      } else {
+        navigate('/Login'); // Redirect to login if no user is found
       }
-    };
+    });
 
-    fetchApplications();
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   const checkIfClubLeader = async (userId) => {
