@@ -7,13 +7,15 @@ import theme from './theme';
 import Login from './Login';
 import Signup from './SignUp';
 import Home from './Home';
-import Dashboard from './Dashboard';
+import DashboardOne from './DashboardOne';
 import ClubSearch from './ClubSearch';
 import PreviewPage from './PreviewPage';
 import ClubLeaderPage from './ClubLeaderPage';
 import CreateClub from './CreateClub';
 import WorkingPage from './WorkingPage';
-import DashboardMain from './DashboardMain';
+import DashboardTwo from './DashboardTwo';
+import Dashboard from './Dashboard';
+import MissionCompletionPage from './MissionCompletionPage';
 
 function App() {
   return (
@@ -23,13 +25,15 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Signup' element={<Signup />} />
-          <Route path='/Dashboard' element={<Dashboard />}/>
+          <Route path='/DashboardOne' element={<DashboardOne />}/>
           <Route path='/ClubSearch' element={<ClubSearch/>}/>
           <Route path='/PreviewPage' element={<PreviewPage/>}/>
           <Route path='/ClubLeaderPage' element={<ClubLeaderPage/>}/>
           <Route path='/CreateClub' element={<CreateClub/>}/>
           <Route path='/WorkingPage' element={<WorkingPage/>}/>
-          <Route path='/DashboardMain' element={<DashboardMain/>}/>
+          <Route path='/DashboardTwo' element={<DashboardTwo/>}/>
+          <Route path='/Dashboard' element={<Dashboard/>}/>
+          <Route path='/MissionCompletionPage' element={<MissionCompletionPage/>}/>
         </Routes>
       </Router>
     </ChakraProvider>

@@ -33,7 +33,7 @@ const Signup = () => {
   
       console.log('New user added to Firestore with ID:', newUserRef.id);
   
-      navigate('/');
+      navigate('/Dashboard');
     } catch (error) {
       setError(error.message);
       console.error('Login error:', error.message);
@@ -41,7 +41,7 @@ const Signup = () => {
   };  
 
   const navigateToSignUp = () => {
-    navigate('/');
+    navigate('/Dashboard');
   };
 
   // Function to handle Google sign-in
@@ -71,7 +71,7 @@ const handleGoogleSignIn = async () => {
 
     console.log('New user added to Firestore with ID:', newUserRef.id);
 
-    navigate('/');
+    navigate('/Dashboard');
   } catch (error) {
     setError(error.message);
     console.error('Google sign-in error:', error.message);
