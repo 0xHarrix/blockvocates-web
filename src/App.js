@@ -15,7 +15,7 @@ import CreateClub from './CreateClub';
 import WorkingPage from './WorkingPage';
 import DashboardTwo from './DashboardTwo';
 import Dashboard from './Dashboard';
-import MissionCompletionPage from './MissionCompletionPage';
+import MissionCompletionPage from './MissionCompletion';
 
 function App() {
   return (
