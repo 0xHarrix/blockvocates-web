@@ -6,7 +6,7 @@ import { db } from "./firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import "./styles/Dashboard.css";
-import MissionCompletionPage from "./MissionCompletionPage";
+import MissionCompletion from "./MissionCompletion";
 
 const DashboardTwo = () => {
   const [userName, setUserName] = useState("");
@@ -94,35 +94,36 @@ const DashboardTwo = () => {
           </Flex>
         ) : (
           <div className="fade-in">
-            <Heading as="h1" size="xl" color="#FFF" textAlign="center" mt={10}>
+            <Heading as="h1" size="xl" color="#FFF" textAlign="center" mt={3}>
               Welcome <span style={{ color: "#00BAE2" }}>{userName}!</span>
             </Heading>
           </div>
         )}
 
         <Flex justifyContent="center" alignItems="center" mt={10}>
-          <Box className="glassbox" padding="6" textAlign="center" marginX={4}>
-            <Flex direction="column" alignItems="center">
-              <Text fontSize="xl" color="white" mt={10} textAlign="center">
-                {clubName}
-              </Text>
-              <Text fontSize="md" color="white" mt={2} textAlign="center">
-                Club Number: 00{userClubId}
-              </Text>
-            </Flex>
-          </Box>
+        <Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
+  <Flex direction="column" alignItems="center">
+    <Text fontSize="xl" color="white" mt={6} textAlign="center">
+      {clubName}
+    </Text>
+    <Text fontSize="md" color="white" mt={2} textAlign="center">
+      Club Number: 00{userClubId}
+    </Text>
+  </Flex>
+</Box>
 
-          <Box className="glassbox" padding="6" textAlign="center" marginX={4}>
-            <Flex direction="column" alignItems="center">
-              <Text fontSize="xl" color="white" mt={10} textAlign="center">
-                Trader
-              </Text>
-            </Flex>
-          </Box>
+<Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
+  <Flex direction="column" alignItems="center">
+    <Text fontSize="xl" color="white" mt={6} textAlign="center">
+      Trader
+    </Text>
+  </Flex>
+</Box>
+
         </Flex>
 
-        <Flex justifyContent="center" mt={10}>
-          <MissionCompletionPage />
+        <Flex justifyContent="center" mt={3}>
+          <MissionCompletion />
         </Flex>
       </Box>
     </div>

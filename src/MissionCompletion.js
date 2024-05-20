@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon, TimeIcon } from '@chakra-ui/icons';
 
-const MissionCompletionPage = () => {
+const MissionCompletion = () => {
   const [missions, setMissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pendingMissions, setPendingMissions] = useState([]);
@@ -144,44 +144,48 @@ const MissionCompletionPage = () => {
 
   return (
     <Box padding="30px" textAlign="center">
-      <Heading as="h1" size="lg" color="#FFF" mb={6}>
-        Mission Completion
-      </Heading>
-      <HStack spacing={6} overflowX="auto">
-        {missions.length > 0 ? (
-          missions.map((mission) => (
-            <VStack key={mission.id} spacing={4}>
-              <Box
-                bg="rgba(255, 255, 255, 0.1)"
-                backdropFilter="blur(10px)"
-                p={4}
-                borderRadius="lg"
-                boxShadow="lg"
-                className="glassmorphism-container"
-                minW="200px"
-                maxW="200px"
-                textAlign="left"
-              >
-                <Heading size="sm" color="#FFF">{mission.missionName}</Heading>
-                <Text color="#FFF">{mission.objective}</Text>
-              </Box>
-              <Button
-                leftIcon={pendingMissions.includes(mission.id) ? <TimeIcon /> : <CheckCircleIcon />}
-                colorScheme={pendingMissions.includes(mission.id) ? "yellow" : "teal"}
-                onClick={() => handleCompleteMission(mission.id)}
-                isDisabled={pendingMissions.includes(mission.id)}
-                width="full"
-              >
-                {pendingMissions.includes(mission.id) ? 'Pending' : 'Mark as Complete'}
-              </Button>
-            </VStack>
-          ))
-        ) : (
-          <Text color="white">No missions found.</Text>
-        )}
-      </HStack>
-    </Box>
+    <Heading as="h1" size="lg" color="#FFF" mb={6}>
+      Mission Completion
+    </Heading>
+    <HStack spacing={4} overflowX="auto">
+      {missions.length > 0 ? (
+        missions.map((mission) => (
+          <VStack key={mission.id} spacing={4}>
+            <Box
+              bg="rgba(255, 255, 255, 0.1)"
+              backdropFilter="blur(10px)"
+              p={3} // Decreased padding
+              borderRadius="lg"
+              boxShadow="lg"
+              className="glassmorphism-container"
+              height="120px"
+              width="150px" // Decreased maximum width
+              textAlign="left"
+            >
+              <Heading size="sm" color="#FFF" mb={2}>{mission.missionName}</Heading>
+              <Text color="#FFF" fontSize="sm" noOfLines={2}>{mission.objective}</Text> {/* Show only 2 lines of objective */}
+            </Box>
+            <Button
+              leftIcon={pendingMissions.includes(mission.id) ? <TimeIcon /> : <CheckCircleIcon />}
+              colorScheme={pendingMissions.includes(mission.id) ? "yellow" : "teal"}
+              onClick={() => handleCompleteMission(mission.id)}
+              isDisabled={pendingMissions.includes(mission.id)}
+              width="full"
+              fontSize="sm" 
+              padding="2" 
+            >
+              {pendingMissions.includes(mission.id) ? 'Pending' : 'Mark as Complete'}
+            </Button>
+          </VStack>
+        ))
+      ) : (
+        <Text color="white">No missions found.</Text>
+      )}
+    </HStack>
+  </Box>
+  
+
   );
 };
 
-export default MissionCompletionPage;
+export default MissionCompletion;
