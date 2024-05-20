@@ -1,37 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from './firebaseConfig';
-import { doc, getDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { getDocs, collection, query, where, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-import { Box, Heading, Button, Spinner, Text, Center } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Button,
+  Spinner,
+  Text,
+  Center,
+  HStack,
+  VStack,
+  Flex,
+} from '@chakra-ui/react';
+import { CheckCircleIcon, TimeIcon } from '@chakra-ui/icons';
 
 const MissionCompletionPage = () => {
   const [missions, setMissions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [completedMissions, setCompletedMissions] = useState([]);
+  const [pendingMissions, setPendingMissions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchMissions = async () => {
       try {
         auth.onAuthStateChanged(async (user) => {
           if (user) {
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
-            const userData = userDoc.data();
-            const pathId = userData.pathId;
-            const completedMissions = userData.completedMissions || [];
+            const userQuery = query(collection(db, 'users'), where('email', '==', user.email));
+            const userSnapshot = await getDocs(userQuery);
 
-            setCompletedMissions(completedMissions);
+            if (!userSnapshot.empty) {
+              const userData = userSnapshot.docs[0].data();
+              const pathId = userData.pathId;
 
-            // Fetch missions for the user's selected path
-            const missionsQuery = query(collection(db, 'missions'), where('pathId', '==', pathId));
-            const missionsSnapshot = await getDocs(missionsQuery);
-            const missionsData = missionsSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data()
-            }));
+              // Fetch missions for the user's selected path
+              const missionsQuery = query(collection(db, 'missions'), where('pathId', '==', pathId));
+              const missionsSnapshot = await getDocs(missionsQuery);
+              const missionsData = missionsSnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+              }));
 
-            setMissions(missionsData);
-            setLoading(false);
+              setMissions(missionsData);
+              setLoading(false);
+            } else {
+              console.error('No user found with this email.');
+              setLoading(false);
+            }
           } else {
             navigate('/login'); // Redirect to login if not authenticated
           }
@@ -42,22 +57,78 @@ const MissionCompletionPage = () => {
       }
     };
 
-    fetchUserData();
+    fetchMissions();
   }, [navigate]);
+
+  useEffect(() => {
+    const fetchCompletedAndPendingMissions = async () => {
+      try {
+        auth.onAuthStateChanged(async (user) => {
+          if (user) {
+            const userQuery = query(collection(db, 'users'), where('email', '==', user.email));
+            const userSnapshot = await getDocs(userQuery);
+
+            if (!userSnapshot.empty) {
+              const userEmail = user.email;
+
+              // Fetch pending missions from missionCompletion collection
+              const missionCompletionQuery = query(collection(db, 'missionCompletion'), where('userId', '==', userEmail));
+              const missionCompletionSnapshot = await getDocs(missionCompletionQuery);
+              const pendingMissions = missionCompletionSnapshot.docs
+                .filter(doc => doc.data().missionStatus === 'pending')
+                .map(doc => doc.data().missionId);
+
+              setPendingMissions(pendingMissions);
+            } else {
+              console.error('No user found with this email.');
+            }
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching completed and pending missions:', error);
+      }
+    };
+
+    fetchCompletedAndPendingMissions();
+  }, []);
 
   const handleCompleteMission = async (missionId) => {
     try {
       const user = auth.currentUser;
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDoc = await getDoc(userDocRef);
-      const userData = userDoc.data();
-      const updatedCompletedMissions = [...userData.completedMissions, missionId];
 
-      await updateDoc(userDocRef, {
-        completedMissions: updatedCompletedMissions
-      });
+      // Fetch the club details using clubMembership (clubId)
+      const userQuery = query(collection(db, 'users'), where('email', '==', user.email));
+      const userSnapshot = await getDocs(userQuery);
 
-      setCompletedMissions(updatedCompletedMissions);
+      if (!userSnapshot.empty) {
+        const userData = userSnapshot.docs[0].data();
+        const clubId = userData.clubMembership;
+        const clubQuery = query(collection(db, 'clubs'), where('clubId', '==', clubId));
+        const clubSnapshot = await getDocs(clubQuery);
+
+        if (!clubSnapshot.empty) {
+          const clubData = clubSnapshot.docs[0].data();
+          const clubLeaderEmail = clubData.clubLeader;
+
+          // Add a document to the missionCompletion collection
+          const completionData = {
+            userId: user.email, // Using email as userId
+            missionId: missionId,
+            clubLeader: clubLeaderEmail,
+            missionStatus: 'pending'
+          };
+
+          const docRef = await addDoc(collection(db, 'missionCompletion'), completionData);
+          console.log('Mission completion document added with ID: ', docRef.id);
+
+          // Update UI to show mission as pending
+          setPendingMissions([...pendingMissions, missionId]);
+        } else {
+          console.error('No club found with this clubId:', clubId);
+        }
+      } else {
+        console.error('No user found with this email.');
+      }
     } catch (error) {
       console.error('Error completing mission:', error);
     }
@@ -72,42 +143,43 @@ const MissionCompletionPage = () => {
   }
 
   return (
-    <Box padding="30px" className="glassmorphism-container2">
-      <Heading as="h1" size="lg" color="#FFF" textAlign="center">
+    <Box padding="30px" textAlign="center">
+      <Heading as="h1" size="lg" color="#FFF" mb={6}>
         Mission Completion
       </Heading>
-      <Box mt={6}>
+      <HStack spacing={6} overflowX="auto">
         {missions.length > 0 ? (
           missions.map((mission) => (
-            <Box
-              key={mission.id}
-              bg="rgba(255, 255, 255, 0.05)"
-              p={2}
-              my={2}
-              borderRadius="md"
-            >
-              <Text color="#FFF">Title: {mission.title}</Text>
-              <Text color="#FFF">Description: {mission.description}</Text>
-              {completedMissions.includes(mission.id) ? (
-                <Button colorScheme="teal" isDisabled mt={2} mr={2}>
-                  Completed
-                </Button>
-              ) : (
-                <Button
-                  colorScheme="teal"
-                  onClick={() => handleCompleteMission(mission.id)}
-                  mt={2}
-                  mr={2}
-                >
-                  Mark as Complete
-                </Button>
-              )}
-            </Box>
+            <VStack key={mission.id} spacing={4}>
+              <Box
+                bg="rgba(255, 255, 255, 0.1)"
+                backdropFilter="blur(10px)"
+                p={4}
+                borderRadius="lg"
+                boxShadow="lg"
+                className="glassmorphism-container"
+                minW="200px"
+                maxW="200px"
+                textAlign="left"
+              >
+                <Heading size="sm" color="#FFF">{mission.missionName}</Heading>
+                <Text color="#FFF">{mission.objective}</Text>
+              </Box>
+              <Button
+                leftIcon={pendingMissions.includes(mission.id) ? <TimeIcon /> : <CheckCircleIcon />}
+                colorScheme={pendingMissions.includes(mission.id) ? "yellow" : "teal"}
+                onClick={() => handleCompleteMission(mission.id)}
+                isDisabled={pendingMissions.includes(mission.id)}
+                width="full"
+              >
+                {pendingMissions.includes(mission.id) ? 'Pending' : 'Mark as Complete'}
+              </Button>
+            </VStack>
           ))
         ) : (
           <Text color="white">No missions found.</Text>
         )}
-      </Box>
+      </HStack>
     </Box>
   );
 };

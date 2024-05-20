@@ -6,8 +6,9 @@ import { db } from "./firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import "./styles/Dashboard.css";
+import MissionCompletionPage from "./MissionCompletionPage";
 
-const DashboardOne = () => {
+const DashboardTwo = () => {
   const [userName, setUserName] = useState("");
   const [userClubId, setUserClubId] = useState("");
   const [clubName, setClubName] = useState("");
@@ -88,59 +89,19 @@ const DashboardOne = () => {
       <NavBar />
       <Box>
         {loading ? (
-          <Flex
-            justifyContent="center"
-            alignItems="center"
-            minHeight="100vh"
-            paddingBottom={200}
-          >
+          <Flex justifyContent="center" alignItems="center" minHeight="100vh" paddingBottom={200}>
             <Spinner size="xl" color="blue.500" />
           </Flex>
         ) : (
           <div className="fade-in">
-            <Heading
-              as="h1"
-              size="xl"
-              color="#FFF"
-              paddingLeft={"300px"}
-              mt={10}
-            >
-              Welcome{" "}
-              <span style={{ color: "#00BAE2" }}>{userName} !</span>
+            <Heading as="h1" size="xl" color="#FFF" textAlign="center" mt={10}>
+              Welcome <span style={{ color: "#00BAE2" }}>{userName}!</span>
             </Heading>
           </div>
         )}
 
-        <Flex justifyContent="flex-start" alignItems="flex-start" mt={2} ml={70}>
-          <Flex direction="column" mr={12}>
-            <Text
-              fontSize={28}
-              fontWeight="bold"
-              textAlign="left"
-              color="white"
-              pl={200}
-              ml={8}
-              mb={1}
-            >
-              You're a member of
-            </Text>
-            <Text
-              fontSize={28}
-              fontWeight="bold"
-              textAlign="left"
-              color="white"
-              pl={810}
-              ml={8}
-              mt={-10}
-              mb={1}
-            >
-              Your Choosen Journey
-            </Text>
-          </Flex>
-        </Flex>
-
-        <Flex justifyContent="space-between" ml={270} mt={4}>
-          <Box className="glassbox" padding="6" textAlign="center">
+        <Flex justifyContent="center" alignItems="center" mt={10}>
+          <Box className="glassbox" padding="6" textAlign="center" marginX={4}>
             <Flex direction="column" alignItems="center">
               <Text fontSize="xl" color="white" mt={10} textAlign="center">
                 {clubName}
@@ -151,133 +112,21 @@ const DashboardOne = () => {
             </Flex>
           </Box>
 
-
-
-
-          <Box className="glassbox" padding="6" textAlign="center" mr={300}>
-  <Flex direction="column" alignItems="center">
-    <Text fontSize="xl" color="white" mt={12} textAlign="center">
-      Trader
-    </Text>
-  </Flex>
-</Box>
-
+          <Box className="glassbox" padding="6" textAlign="center" marginX={4}>
+            <Flex direction="column" alignItems="center">
+              <Text fontSize="xl" color="white" mt={10} textAlign="center">
+                Trader
+              </Text>
+            </Flex>
+          </Box>
         </Flex>
-        <Text
-          fontSize={24}
-          fontWeight="bold"
-          textAlign="left"
-          color="white"
-          pl={270}
-          mt={3}
-          ml={8}
-          mb={1}
-        >
-          Membership #
-        </Text>
-        <Text
-          fontSize={35}
-          fontWeight="bold"
-          textAlign="left"
-          color="white"
-          pl={270}
-          mt={1}
-          ml={8}
-          mb={1}
-        >
-          Misson Progress
-        </Text>
-        
-        <Flex justifyContent="center" mt={1} pr={600}>
-  <Box
-    width="102px"
-    height="102px"
-    backgroundColor="rgba(255, 255, 255, 0.1)"
-    border="1px solid rgba(255, 255, 255, 0.2)"
-    display="flex"
-    flexDirection="column"
-    justifyContent="center"
-    alignItems="center"
-    fontSize="md"
-    margin="10px"
-    borderRadius="8px"
-    boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-    color="white"
-    transition="transform 0.2s, box-shadow 0.2s"
-    _hover={{
-      transform: "translateY(-5px)",
-      boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
-    }}
-  >
-    <Text fontWeight="bold">M1</Text>
-    {/* Content for first box */}
-  </Box>
 
-  <Box
-    width="102px"
-    height="102px"
-    backgroundColor="rgba(255, 255, 255, 0.1)"
-    border="1px solid rgba(255, 255, 255, 0.2)"
-    display="flex"
-    flexDirection="column"
-    justifyContent="center"
-    alignItems="center"
-    fontSize="md"
-    margin="10px"
-    borderRadius="8px"
-    boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-    color="white"
-    transition="transform 0.2s, box-shadow 0.2s"
-    _hover={{
-      transform: "translateY(-5px)",
-      boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
-    }}
-  >
-    <Text fontWeight="bold">M2</Text>
-    <Text fontWeight="bold">Locked</Text>
-    {/* Content for second box */}
-  </Box>
-
-  <Box
-    width="102px"
-    height="102px"
-    backgroundColor="rgba(255, 255, 255, 0.1)"
-    border="1px solid rgba(255, 255, 255, 0.2)"
-    display="flex"
-    flexDirection="column"
-    justifyContent="center"
-    alignItems="center"
-    fontSize="md"
-    margin="10px"
-    borderRadius="8px"
-    boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-    color="white"
-    transition="transform 0.2s, box-shadow 0.2s"
-    _hover={{
-      transform: "translateY(-5px)",
-      boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
-    }}
-  >
-    <Text fontWeight="bold">M3</Text>
-    <Text fontWeight="bold">Locked</Text>
-    {/* Content for third box */}
-  </Box>
-</Flex>
-  <Button
-    bg="blue.400"
-    color="white"
-    borderRadius="8px"
-    left={295}
-
-  >
-    Start
-  </Button>
-
-    
+        <Flex justifyContent="center" mt={10}>
+          <MissionCompletionPage />
+        </Flex>
       </Box>
-      
     </div>
   );
 };
 
-export default DashboardOne;
+export default DashboardTwo;
