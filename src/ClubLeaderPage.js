@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ClubMemberCard from "./components/ClubMemberCard";
+import MissionVerification from "./MissionVerification";
 
 const ClubLeaderPage = () => {
   const navigate = useNavigate();
@@ -232,7 +233,7 @@ const ClubLeaderPage = () => {
             <Text color="white">No members found for the club.</Text>
           )}
         </Box>
-
+<MissionVerification/>
         <Box
           flex="2"
           padding={"30px"}
@@ -240,7 +241,7 @@ const ClubLeaderPage = () => {
           marginRight={20}
         >
           <Heading as="h1" size="lg" color="#FFF" textAlign="center">
-            Club Leader Dashboard
+            Club Requests
           </Heading>
           {/* Display Spinner while loading */}
           {loading && (
