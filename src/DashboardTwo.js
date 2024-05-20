@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import { Box, Heading, Flex, Text, Spinner, useToast } from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Spinner, useToast, Button } from "@chakra-ui/react";
 import { db } from "./firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
@@ -24,7 +24,6 @@ const DashboardOne = () => {
           if (user) {
             const currentUserEmail = user.email;
 
-
             const userQuery = query(
               collection(db, "users"),
               where("email", "==", currentUserEmail)
@@ -42,7 +41,6 @@ const DashboardOne = () => {
                 where("clubId", "==", userData.clubMembership)
               );
               const clubSnap = await getDocs(clubDoc);
-
 
               if (!clubSnap.empty) {
                 const clubData = clubSnap.docs[0].data();
@@ -104,79 +102,180 @@ const DashboardOne = () => {
               as="h1"
               size="xl"
               color="#FFF"
-              paddingLeft={"100px"}
-              mt={-4}
+              paddingLeft={"300px"}
+              mt={10}
             >
-              Welcome <span style={{ color: "#00BAE2" }}>{userName} !</span>
+              Welcome{" "}
+              <span style={{ color: "#00BAE2" }}>{userName} !</span>
             </Heading>
           </div>
         )}
-        <Flex justifyContent="center" alignItems="center" mt={6}>
-          <Flex direction={"column"}>
-            <Heading as="h2" size="xl" color="#FFF" textAlign="center" mr={12}>
-              You're a member of
-            </Heading>
-            <Heading as="h1" size="xl" color="#FFF" textAlign="center" mr={12}>
-              {clubName} {/* Display Club Name */}
-            </Heading>
+
+        <Flex justifyContent="flex-start" alignItems="flex-start" mt={2} ml={70}>
+          <Flex direction="column" mr={12}>
             <Text
               fontSize={28}
-              fontWeight={"bold"}
-              textAlign={"center"}
-              mt={4}
-              color={"white"}
+              fontWeight="bold"
+              textAlign="left"
+              color="white"
+              pl={200}
+              ml={8}
+              mb={1}
             >
-              Membership Number
+              You're a member of
+            </Text>
+            <Text
+              fontSize={28}
+              fontWeight="bold"
+              textAlign="left"
+              color="white"
+              pl={810}
+              ml={8}
+              mt={-10}
+              mb={1}
+            >
+              Your Choosen Journey
             </Text>
           </Flex>
+        </Flex>
+
+        <Flex justifyContent="space-between" ml={270} mt={4}>
           <Box className="glassbox" padding="6" textAlign="center">
-            <Text fontSize="xl" color="white" paddingTop={"48px"}>
-              {clubName}
-            </Text>
-            <Text fontSize="md" color="white" mt={2}>
-              Club Number: 00{userClubId}
-            </Text>
-          </Box>
-        </Flex>
-       
-        <Flex justifyContent="center" mt={7}>
-          {["Crypto Trader", "Designer", "Developer", "Community", "Marketing"].map((role, index) => (
-            <Box
-              key={index}
-              className="glassbox"
-              display="flex"
-              flexDirection="column"
-              justifyContent="flex-end"
-              padding="6"
-              borderRadius="16px"
-              border="1px solid rgba(255, 255, 255, 0.125)"
-              boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-              position="relative"
-              cursor="pointer"
-              backdropFilter="blur(16px) saturate(180%)"
-              WebkitBackdropFilter="blur(16px) saturate(180%)"
-              width="200px"
-              height="200px"
-              margin="0 10px"
-              backgroundImage={`linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('${role.replace(" ", "-")}.png')`}
-              backgroundPosition="center"
-              backgroundSize="cover"
-              transition="transform 0.3s ease-in-out"
-              _hover={{ transform: "scale(1.05)" }}
-            >
-              <Text
-                color="white"
-                fontSize={"lg"}
-                textAlign="center"
-                fontWeight={700}
-                marginBottom="-14px"
-              >
-                {role}
+            <Flex direction="column" alignItems="center">
+              <Text fontSize="xl" color="white" mt={10} textAlign="center">
+                {clubName}
               </Text>
-            </Box>
-          ))}
+              <Text fontSize="md" color="white" mt={2} textAlign="center">
+                Club Number: 00{userClubId}
+              </Text>
+            </Flex>
+          </Box>
+
+
+
+
+          <Box className="glassbox" padding="6" textAlign="center" mr={300}>
+  <Flex direction="column" alignItems="center">
+    <Text fontSize="xl" color="white" mt={12} textAlign="center">
+      Trader
+    </Text>
+  </Flex>
+</Box>
+
         </Flex>
+        <Text
+          fontSize={24}
+          fontWeight="bold"
+          textAlign="left"
+          color="white"
+          pl={270}
+          mt={3}
+          ml={8}
+          mb={1}
+        >
+          Membership #
+        </Text>
+        <Text
+          fontSize={35}
+          fontWeight="bold"
+          textAlign="left"
+          color="white"
+          pl={270}
+          mt={1}
+          ml={8}
+          mb={1}
+        >
+          Misson Progress
+        </Text>
+        
+        <Flex justifyContent="center" mt={1} pr={600}>
+  <Box
+    width="102px"
+    height="102px"
+    backgroundColor="rgba(255, 255, 255, 0.1)"
+    border="1px solid rgba(255, 255, 255, 0.2)"
+    display="flex"
+    flexDirection="column"
+    justifyContent="center"
+    alignItems="center"
+    fontSize="md"
+    margin="10px"
+    borderRadius="8px"
+    boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+    color="white"
+    transition="transform 0.2s, box-shadow 0.2s"
+    _hover={{
+      transform: "translateY(-5px)",
+      boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+    }}
+  >
+    <Text fontWeight="bold">M1</Text>
+    {/* Content for first box */}
+  </Box>
+
+  <Box
+    width="102px"
+    height="102px"
+    backgroundColor="rgba(255, 255, 255, 0.1)"
+    border="1px solid rgba(255, 255, 255, 0.2)"
+    display="flex"
+    flexDirection="column"
+    justifyContent="center"
+    alignItems="center"
+    fontSize="md"
+    margin="10px"
+    borderRadius="8px"
+    boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+    color="white"
+    transition="transform 0.2s, box-shadow 0.2s"
+    _hover={{
+      transform: "translateY(-5px)",
+      boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+    }}
+  >
+    <Text fontWeight="bold">M2</Text>
+    <Text fontWeight="bold">Locked</Text>
+    {/* Content for second box */}
+  </Box>
+
+  <Box
+    width="102px"
+    height="102px"
+    backgroundColor="rgba(255, 255, 255, 0.1)"
+    border="1px solid rgba(255, 255, 255, 0.2)"
+    display="flex"
+    flexDirection="column"
+    justifyContent="center"
+    alignItems="center"
+    fontSize="md"
+    margin="10px"
+    borderRadius="8px"
+    boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+    color="white"
+    transition="transform 0.2s, box-shadow 0.2s"
+    _hover={{
+      transform: "translateY(-5px)",
+      boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+    }}
+  >
+    <Text fontWeight="bold">M3</Text>
+    <Text fontWeight="bold">Locked</Text>
+    {/* Content for third box */}
+  </Box>
+</Flex>
+  <Button
+    bg="blue.400"
+    color="white"
+    borderRadius="8px"
+    left={295}
+
+  >
+    Start
+  </Button>
+
+    
       </Box>
+      
     </div>
   );
 };
