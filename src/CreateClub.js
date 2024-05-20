@@ -24,6 +24,7 @@ const CreateClub = () => {
   const [days, setDays] = useState("");
   const [meetingTime, setMeetingTime] = useState("");
   const [clubType, setClubType] = useState("");
+  const [meetingLink, setMeetingLink] = useState("");
   const [loading, setLoading] = useState(false);
 
 
@@ -52,6 +53,7 @@ const CreateClub = () => {
         location: location,
         meetingTime: meetingTime,
         meetingDays: days,
+        meetingLink: meetingLink,
       });
 
       console.log("Club created successfully.");
@@ -171,7 +173,7 @@ const CreateClub = () => {
             </Grid>
           </RadioGroup>
         </Box>
-        <Box mt={5}>
+        <Box mt={2}>
           <RadioGroup colorScheme="teal" mt={0}>
             <Flex direction={"column"}>
               <Radio
@@ -219,6 +221,28 @@ const CreateClub = () => {
             <option value="online">Online</option>
             <option value="inperson">In-person</option>
           </Select>
+        </Box>
+        <Box mt={2}>
+          <Input
+            placeholder="Meeting Link"
+            value={meetingLink}
+            onChange={(e) => setLocation(e.target.value)}
+            
+            variant="outline"
+            color="#FFF"
+            bg="rgba(255, 255, 255, 0.05)"
+            border="1px solid rgba(255, 255, 255, 0.1)"
+            _placeholder={{ color: "#FFF" }}
+            _hover={{ borderColor: "#00BAE2" }}
+            _focus={{
+              borderColor: "#00BAE2",
+              boxShadow: "0 0 0 1px #00BAE2",
+            }}
+            borderRadius="8px"
+            py={3}
+            px={4}
+            width="100%"
+          />
         </Box>
         <Flex justify="center">
           <Button
