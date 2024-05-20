@@ -138,16 +138,7 @@ const DashboardOne = () => {
             </Text>
           </Box>
         </Flex>
-        <Text
-          fontSize={28}
-          fontWeight={"bold"}
-          textAlign={"center"}
-          mt={4}
-          color={"white"}
-        >
-          Choose your Blockvocates Journey (Journey cannot be changed once
-          picked)
-        </Text>
+       
         <Flex justifyContent="center" mt={7}>
           {["Crypto Trader", "Designer", "Developer", "Community", "Marketing"].map((role, index) => (
             <Box

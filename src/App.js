@@ -15,6 +15,7 @@ import CreateClub from './CreateClub';
 import WorkingPage from './WorkingPage';
 import DashboardTwo from './DashboardTwo';
 import Dashboard from './Dashboard';
+import MissionCompletionPage from './MissionCompletionPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path='/WorkingPage' element={<WorkingPage/>}/>
           <Route path='/DashboardTwo' element={<DashboardTwo/>}/>
           <Route path='/Dashboard' element={<Dashboard/>}/>
+          <Route path='/MissionCompletionPage' element={<MissionCompletionPage/>}/>
         </Routes>
       </Router>
     </ChakraProvider>
