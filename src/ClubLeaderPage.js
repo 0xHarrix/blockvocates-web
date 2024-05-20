@@ -18,10 +18,9 @@ import {
   Spinner,
   Text,
   Center,
-  Card,
-  CardBody,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import ClubMemberCard from "./components/ClubMemberCard";
 
 const ClubLeaderPage = () => {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ const ClubLeaderPage = () => {
   const [loading, setLoading] = useState(true); // State to track loading status
   const [clubMembers, setClubMembers] = useState([]);
   const [details, setDetails] = useState([]); // State to store club members
-  const [clubName, setClubName] = useState('');
+  const [clubName, setClubName] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -75,41 +74,50 @@ const ClubLeaderPage = () => {
   const fetchClubMembers = async (userId) => {
     try {
       // Step 1: Query the clubs collection to get the club data for the current user as club leader
-      const clubsQuerySnapshot = await getDocs(query(collection(db, 'clubs'), where('clubLeader', '==', userId)));
-  
+      const clubsQuerySnapshot = await getDocs(
+        query(collection(db, "clubs"), where("clubLeader", "==", userId))
+      );
+
       if (clubsQuerySnapshot.empty) {
         console.log("No club found for the current user.");
         return;
       }
-  
+
       // Assuming there is only one document for the user in the clubs collection
       const clubData = clubsQuerySnapshot.docs[0].data();
       const clubName = clubData.clubName; // Assuming the club name field is 'clubName'
       setClubName(clubName);
-  
+
       // Step 2: Use the clubId from clubData to query the clubMembers collection
-      const clubMembersQuerySnapshot = await getDocs(query(collection(db, 'clubMembers'), where('clubId', '==', clubData.clubId)));
-  
+      const clubMembersQuerySnapshot = await getDocs(
+        query(
+          collection(db, "clubMembers"),
+          where("clubId", "==", clubData.clubId)
+        )
+      );
+
       if (clubMembersQuerySnapshot.empty) {
         console.log("No members found for the club.");
         return;
       }
-  
+
       // Step 3: Extract and set the club members data
-      const members = clubMembersQuerySnapshot.docs.map(doc => doc.data());
+      const members = clubMembersQuerySnapshot.docs.map((doc) => doc.data());
       setClubMembers(members);
       console.log(members);
-  
+
       // Step 4: Fetch and set user details for each member
-      members.forEach(async member => {
-        const userQuerySnapshot = await getDocs(query(collection(db, "users"), where("email", "==", member.userId)));
-  
+      members.forEach(async (member) => {
+        const userQuerySnapshot = await getDocs(
+          query(collection(db, "users"), where("email", "==", member.userId))
+        );
+
         if (!userQuerySnapshot.empty) {
           const userDoc = userQuerySnapshot.docs[0].data();
           console.log(userDoc);
-  
+
           // Update the details state for each member (you may need to modify this based on your card rendering logic)
-          setDetails(prevDetails => [...prevDetails, userDoc]);
+          setDetails((prevDetails) => [...prevDetails, userDoc]);
         } else {
           console.error("No user document found with email:", member.userId);
         }
@@ -118,8 +126,6 @@ const ClubLeaderPage = () => {
       console.error("Error fetching Club Members:", error);
     }
   };
-  
-  
 
   const checkIfClubLeader = async (userId) => {
     try {
@@ -213,38 +219,18 @@ const ClubLeaderPage = () => {
           display={"flex"}
           flexDirection={"row"}
         >
-{clubMembers.length > 0 ? (
-  clubMembers.map((member, index) => (
-    <Card
-      key={index}
-      mt={4}
-      borderRadius="md"
-      boxShadow="md"
-      marginRight={5}
-      className="clubMemberCard"
-      width={200}
-      height={270}
-      color={"white"}
-      bg={
-        "linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));"
-      }
-      textAlign={'center'}
-    >
-      <CardBody>
-        {/* Displaying the user's name from userDoc */}
-        {details[index] && (
-          <>
-            <Text>User Name: {details[index].name}</Text>
-            <br/>
-            <Text>Club Name: {clubName}</Text>
-          </>
-        )}
-      </CardBody>
-    </Card>
-  ))
-) : (
-  <Text color="white">No members found for the club.</Text>
-)}
+          {clubMembers.length > 0 ? (
+            clubMembers.map((member, index) => (
+              <ClubMemberCard
+                key={index}
+                member={member}
+                details={details[index]}
+                clubName={clubName}
+              />
+            ))
+          ) : (
+            <Text color="white">No members found for the club.</Text>
+          )}
         </Box>
 
         <Box
