@@ -53,36 +53,45 @@ const modules = [
 function PreviewPage() {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [authInitializing, setAuthInitializing] = useState(true);
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const user = auth.currentUser;
-        if (!user) return;
-
-        const userId = user.email;
-        console.log("User:", userId);
-
-        const usersCollection = collection(db, "users");
-        const q = query(usersCollection, where("email", "==", userId));
-        const querySnapshot = await getDocs(q);
-
-        if (!querySnapshot.empty) {
-          const userDoc = querySnapshot.docs[0];
-          setUserData({ id: userDoc.id, ...userDoc.data() });
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        console.log("User logged in:", user.email);
+        await fetchUserData(user.email);
+      } else {
+        console.log("No user logged in");
         setLoading(false);
       }
-    };
+      setAuthInitializing(false);
+    });
 
-    fetchUserData();
+    return () => unsubscribe();
   }, []);
+
+  const fetchUserData = async (email) => {
+    try {
+      const usersCollection = collection(db, "users");
+      const q = query(usersCollection, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        setUserData({ id: userDoc.id, ...userDoc.data() });
+        console.log("User Data:", { id: userDoc.id, ...userDoc.data() });
+      } else {
+        console.log("User data not found in Firestore");
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setLoading(false);
+    }
+  };
 
   const handleSelectPath = async (cardPathId) => {
     try {
@@ -90,6 +99,7 @@ function PreviewPage() {
 
       if (!userData) {
         console.error("User data not found.");
+        setLoading(false);
         return;
       }
 
@@ -98,7 +108,7 @@ function PreviewPage() {
       });
 
       console.log("Path selected successfully.");
-      navigate("/DashboardMain");
+      navigate("/Dashboardtwo");
     } catch (error) {
       console.error("Error selecting path:", error);
       setLoading(false);
@@ -106,6 +116,10 @@ function PreviewPage() {
       setLoading(false);
     }
   };
+
+  if (authInitializing) {
+    return <Spinner />;
+  }
 
   return (
     <div className="bg">
@@ -161,56 +175,55 @@ function PreviewPage() {
       </Flex>
       {hoveredCard !== null && (
         <Box
-  className="description-card"
-  position="absolute"
-  marginTop={50}
-  left="50%"
-  transform="translateX(-50%)"
-  width="1000px"
-  padding="10px"
-  borderRadius="8px"
-  backgroundColor="rgba(255, 255, 255, 0.05)"
-  color="white"
-  zIndex="999"
-  style={{ opacity: 1, pointerEvents: "none" }}
-  textAlign="center" // Center align the description heading
->
-  <Text fontSize="xl" fontWeight="bold" marginBottom="10px">
-    {cards[hoveredCard].title} Description
-  </Text>
-  <Text>{cards[hoveredCard].description}</Text>
-  <Flex flexWrap="wrap" justifyContent="center" mt={7}>
-    {modules.map((module, index) => (
-      <Box
-        key={index}
-        width="102px"
-        height="102px"
-        backgroundColor="rgba(255, 255, 255, 0.1)"
-        border="1px solid rgba(255, 255, 255, 0.2)"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="md"
-        margin="10px"
-        borderRadius="8px"
-        boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-        color="white"
-        transition="transform 0.2s, box-shadow 0.2s"
-        _hover={{
-          transform: "translateY(-5px)",
-          boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <Text fontWeight="bold" marginBottom="5px">
-          {module.split(":")[0]}
-        </Text>
-        <Text textAlign="center">{module.split(":")[1]}</Text>
-      </Box>
-    ))}
-  </Flex>
-</Box>
-
+          className="description-card"
+          position="absolute"
+          marginTop={50}
+          left="50%"
+          transform="translateX(-50%)"
+          width="1000px"
+          padding="10px"
+          borderRadius="8px"
+          backgroundColor="rgba(255, 255, 255, 0.05)"
+          color="white"
+          zIndex="999"
+          style={{ opacity: 1, pointerEvents: "none" }}
+          textAlign="center"
+        >
+          <Text fontSize="xl" fontWeight="bold" marginBottom="10px">
+            {cards[hoveredCard].title} Description
+          </Text>
+          <Text>{cards[hoveredCard].description}</Text>
+          <Flex flexWrap="wrap" justifyContent="center" mt={7}>
+            {modules.map((module, index) => (
+              <Box
+                key={index}
+                width="102px"
+                height="102px"
+                backgroundColor="rgba(255, 255, 255, 0.1)"
+                border="1px solid rgba(255, 255, 255, 0.2)"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                fontSize="md"
+                margin="10px"
+                borderRadius="8px"
+                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+                color="white"
+                transition="transform 0.2s, box-shadow 0.2s"
+                _hover={{
+                  transform: "translateY(-5px)",
+                  boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <Text fontWeight="bold" marginBottom="5px">
+                  {module.split(":")[0]}
+                </Text>
+                <Text textAlign="center">{module.split(":")[1]}</Text>
+              </Box>
+            ))}
+          </Flex>
+        </Box>
       )}
       {loading && <Spinner />}
     </div>

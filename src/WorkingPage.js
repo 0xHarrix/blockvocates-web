@@ -72,6 +72,7 @@ function WorkingPage() {
         if (!querySnapshot.empty) {
           const userDoc = querySnapshot.docs[0];
           setUserData({ id: userDoc.id, ...userDoc.data() });
+          console.log(userData)
         }
 
         setLoading(false);
