@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import { Box, Heading, Flex, Text, Spinner, useToast, Button } from "@chakra-ui/react";
+import { Box, Heading, Flex, Text, Spinner, useToast } from "@chakra-ui/react";
 import { db } from "./firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
@@ -12,7 +12,10 @@ const DashboardTwo = () => {
   const [userName, setUserName] = useState("");
   const [userClubId, setUserClubId] = useState("");
   const [clubName, setClubName] = useState("");
+  const [userPathId, setUserPathId] = useState("");
+  const [pathName, setPathName] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadingPathName, setLoadingPathName] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState(true);
   const auth = getAuth();
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ const DashboardTwo = () => {
               const userData = querySnapshot.docs[0].data();
               setUserName(userData.name);
               setUserClubId(userData.clubMembership.toString());
-
+              setUserPathId(userData.pathId);
               const clubsCollection = collection(db, "clubs");
               const clubDoc = query(
                 clubsCollection,
@@ -84,6 +87,34 @@ const DashboardTwo = () => {
     }
   }, [userLoggedIn, navigate, toast]);
 
+  useEffect(() => {
+    const fetchPathName = async () => {
+      try {
+        if (userClubId) {
+          setLoadingPathName(true);
+          console.log("Path Id : ",userPathId);
+          const pathsCollection = collection(db, "paths");
+          const pathDoc = query(pathsCollection, where("pathId", "==", userPathId));
+          const pathSnap = await getDocs(pathDoc);
+
+          if (!pathSnap.empty) {
+            const pathData = pathSnap.docs[0].data();
+            setPathName(pathData.pathName);
+          } else {
+            console.log("No such path!");
+          }
+
+          setLoadingPathName(false);
+        }
+      } catch (error) {
+        console.error("Error fetching path name:", error);
+        setLoadingPathName(false);
+      }
+    };
+
+    fetchPathName();
+  }, [userClubId]);
+
   return (
     <div className="bg">
       <NavBar />
@@ -101,25 +132,28 @@ const DashboardTwo = () => {
         )}
 
         <Flex justifyContent="center" alignItems="center" mt={10}>
-        <Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
-  <Flex direction="column" alignItems="center">
-    <Text fontSize="xl" color="white" mt={6} textAlign="center">
-      {clubName}
-    </Text>
-    <Text fontSize="md" color="white" mt={2} textAlign="center">
-      Club Number: 00{userClubId}
-    </Text>
-  </Flex>
-</Box>
+          <Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
+            <Flex direction="column" alignItems="center">
+              <Text fontSize="xl" color="white" mt={6} textAlign="center">
+                {clubName}
+              </Text>
+              <Text fontSize="md" color="white" mt={2} textAlign="center">
+                Club Number: 00{userClubId}
+              </Text>
+            </Flex>
+          </Box>
 
-<Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
-  <Flex direction="column" alignItems="center">
-    <Text fontSize="xl" color="white" mt={6} textAlign="center">
-      Trader
-    </Text>
-  </Flex>
-</Box>
-
+          {loadingPathName ? (
+            <Spinner size="sm" color="blue.500" />
+          ) : (
+            <Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
+              <Flex direction="column" alignItems="center">
+                <Text fontSize="xl" color="white" mt={6} textAlign="center">
+                  {pathName}
+                </Text>
+              </Flex>
+            </Box>
+          )}
         </Flex>
 
         <Flex justifyContent="center" mt={3}>
