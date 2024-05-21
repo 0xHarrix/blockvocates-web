@@ -11,14 +11,13 @@ import {
   Center,
   HStack,
   VStack,
-  Flex,
 } from '@chakra-ui/react';
-import { CheckCircleIcon, TimeIcon } from '@chakra-ui/icons';
+import { CheckCircleIcon, TimeIcon, CheckIcon } from '@chakra-ui/icons';
 
 const MissionCompletion = () => {
   const [missions, setMissions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [pendingMissions, setPendingMissions] = useState([]);
+  const [missionStatusMap, setMissionStatusMap] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,35 +60,30 @@ const MissionCompletion = () => {
   }, [navigate]);
 
   useEffect(() => {
-    const fetchCompletedAndPendingMissions = async () => {
+    const fetchMissionStatus = async () => {
       try {
         auth.onAuthStateChanged(async (user) => {
           if (user) {
-            const userQuery = query(collection(db, 'users'), where('email', '==', user.email));
-            const userSnapshot = await getDocs(userQuery);
+            const missionStatusMap = {};
 
-            if (!userSnapshot.empty) {
-              const userEmail = user.email;
+            // Fetch missionCompletion documents for the current user
+            const missionCompletionQuery = query(collection(db, 'missionCompletion'), where('userId', '==', user.email));
+            const missionCompletionSnapshot = await getDocs(missionCompletionQuery);
 
-              // Fetch pending missions from missionCompletion collection
-              const missionCompletionQuery = query(collection(db, 'missionCompletion'), where('userId', '==', userEmail));
-              const missionCompletionSnapshot = await getDocs(missionCompletionQuery);
-              const pendingMissions = missionCompletionSnapshot.docs
-                .filter(doc => doc.data().missionStatus === 'pending')
-                .map(doc => doc.data().missionId);
+            missionCompletionSnapshot.docs.forEach((doc) => {
+              const data = doc.data();
+              missionStatusMap[data.missionId] = data.missionStatus;
+            });
 
-              setPendingMissions(pendingMissions);
-            } else {
-              console.error('No user found with this email.');
-            }
+            setMissionStatusMap(missionStatusMap);
           }
         });
       } catch (error) {
-        console.error('Error fetching completed and pending missions:', error);
+        console.error('Error fetching mission status:', error);
       }
     };
 
-    fetchCompletedAndPendingMissions();
+    fetchMissionStatus();
   }, []);
 
   const handleCompleteMission = async (missionId) => {
@@ -121,8 +115,11 @@ const MissionCompletion = () => {
           const docRef = await addDoc(collection(db, 'missionCompletion'), completionData);
           console.log('Mission completion document added with ID: ', docRef.id);
 
-          // Update UI to show mission as pending
-          setPendingMissions([...pendingMissions, missionId]);
+          // Update the missionStatusMap state
+          setMissionStatusMap((prevStatusMap) => ({
+            ...prevStatusMap,
+            [missionId]: 'pending'
+          }));
         } else {
           console.error('No club found with this clubId:', clubId);
         }
@@ -144,47 +141,57 @@ const MissionCompletion = () => {
 
   return (
     <Box padding="30px" textAlign="center">
-    <Heading as="h1" size="lg" color="#FFF" mb={6}>
-      Mission Completion
-    </Heading>
-    <HStack spacing={4} overflowX="auto">
-      {missions.length > 0 ? (
-        missions.map((mission) => (
-          <VStack key={mission.id} spacing={4}>
-            <Box
-              bg="rgba(255, 255, 255, 0.1)"
-              backdropFilter="blur(10px)"
-              p={3} // Decreased padding
-              borderRadius="lg"
-              boxShadow="lg"
-              className="glassmorphism-container"
-              height="120px"
-              width="150px" // Decreased maximum width
-              textAlign="left"
-            >
-              <Heading size="sm" color="#FFF" mb={2}>{mission.missionName}</Heading>
-              <Text color="#FFF" fontSize="sm" noOfLines={2}>{mission.objective}</Text> {/* Show only 2 lines of objective */}
-            </Box>
-            <Button
-              leftIcon={pendingMissions.includes(mission.id) ? <TimeIcon /> : <CheckCircleIcon />}
-              colorScheme={pendingMissions.includes(mission.id) ? "yellow" : "teal"}
-              onClick={() => handleCompleteMission(mission.id)}
-              isDisabled={pendingMissions.includes(mission.id)}
-              width="full"
-              fontSize="sm" 
-              padding="2" 
-            >
-              {pendingMissions.includes(mission.id) ? 'Pending' : 'Mark as Complete'}
-            </Button>
-          </VStack>
-        ))
-      ) : (
-        <Text color="white">No missions found.</Text>
-      )}
-    </HStack>
-  </Box>
-  
-
+      <Heading as="h1" size="lg" color="#FFF" mb={6}>
+        Mission Completion
+      </Heading>
+      <HStack spacing={4} overflowX="auto">
+        {missions.length > 0 ? (
+          missions.map((mission) => (
+            <VStack key={mission.id} spacing={4}>
+              <Box
+                bg="rgba(255, 255, 255, 0.1)"
+                backdropFilter="blur(10px)"
+                p={3} // Decreased padding
+                borderRadius="lg"
+                boxShadow="lg"
+                className="glassmorphism-container"
+                height="120px"
+                width="150px" // Decreased maximum width
+                textAlign="left"
+              >
+                <Heading size="sm" color="#FFF" mb={2}>{mission.missionName}</Heading>
+                <Text color="#FFF" fontSize="sm" noOfLines={2}>{mission.objective}</Text> {/* Show only 2 lines of objective */}
+              </Box>
+              <Button
+                leftIcon={
+                  missionStatusMap[mission.id] === 'pending' ? <TimeIcon /> :
+                  missionStatusMap[mission.id] === 'completed' ? <CheckCircleIcon /> :
+                  <CheckIcon />
+                }
+                colorScheme={
+                  missionStatusMap[mission.id] === 'pending' ? "yellow" :
+                  missionStatusMap[mission.id] === 'completed' ? "green" :
+                  "teal"
+                }
+                onClick={() => handleCompleteMission(mission.id)}
+                isDisabled={missionStatusMap[mission.id] !== undefined}
+                width="full"
+                fontSize="sm" 
+                padding="2" 
+              >
+                {
+                  missionStatusMap[mission.id] === 'pending' ? 'Pending' :
+                  missionStatusMap[mission.id] === 'completed' ? 'Completed' :
+                  'Mark as Complete'
+                }
+              </Button>
+            </VStack>
+          ))
+        ) : (
+          <Text color="white">No missions found.</Text>
+        )}
+      </HStack>
+    </Box>
   );
 };
 

@@ -80,8 +80,14 @@ function PreviewPage() {
 
       if (!querySnapshot.empty) {
         const userDoc = querySnapshot.docs[0];
-        setUserData({ id: userDoc.id, ...userDoc.data() });
-        console.log("User Data:", { id: userDoc.id, ...userDoc.data() });
+        const userData = { id: userDoc.id, ...userDoc.data() };
+        setUserData(userData);
+        console.log("User Data:", userData);
+
+        // Check if user already has a path
+        if (userData.pathId && userData.pathId !== 0) {
+          navigate("/Dashboard");
+        }
       } else {
         console.log("User data not found in Firestore");
       }
