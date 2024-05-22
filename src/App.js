@@ -17,6 +17,7 @@ import DashboardTwo from './DashboardTwo';
 import Dashboard from './Dashboard';
 import MissionCompletionPage from './MissionCompletion';
 import MissionVerification from './MissionVerification';
+import Checkout from './Checkout';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path='/Dashboard' element={<Dashboard/>}/>
           <Route path='/MissionCompletionPage' element={<MissionCompletionPage/>}/>
           <Route path='/MissionVerification' element={<MissionVerification/>}/>
+          <Route path='/Checkout' element={<Checkout/>}/>
         </Routes>
       </Router>
     </ChakraProvider>
