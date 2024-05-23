@@ -18,6 +18,7 @@ import {
   Spinner,
   Text,
   Center,
+  Flex,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import ClubMemberCard from "./components/ClubMemberCard";
@@ -211,31 +212,30 @@ const ClubLeaderPage = () => {
   return (
     <div className="container">
       <NavBar />
-      <Box display="flex" alignItems="center" justifyContent="center" flex="1">
+      <Flex>
+        <Flex flexDirection={"column"}>
+          <Flex
+            className="clubMembersBox"
+            marginLeft={5}
+            marginRight={5}
+            flexDirection={"row"}
+          >
+            {clubMembers.length > 0 ? (
+              clubMembers.map((member, index) => (
+                <ClubMemberCard
+                  key={index}
+                  member={member}
+                  details={details[index]}
+                  clubName={clubName}
+                />
+              ))
+            ) : (
+              <Text color="white">No members found for the club.</Text>
+            )}
+          </Flex>
+          <MissionVerification />
+        </Flex>
         <Box
-          className="clubMembersBox"
-          flex={4}
-          marginLeft={5}
-          marginRight={5}
-          display={"flex"}
-          flexDirection={"row"}
-        >
-          {clubMembers.length > 0 ? (
-            clubMembers.map((member, index) => (
-              <ClubMemberCard
-                key={index}
-                member={member}
-                details={details[index]}
-                clubName={clubName}
-              />
-            ))
-          ) : (
-            <Text color="white">No members found for the club.</Text>
-          )}
-        </Box>
-<MissionVerification/>
-        <Box
-          flex="2"
           padding={"30px"}
           className="glassmorphism-container2"
           marginRight={20}
@@ -251,15 +251,20 @@ const ClubLeaderPage = () => {
           )}
 
           {/* Display Applications */}
-          <Box mt={6}>
+          <Box mt={6} alignContent="center" justifyItems="center">
             {applications.length > 0 ? (
               applications.map((application, index) => (
                 <Box
                   key={index}
                   bg="rgba(255 , 255, 255, 0.05)"
-                  p={2}
+                  p={4} // Increased padding for better spacing
                   my={2}
-                  borderRadius="md"
+                  borderRadius={18}
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center" // Center content horizontally
+                  justifyContent="center" // Center content vertically
+                  textAlign="center" // Center text
                 >
                   <Text color="#FFF">User ID: {application.userId}</Text>
                   <Text color="#FFF">Club ID: {application.clubId}</Text>
@@ -301,7 +306,7 @@ const ClubLeaderPage = () => {
             )}
           </Box>
         </Box>
-      </Box>
+      </Flex>
     </div>
   );
 };
