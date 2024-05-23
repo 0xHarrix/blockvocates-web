@@ -11,35 +11,42 @@ const stripePromise = loadStripe('pk_test_51PJIXUSJm0sOLQTxEqt8f2IJYGZ8AAPDW4vei
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const [priceId, setPriceId] = useState('');
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const toast = useToast();
   const auth = getAuth();
 
   useEffect(() => {
-    const fetchPriceId = async () => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setUser(user);
 
-        const user = auth.currentUser;
-        console.log(user.uid);
-      const q = query(collection(db, 'membership'), where('active', '==', true));
-      const querySnapshot = await getDocs(q);
+        const fetchPriceId = async () => {
+          const q = query(collection(db, 'membership'), where('active', '==', true));
+          const querySnapshot = await getDocs(q);
 
-      if (!querySnapshot.empty) {
-        const membershipDoc = querySnapshot.docs[0];
-        const priceSnapshot = await getDocs(collection(membershipDoc.ref, 'prices'));
+          if (!querySnapshot.empty) {
+            const membershipDoc = querySnapshot.docs[0];
+            const priceSnapshot = await getDocs(collection(membershipDoc.ref, 'prices'));
 
-        if (!priceSnapshot.empty) {
-          setPriceId(priceSnapshot.docs[0].id);
-        }
+            if (!priceSnapshot.empty) {
+              setPriceId(priceSnapshot.docs[0].id);
+            }
+          }
+        };
+
+        fetchPriceId();
+      } else {
+        navigate('/login'); // Redirect to login if no user is found
       }
-    };
+    });
 
-    fetchPriceId();
-  }, []);
+    return () => unsubscribe(); // Cleanup the listener on component unmount
+  }, [auth, navigate]);
 
   const handleCheckout = async () => {
     setLoading(true);
-    const user = auth.currentUser;
-    console.log(user.uid);
+
     if (!user) {
       toast({
         title: "You must be logged in to checkout.",
@@ -63,21 +70,21 @@ const Checkout = () => {
     }
 
     try {
-        
       const checkoutSessionRef = await addDoc(
-        collection(db, 'users', user.uid, 'checkout_sessions'),
+        collection(db, 'members', user.uid, 'checkout_sessions'),
         {
           price: priceId,
-          success_url: window.location.origin,
+          success_url: `${window.location.origin}/dashboard`,
           cancel_url: window.location.origin,
           mode: 'payment',
+          email: user.email // Add email field to the members collection
         }
       );
 
       onSnapshot(checkoutSessionRef, (docSnapshot) => {
         const data = docSnapshot.data();
         if (data) {
-          const { error, url, status } = data;
+          const { error, url } = data;
           if (error) {
             console.error("Error creating checkout session: ", error);
             toast({
@@ -89,10 +96,23 @@ const Checkout = () => {
             setLoading(false);
           } else if (url) {
             window.location.assign(url);
-          } else if (status === 'succeeded') {
-            updateUserMembership(user.uid);
-            console.log("inside elseif")
-            console.log("user id :",user.uid)
+            console.log("Opening new tab");
+
+            // Start listening for payment status updates
+            const paymentsRef = collection(db, 'members', user.uid, 'payments');
+            const unsubscribePayments = onSnapshot(paymentsRef, (snapshot) => {
+              snapshot.docChanges().forEach((change) => {
+                if (change.type === 'added' || change.type === 'modified') {
+                  const paymentData = change.doc.data();
+                  console.log(paymentData);
+                  console.log(paymentData.status);
+                  if (paymentData.status === 'succeeded') {
+                    updateUserMembership(user.email);
+                    unsubscribePayments(); // Stop listening after successful payment
+                  }
+                }
+              });
+            });
           }
         }
       });
@@ -108,43 +128,58 @@ const Checkout = () => {
     }
   };
 
-  const updateUserMembership = async (userId) => {
-    const userRef = doc(db, 'users', userId);
-    try {
-      await updateDoc(userRef, {
-        clubMembership: '1' // Replace '1' with the actual club ID to assign
-      });
+  const updateUserMembership = async (email) => {
+    const usersRef = collection(db, 'users');
+    const querySnapshot = await getDocs(query(usersRef, where('email', '==', email)));
+    if (!querySnapshot.empty) {
+      const userDoc = querySnapshot.docs[0];
+      const userId = userDoc.id;
+      const userRef = doc(db, 'users', userId);
+      try {
+        await updateDoc(userRef, {
+          clubMembership: 1 // Replace '1' with the actual club ID to assign
+        });
+        toast({
+          title: "Payment successful! Club membership updated.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        setLoading(false);
+        navigate('/dashboard');
+      } catch (error) {
+        console.error("Error updating club membership: ", error);
+        toast({
+          title: "An error occurred while updating club membership.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        setLoading(false);
+      }
+    } else {
+      console.error("User document not found for email: ", email);
       toast({
-        title: "Payment successful! Club membership updated.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setLoading(false);
-      navigate('/dashboard'); // Redirect to the dashboard after successful membership update
-    } catch (error) {
-      console.error("Error updating club membership: ", error);
-      toast({
-        title: "An error occurred while updating club membership.",
+        title: "User not found.",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
       setLoading(false);
+      navigate('/dashboard');
     }
   };
 
   return (
-    <Box textAlign="center" mt={5}>
       <Button
-        colorScheme="teal"
+        bg="#00BAE2"
         onClick={handleCheckout}
         isLoading={loading}
         loadingText="Processing"
+        mt={5}
       >
-        Checkout
+      Join Membership
       </Button>
-    </Box>
   );
 };
 

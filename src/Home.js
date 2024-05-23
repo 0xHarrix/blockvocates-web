@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import { Box, Heading, Input, Text, Flex, Button } from "@chakra-ui/react";
 import "./styles/Home.css";
 import { useNavigate } from 'react-router-dom';
+import Checkout from "./Checkout";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -202,7 +203,7 @@ const Home = () => {
                 professional seeking to expand your network, our meetings offer
                 a welcoming environment for all.
               </Text>
-              <Button mt={"10px"} onClick={() => navigate('/ClubSearch')} >Find a Club</Button>
+              <Checkout />
             </Box>
             <Box flex="1" justifyContent="center" mt={120} ml={20}>
               <Box
@@ -215,7 +216,7 @@ const Home = () => {
                 WebkitBackdropFilter="blur(10px) saturate(180%)"
                 background="rgba(255, 255, 255, 0.05)"
                 width="600px"
-                height="260px"
+                height="300px"
                 transition="all 0.3s ease"
                 _hover={{
                   transform: "translateY(-5px)",
@@ -237,6 +238,7 @@ const Home = () => {
                   <Text color="white" fontSize="lg" fontWeight="medium">
                     60000 Advocate in Rewards
                   </Text>
+                  <Checkout/>
                 </Box>
               </Box>
             </Box>

@@ -18,6 +18,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import Checkout from './Checkout';
 
 const ClubSearch = () => {
   const navigate = useNavigate();
@@ -292,7 +293,7 @@ const ClubSearch = () => {
         {club.clubName}
       </Heading>
       {/* Display other club details */}
-      {appliedClubs.includes(club.clubId) ? (
+   {/*   {appliedClubs.includes(club.clubId) ? (
                   <Button colorScheme="teal" mt={2} isDisabled>
                     Applied
                   </Button>
@@ -303,8 +304,10 @@ const ClubSearch = () => {
                     mt={2}
                   >
                     Join
-                  </Button>
-                )}
+                </Button> 
+                
+                )}*/}
+                <Checkout/>
               </Box>
             ))
           ) : (
