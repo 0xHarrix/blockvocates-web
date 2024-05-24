@@ -6,7 +6,6 @@ import { collection, query, where, getDocs, addDoc, onSnapshot, doc, updateDoc }
 import { db } from './firebaseConfig';
 import { Box, Button, useToast } from '@chakra-ui/react';
 
-const stripePromise = loadStripe('pk_test_51PJIXUSJm0sOLQTxEqt8f2IJYGZ8AAPDW4veiN2nh8hVy0BEumtnP5LMXaDOOvaRQ15DPpKJoYQ6N1EazlAbKzaB00L0adhTm5');
 
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
@@ -95,7 +94,7 @@ const Checkout = () => {
             });
             setLoading(false);
           } else if (url) {
-            window.location.assign(url);
+            window.open(url, '_blank');
             console.log("Opening new tab");
 
             // Start listening for payment status updates

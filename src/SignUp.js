@@ -111,7 +111,7 @@ const handleGoogleSignIn = async () => {
                 color="white"
                 width={'380px'}
                 _focus={{
-                  borderColor: '#00ffff',
+                  borderColor: '#00BAE2',
                 }}
                 bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
                 _hover={{
@@ -129,7 +129,7 @@ const handleGoogleSignIn = async () => {
                 color="white"
                 width={'380px'}
                 _focus={{
-                  borderColor: '#00ffff',
+                  borderColor: '#00BAE2',
                 }}
                 bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
                 _hover={{
@@ -147,7 +147,7 @@ const handleGoogleSignIn = async () => {
                 variant="filled"
                 color="white"
                 _focus={{
-                  borderColor: '#00ffff',
+                  borderColor: '#00BAE2',
                 }}
                 bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
                 _hover={{
