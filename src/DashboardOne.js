@@ -6,6 +6,7 @@ import { db } from "./firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import "./styles/Dashboard.css";
+import PreviewPage from "./PreviewPage"
 
 const DashboardOne = () => {
   const [userName, setUserName] = useState("");
@@ -172,7 +173,7 @@ const DashboardOne = () => {
               backgroundSize="cover"
               transition="transform 0.3s ease-in-out"
               _hover={{ transform: "scale(1.05)" }}
-            >
+              onClick={() => navigate('/PreviewPage')}            >
               <Text
                 color="white"
                 fontSize={"lg"}
