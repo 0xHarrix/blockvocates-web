@@ -10,6 +10,7 @@ const Step4 = ({ nextStep, prevStep }) => {
       <Text>For creating Web3 Social Media accounts, you will need a Blockchain Wallet. <Link href="https://rainbow.me/" isExternal>Rainbow</Link> is a recommended wallet.</Text>
       <Text>On Farcaster: Click on <Link href="https://www.farcaster.xyz/" isExternal>this link</Link> and follow the instructions.</Text>
       <Text>On Lens: Claim a handle on <Link href="https://www.lens.xyz/" isExternal>https://www.lens.xyz/</Link></Text>
+      <Text>Create a account at Yup and connect with social platforms<Link href="https://app.yup.io">Click here</Link></Text>
       <ConnectModal />
       <Button colorScheme="blue" mt="4" onClick={prevStep}>Previous</Button>
       <Button colorScheme="blue" mt="4" onClick={nextStep}>Next</Button>
