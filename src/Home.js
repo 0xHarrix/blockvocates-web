@@ -115,7 +115,8 @@ const Home = () => {
                 backgroundSize="cover"
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
                 _hover={{
-                  transform: "scale(1.05)", // Increase scale on hover
+                  transform: "scale(1.05)",
+                  cursor: "pointer" // Increase scale on hover
                 }}
               >
                 <Text
