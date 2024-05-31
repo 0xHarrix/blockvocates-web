@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Spacer, Button, Link } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Button, Link, Image, Center } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebaseConfig'; // Assuming you have a firebase.js file for authentication
 import './NavBar.css';
@@ -30,17 +30,13 @@ const NavBar = () => {
 
   return (
     <Box className="sticky-nav">
-      <Flex align="center" margin={7} paddingBottom={30}>
+      <Flex align="center" paddingBottom={30}>
         <Link
-          mt={2}
-          className="logo"
+          mt={10}
           _hover={{ textDecoration: 'none' }}
-          fontSize="xl"
-          fontWeight="bold"
-          color="white"
           onClick={() => navigate('/')}
         >
-          BLOCKVOCATES
+          <Image src='Text_Logo-removebg-preview.png' aspectRatio={'auto'} width={60}/>
         </Link>
         <Spacer />
         <Box mt={4}>

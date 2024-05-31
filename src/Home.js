@@ -8,6 +8,7 @@ import Checkout from "./Checkout";
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     // Simulate loading delay with setTimeout
@@ -18,20 +19,25 @@ const Home = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSearch = () => {
+    // Navigate to ClubSearch with location data
+    navigate('/ClubSearch', { state: { location } });
+  };
   return (
     <div className={`container ${isLoaded ? "loaded" : ""}`}>
       <div className="body">
         <NavBar />
-        <Box padding={"0px"}>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center">
-            Learn Blockchain, Improve your 
+        <Box padding={"0px"} className='text1'>
+          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
+            Learn <span style={{ color: "#00BAE2" }}>Blockchain</span>, Improve your 
             <span style={{ color: "#00BAE2" }}> Public Speaking</span>
           </Heading>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center">
+          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
             Land Jobs in<span style={{ color: "#00BAE2" }}> Web3</span>
           </Heading>
           <Box mt={8} textAlign="center">
-            <Input
+          <Input
               variant="outline"
               placeholder="Enter your location or address"
               bg="rgba(255, 255, 255, 0.05)"
@@ -49,13 +55,17 @@ const Home = () => {
               px={4}
               width="500px"
               height={50}
+              value={location} // Bind value to state
+              onChange={(e) => setLocation(e.target.value)} // Update state on change
             />
+            <Button onClick={handleSearch} mt={4}>Search</Button>
             <Heading
               as="h1"
               mt="30px"
               size="xl"
               color="#FFF"
               textAlign="center"
+              fontFamily={'Montserrat'}
             >
               Why Join <span style={{ color: "#00BAE2" }}>Blockvocates?</span>
             </Heading>
@@ -170,10 +180,10 @@ const Home = () => {
       </div>
       <div className="body2">
         <Box padding={"30px"}>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center">
+          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
             Find a<span style={{ color: "#00BAE2" }}> Club</span> and
           </Heading>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center">
+          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
             Learn <span style={{ color: "#00BAE2" }}>Web3</span> with a
             community
           </Heading>
@@ -186,7 +196,7 @@ const Home = () => {
                 mt="80px"
                 size="lg"
                 color="#FFF"
-                textAlign="left"
+                textAlign="left" fontFamily={'Montserrat'}
               >
                 Attend meetings as a guest before <br />
                 <span style={{ color: "#00BAE2" }}>signing up</span> for free

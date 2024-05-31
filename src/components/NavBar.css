@@ -2,6 +2,11 @@
   font-family: 'DM Sans'; /* Name your custom font family */
   src: url('../../public/DMSans_18pt-Regular.ttf') format('ttf');
 }
+@font-face {
+  font-family: 'Montserrat'; /* Name your custom font family */
+  src: url('../../public/Montserrat-Regular.ttf') format('ttf');
+}
+
 .logo {
   text-decoration: none;
   font-size: xl;
@@ -15,14 +20,13 @@
   text-decoration: none; /* Remove underline on hover */
 }
 body{
-  font-family: 'DM Sans';
+  font-family: 'Montserrat';
 }
 .sticky-nav {
   position: sticky;
   top: 0;
   background-color: rgba(0, 0, 0, 0.18); /* Adjust the background color and opacity as needed */
   backdrop-filter: blur(10px); /* Apply the blur effect */
-  z-index: 1000; /* Ensure the navbar stays on top of other content */
+  z-index: 1000;
+  height: 110px; /* Ensure the navbar stays on top of other content */
 }
-
-
