@@ -28,10 +28,9 @@ const Mission1Page = () => {
   };
 
   return (
-    <Box maxW="800px" mx="auto" p="20px">
-      {renderStep()}
-
-    </Box>
+    <div className='bg1'>
+    {renderStep()}
+    </div>
   );
 };
 

@@ -86,6 +86,8 @@ const MissionCompletion = () => {
     fetchMissionStatus();
   }, []);
 
+  
+
   const handleCompleteMission = async (missionId) => {
     try {
       const user = auth.currentUser;
@@ -162,7 +164,8 @@ const MissionCompletion = () => {
                 <Heading size="sm" color="#FFF" mb={2}>{mission.missionName}</Heading>
                 <Text color="#FFF" fontSize="sm" noOfLines={2}>{mission.objective}</Text> {/* Show only 2 lines of objective */}
               </Box>
-              <Button
+              <Button colorScheme="blue" mt="4" onClick={() => navigate('/Mission1')}>Open Mission</Button>
+              {/* <Button
                 leftIcon={
                   missionStatusMap[mission.id] === 'pending' ? <TimeIcon /> :
                   missionStatusMap[mission.id] === 'completed' ? <CheckCircleIcon /> :
@@ -184,7 +187,7 @@ const MissionCompletion = () => {
                   missionStatusMap[mission.id] === 'completed' ? 'Completed' :
                   'Mark as Complete'
                 }
-              </Button>
+              </Button> */}
             </VStack>
           ))
         ) : (
