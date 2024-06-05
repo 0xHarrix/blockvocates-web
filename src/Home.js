@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { Box, Heading, Input, Text, Flex, Button } from "@chakra-ui/react";
 import "./styles/Home.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Checkout from "./Checkout";
 
 const Home = () => {
@@ -16,28 +16,40 @@ const Home = () => {
       setIsLoaded(true);
     }, 1000);
 
-
     return () => clearTimeout(timer);
   }, []);
 
   const handleSearch = () => {
     // Navigate to ClubSearch with location data
-    navigate('/ClubSearch', { state: { location } });
+    navigate("/ClubSearch", { state: { location } });
   };
   return (
     <div className={`container ${isLoaded ? "loaded" : ""}`}>
       <div className="body">
         <NavBar />
-        <Box padding={"0px"} className='text1'>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
-            Learn <span style={{ color: "#00BAE2" }}>Blockchain</span>, Improve your 
+        <Box padding={"0px"} className="text1">
+          <Heading
+            as="h1"
+            size="xl"
+            color="#FFF"
+            textAlign="center"
+            fontFamily={"Montserrat"}
+          >
+            Learn <span style={{ color: "#00BAE2" }}>Blockchain</span>, Improve
+            your
             <span style={{ color: "#00BAE2" }}> Public Speaking</span>
           </Heading>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
+          <Heading
+            as="h1"
+            size="xl"
+            color="#FFF"
+            textAlign="center"
+            fontFamily={"Montserrat"}
+          >
             Land Jobs in<span style={{ color: "#00BAE2" }}> Web3</span>
           </Heading>
           <Box mt={8} textAlign="center">
-          {/* <Input
+            {/* <Input
               variant="outline"
               placeholder="Enter your location or address"
               bg="rgba(255, 255, 255, 0.05)"
@@ -65,7 +77,7 @@ const Home = () => {
               size="xl"
               color="#FFF"
               textAlign="center"
-              fontFamily={'Montserrat'}
+              fontFamily={"Montserrat"}
             >
               Why Join <span style={{ color: "#00BAE2" }}>Blockvocates?</span>
             </Heading>
@@ -126,7 +138,7 @@ const Home = () => {
                 transition="transform 0.3s ease-in-out" // Add transition for smooth effect
                 _hover={{
                   transform: "scale(1.05)",
-                  cursor: "pointer" // Increase scale on hover
+                  cursor: "pointer", // Increase scale on hover
                 }}
               >
                 <Text
@@ -180,10 +192,22 @@ const Home = () => {
       </div>
       <div className="body2">
         <Box padding={"30px"}>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
+          <Heading
+            as="h1"
+            size="xl"
+            color="#FFF"
+            textAlign="center"
+            fontFamily={"Montserrat"}
+          >
             Find a<span style={{ color: "#00BAE2" }}> Club</span> and
           </Heading>
-          <Heading as="h1" size="xl" color="#FFF" textAlign="center" fontFamily={'Montserrat'}>
+          <Heading
+            as="h1"
+            size="xl"
+            color="#FFF"
+            textAlign="center"
+            fontFamily={"Montserrat"}
+          >
             Learn <span style={{ color: "#00BAE2" }}>Web3</span> with a
             community
           </Heading>
@@ -216,8 +240,10 @@ const Home = () => {
               </Text>
               <Checkout />
             </Box> */}
-            <Box  justifyContent="center" mt={120} ml={20}>
-              <Box
+            <Box justifyContent="center" mt={120} ml={20}>
+              <Flex
+                direction="column"
+                align="center"
                 padding="20px"
                 marginRight="80px"
                 borderRadius="20px"
@@ -227,14 +253,14 @@ const Home = () => {
                 WebkitBackdropFilter="blur(10px) saturate(180%)"
                 background="rgba(255, 255, 255, 0.05)"
                 width="600px"
-                height="300px"
+                height="340px"
                 transition="all 0.3s ease"
                 _hover={{
                   transform: "translateY(-5px)",
                   boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)",
                 }}
               >
-                <Box py={6} px={8}>
+                <Box py={6} px={8} textAlign="center">
                   <Text color="white" fontSize="3xl" fontWeight="bold" mb={4}>
                     Affordable Membership
                   </Text>
@@ -244,14 +270,15 @@ const Home = () => {
                     fontWeight="semibold"
                     mb={4}
                   >
-                    $60 USD - 6 months
+                    60$ for 6 months (10$/Month) - for Selected Scholars
+                    (Original Price 25,000$ for 6 months or 4,200$/Month)
                   </Text>
                   <Text color="white" fontSize="lg" fontWeight="medium">
-                    60000 Advocate in Rewards
+                    60000 $VOCATE tokens in Rewards
                   </Text>
-                  <Checkout/>
+                  <Checkout />
                 </Box>
-              </Box>
+              </Flex>
             </Box>
           </Flex>
         </Box>

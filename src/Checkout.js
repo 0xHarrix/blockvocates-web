@@ -177,7 +177,7 @@ const Checkout = () => {
         loadingText="Processing"
         mt={5}
       >
-      Join Membership
+      Join as a Member
       </Button>
   );
 };

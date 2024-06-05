@@ -50,7 +50,7 @@ const NavBar = () => {
             onClick={() => navigate('/Dashboard')}
             _hover={{ color: '#00BAE2' }}
           >
-            My Account
+            MY ACCOUNT
           </Link>
           {/* <Link
             color="white"
