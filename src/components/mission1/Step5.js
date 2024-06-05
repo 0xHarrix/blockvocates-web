@@ -1,58 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Heading, Text, Button } from "@chakra-ui/react";
 import { auth, db } from '../../firebaseConfig';
-import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, updateDoc, doc, addDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const Step5 = ({ prevStep }) => {
-
   const [missionData, setMissionData] = useState([]);
+  const [missionStatusMap, setMissionStatusMap] = useState({});
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
 
     return unsubscribe;
   }, []);
-  // Function to handle posting to Twitter
+
   const handlePostToTwitter = () => {
-    // Constructing the Twitter intent URL
     const tweetText = encodeURIComponent("☀️GM World! I just created my identity for Mission 1 of my @blockvocates journey and claimed a 10,000 $VOCATE tokens reward ☺️ Learning Blockchain is fun and rewarding with Blockvocates.org 📢");
     const twitterUrl = `https://twitter.com/intent/tweet?text=${tweetText}`;
-    // Open Twitter in a new tab
     window.open(twitterUrl, "_blank");
   };
 
   const handleCompleteMission = async (missionId) => {
+    console.log('handleCompleteMission called with missionId:', missionId);
     try {
+      setLoading(true);
       const user = auth.currentUser;
       const userId = user.email;
-      const missionIdentifier = "mission101";
 
-           // Query users collection to find the document with matching email
-           const userQuery = query(collection(db, 'users'), where('email', '==', userId));
-           const userSnapshot = await getDocs(userQuery);
-     
-           if (!userSnapshot.empty) {
-             const userDoc = userSnapshot.docs[0];
-             const userRef = doc(db, 'users', userDoc.id);
-     
-             // Add mission to completedMissions array in users collection
-             await updateDoc(userRef, {
-               completedMissions: [...(userDoc.data().completedMissions || []), missionIdentifier]
-             });
-     
-             // Remove the mission from missionData state
-             setMissionData(prevData => prevData.filter(item => item.id !== missionId));
-           } else {
-             console.error(`User document with email ${userId} does not exist.`);
-           }
-         } catch (error) {
-           console.error('Error verifying mission:', error);
-         }
-       };
+      const userQuery = query(collection(db, 'users'), where('email', '==', userId));
+      const userSnapshot = await getDocs(userQuery);
+
+      if (!userSnapshot.empty) {
+        const userDoc = userSnapshot.docs[0];
+        const userRef = doc(db, 'users', userDoc.id);
+
+        const userData = userDoc.data();
+        const clubId = userData.clubMembership;
+        const clubQuery = query(collection(db, 'clubs'), where('clubId', '==', clubId));
+        const clubSnapshot = await getDocs(clubQuery);
+
+        if (!clubSnapshot.empty) {
+          const clubData = clubSnapshot.docs[0].data();
+          const clubLeaderEmail = clubData.clubLeader;
+
+          const completionData = {
+            userId: userId,
+            missionId: 'mission101',
+            clubLeader: clubLeaderEmail,
+            missionStatus: 'completed'
+          };
+
+          console.log('completionData:', completionData);
+          const docRef = await addDoc(collection(db, 'missionCompletion'), completionData);
+          console.log('Mission completion document added with ID: ', docRef.id);
+
+          await updateDoc(userRef, {
+            completedMissions: [...(userData.completedMissions || []), 'mission101']
+          });
+
+          setMissionData(prevData => prevData.filter(item => item.id !== missionId));
+
+          setMissionStatusMap((prevStatusMap) => ({
+            ...prevStatusMap,
+            [missionId]: 'pending'
+          }));
+          navigate('/dashboard')
+        } else {
+          console.error('No club found with this clubId:', clubId);
+        }
+      } else {
+        console.error(`User document with email ${userId} does not exist.`);
+      }
+    } catch (error) {
+      console.error('Error completing mission:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading message or spinner
+  }
 
   return (
 

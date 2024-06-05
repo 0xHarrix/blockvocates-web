@@ -86,8 +86,6 @@ const MissionCompletion = () => {
     fetchMissionStatus();
   }, []);
 
-  
-
   const handleCompleteMission = async (missionId) => {
     try {
       const user = auth.currentUser;
@@ -164,30 +162,13 @@ const MissionCompletion = () => {
                 <Heading size="sm" color="#FFF" mb={2}>{mission.missionName}</Heading>
                 <Text color="#FFF" fontSize="sm" noOfLines={2}>{mission.objective}</Text> {/* Show only 2 lines of objective */}
               </Box>
-              <Button colorScheme="blue" mt="4" onClick={() => navigate('/Mission1')}>Open Mission</Button>
-              {/* <Button
-                leftIcon={
-                  missionStatusMap[mission.id] === 'pending' ? <TimeIcon /> :
-                  missionStatusMap[mission.id] === 'completed' ? <CheckCircleIcon /> :
-                  <CheckIcon />
-                }
-                colorScheme={
-                  missionStatusMap[mission.id] === 'pending' ? "yellow" :
-                  missionStatusMap[mission.id] === 'completed' ? "green" :
-                  "teal"
-                }
-                onClick={() => handleCompleteMission(mission.id)}
-                isDisabled={missionStatusMap[mission.id] !== undefined}
-                width="full"
-                fontSize="sm" 
-                padding="2" 
-              >
-                {
-                  missionStatusMap[mission.id] === 'pending' ? 'Pending' :
-                  missionStatusMap[mission.id] === 'completed' ? 'Completed' :
-                  'Mark as Complete'
-                }
-              </Button> */}
+              {missionStatusMap[mission.id] === 'completed' ? (
+                <Button colorScheme="green" mt="4" isDisabled>
+                  Mission Completed
+                </Button>
+              ) : (
+                <Button colorScheme="blue" mt="4" onClick={() => navigate(`/Mission/${mission.id}`)}>Open Mission</Button>
+              )}
             </VStack>
           ))
         ) : (
