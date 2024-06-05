@@ -167,7 +167,7 @@ const MissionCompletion = () => {
                   Mission Completed
                 </Button>
               ) : (
-                <Button colorScheme="blue" mt="4" onClick={() => navigate(`/Mission/${mission.id}`)}>Open Mission</Button>
+                <Button colorScheme="blue" mt="4" onClick={() => navigate(`/Mission1`)}>Open Mission</Button>
               )}
             </VStack>
           ))

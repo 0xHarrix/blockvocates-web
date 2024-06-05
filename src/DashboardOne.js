@@ -120,15 +120,6 @@ const DashboardOne = () => {
             <Heading as="h1" size="xl" color="#FFF" textAlign="center" mr={12}>
               {clubName} {/* Display Club Name */}
             </Heading>
-            <Text
-              fontSize={28}
-              fontWeight={"bold"}
-              textAlign={"center"}
-              mt={4}
-              color={"white"}
-            >
-              Membership Number
-            </Text>
           </Flex>
           <Box className="glassbox" padding="6" textAlign="center">
             <Text fontSize="xl" color="white" paddingTop={"48px"}>

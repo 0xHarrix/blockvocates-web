@@ -37,7 +37,7 @@ const Home = () => {
             Land Jobs in<span style={{ color: "#00BAE2" }}> Web3</span>
           </Heading>
           <Box mt={8} textAlign="center">
-          <Input
+          {/* <Input
               variant="outline"
               placeholder="Enter your location or address"
               bg="rgba(255, 255, 255, 0.05)"
@@ -58,7 +58,7 @@ const Home = () => {
               value={location} // Bind value to state
               onChange={(e) => setLocation(e.target.value)} // Update state on change
             />
-            <Button onClick={handleSearch} mt={4}>Search</Button>
+            <Button onClick={handleSearch} mt={4}>Search</Button> */}
             <Heading
               as="h1"
               mt="30px"
@@ -190,7 +190,7 @@ const Home = () => {
           <Flex justifyContent="center" alignItems="center">
             {" "}
             {/* Center the content horizontally and vertically */}
-            <Box textAlign="left" flex="1" mt={30}>
+            {/* <Box textAlign="left" flex="1" mt={30}>
               <Heading
                 as="h1"
                 mt="80px"
@@ -215,8 +215,8 @@ const Home = () => {
                 a welcoming environment for all.
               </Text>
               <Checkout />
-            </Box>
-            <Box flex="1" justifyContent="center" mt={120} ml={20}>
+            </Box> */}
+            <Box  justifyContent="center" mt={120} ml={20}>
               <Box
                 padding="20px"
                 marginRight="80px"

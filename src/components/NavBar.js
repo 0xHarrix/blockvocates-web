@@ -50,9 +50,9 @@ const NavBar = () => {
             onClick={() => navigate('/Dashboard')}
             _hover={{ color: '#00BAE2' }}
           >
-            ABOUT
+            My Account
           </Link>
-          <Link
+          {/* <Link
             color="white"
             fontWeight="bold"
             mr={20}
@@ -63,7 +63,7 @@ const NavBar = () => {
           </Link>
           <Link color="white" fontWeight="bold" onClick={() => navigate('/CreateClub')} _hover={{ color: '#00BAE2' }}>
             START A CLUB
-          </Link>
+          </Link> */}
         </Box>
         <Spacer />
         {user ? (
