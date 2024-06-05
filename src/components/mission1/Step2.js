@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Heading, Text, Input, Button } from "@chakra-ui/react";
+import { Link } from 'react-router-dom';
 
 const Step2 = ({ nextStep, prevStep }) => {
   const [hobby, setHobby] = useState("");
@@ -40,6 +41,7 @@ const Step2 = ({ nextStep, prevStep }) => {
             <Input value={hobby} onChange={(e) => setHobby(e.target.value)} mb="4"/>
             <Text>Mention your Favourite animal/character:</Text>
             <Input value={character} onChange={(e) => setCharacter(e.target.value)} mb="4"/>
+            <Text>Your identity can also be influenced by the Web3 sector you want to target: <Link color='blue'>https://x.com/communitybuidl/status/1779007223009870258?s=46</Link> </Text>
             <Button colorScheme="blue" onClick={generateIdentity}>Generate Identity</Button>
           </Box>
           {identity && <Text mt="4">Your identity: {identity}</Text>}

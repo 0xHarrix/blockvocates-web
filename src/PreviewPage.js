@@ -15,7 +15,7 @@ import {
 
 const cards = [
   {
-    id: "1",
+    id: 1,
     title: "TRADER",
     description:
       "Trading in cryptocurrency is substantially different from traditional markets - 24/7 with no downtimes. And instead of traditional metrics like EPS (earnings per share) a lot of crypto price movement is driven by token-related factors. The TRADER journey will cover the fundamentals of blockchain, basics of project research and tokenomics, wallet setup for DEX (decentralized) and CEX (centralized) exchange trading, technical analysis, choosing your specialization, gaining asymmetric advantages and managing risk.",
@@ -32,7 +32,7 @@ const cards = [
     ],
   },
   {
-    id: "2",
+    id: 2,
     title: "COMMUNITY BUILDER",
     description:
       "Communities are the backbone of blockchains, true community involvement and ownership are what sets Web3 apart from Web2. Blockchain Projects invest millions in creating equitable communities. The COMMUNITY BUILDER journey will cover the fundamentals of blockchain, creating your identity, understanding the types of communities and platforms, picking your ideal community role and different tools that you can use.",
@@ -49,7 +49,7 @@ const cards = [
     ],
   },
   {
-    id: "3",
+    id: 3,
     title: "DESIGNER",
     description:
       "Whenever there is a new renaissance, it is the artists and creatives that convey  the story -  from NFTs and visuals to brand identity, the blockchain world would not run without designers. The DESIGNER Journey will teach the fundamentals of blockchain, paint an understanding of what design means in Web3, help you find your voice and your role and equip you with the right tools to succeed.",
@@ -66,7 +66,7 @@ const cards = [
     ],
   },
   {
-    id: "4",
+    id: 4,
     title: "FOUNDER",
     description:
       "The trailblazers of ideas and innovation - founders build on the powerful technology of Blockchain - realizing the ideals of Web3 through innovative and revolutionary ideas.The FOUNDER journey will teach you the fundamentals of blockchain, how you canbecome a Web3 founder, select the right idea, find a team and community and launch your project.",
@@ -83,7 +83,7 @@ const cards = [
     ],
   },
   {
-    id: "5",
+    id: 5,
     title: "MUSICIAN",
     description:
       "Web3 Music is poised to revolutionize the music industry - make it more equitable while giving fans much more ownership. The MUSICIAN journey will teach you the fundamentals of blockchain, how you can become a Web3 Musician, build music communities and launch your own Music NFTs.",
@@ -99,17 +99,6 @@ const cards = [
       "M8: Summanzing Learniings.",
     ],
   },
-];
-
-const modules = [
-  "M1: Read, Write, Own.",
-  "M2: Identity Creation",
-  "M3: Wallets, Interface, DEX, CEX.",
-  "M4: Research Report",
-  "M5: Trading Style (Low - Mid - High)",
-  "M6: Managing Risk",
-  "M7: Public Trading Challenge.",
-  "M8: Summarizing Learnings.",
 ];
 
 function PreviewPage() {
@@ -241,57 +230,58 @@ function PreviewPage() {
         ))}
       </Flex>
       {selectedCard !== null && (
-  <Box
-    className="description-card"
-    position="absolute"
-    marginTop={50}
-    left="50%"
-    transform="translateX(-50%)"
-    width="1400px"
-    padding="10px"
-    borderRadius="8px"
-    backgroundColor="rgba(255, 255, 255, 0.05)"
-    color="white"
-    zIndex="999"
-    style={{ opacity: 1, pointerEvents: "none" }}
-    textAlign="center"
-  >
-    <Text fontSize="xl" fontWeight="bold" marginBottom="10px">
-      {cards[selectedCard].title}
-    </Text>
-    <Text>{cards[selectedCard].description}</Text>
-    <Flex flexWrap="wrap" justifyContent="center" mt={7}>
-      {cards[selectedCard].modules.map((module, index) => (
         <Box
-          key={index}
-          width="252px"
-          height="252px"
-          backgroundColor="rgba(255, 255, 255, 0.1)"
-          border="1px solid rgba(255, 255, 255, 0.2)"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          fontSize="md"
-          margin="10px"
+          className="description-card"
+          position="absolute"
+          marginTop={50}
+          left="50%"
+          transform="translateX(-50%)"
+          width="1400px"
+          padding="10px"
           borderRadius="8px"
-          boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+          backgroundColor="rgba(255, 255, 255, 0.05)"
           color="white"
-          transition="transform 0.2s, box-shadow 0.2s"
-          _hover={{
-            transform: "translateY(-5px)",
-            boxShadow: "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
-          }}
+          zIndex="999"
+          style={{ opacity: 1, pointerEvents: "none" }}
+          textAlign="center"
         >
-          <Text fontWeight="bold" marginBottom="5px">
-            {module.split(":")[0]}
+          <Text fontSize="xl" fontWeight="bold" marginBottom="10px">
+            {cards[selectedCard].title}
           </Text>
-          <Text textAlign="center">{module.split(":")[1]}</Text>
+          <Text>{cards[selectedCard].description}</Text>
+          <Flex flexWrap="wrap" justifyContent="center" mt={7}>
+            {cards[selectedCard].modules.map((module, index) => (
+              <Box
+                key={index}
+                width="252px"
+                height="252px"
+                backgroundColor="rgba(255, 255, 255, 0.1)"
+                border="1px solid rgba(255, 255, 255, 0.2)"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                fontSize="md"
+                margin="10px"
+                borderRadius="8px"
+                boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+                color="white"
+                transition="transform 0.2s, box-shadow 0.2s"
+                _hover={{
+                  transform: "translateY(-5px)",
+                  boxShadow:
+                    "0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <Text fontWeight="bold" marginBottom="5px">
+                  {module.split(":")[0]}
+                </Text>
+                <Text textAlign="center">{module.split(":")[1]}</Text>
+              </Box>
+            ))}
+          </Flex>
         </Box>
-      ))}
-    </Flex>
-  </Box>
-)}
+      )}
 
       {loading && <Spinner />}
     </div>
