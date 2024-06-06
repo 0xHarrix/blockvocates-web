@@ -75,7 +75,7 @@ const Checkout = () => {
           price: priceId,
           success_url: `${window.location.origin}/dashboard`,
           cancel_url: window.location.origin,
-          mode: 'payment',
+          mode: 'subscription',
           email: user.email // Add email field to the members collection
         }
       );
