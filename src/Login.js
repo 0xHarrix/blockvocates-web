@@ -3,7 +3,9 @@ import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvide
 import { app } from './firebaseConfig';
 import { Box, Text, Input, Stack, Button, Image, Link } from '@chakra-ui/react';
 import './styles/Login.css';
+import { collection, addDoc, getDocs, query, orderBy, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { db } from './firebaseConfig';
 
 const Login = () => {
 
@@ -32,19 +34,44 @@ const Login = () => {
   };
 
   // Function to handle Google sign-in
-  const handleGoogleSignIn = async () => {
+  const handleGoogleLogin = async () => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider(); // Create GoogleAuthProvider instance
     try {
       const result = await signInWithPopup(auth, provider); // Open Google sign-in popup
       const user = result.user;
-      console.log('User signed in with Google: ', user);
+      console.log('User signed in with Google:', user);
+  
+      // Extract user's name and email from the profile
+      const name = user.displayName;
+      const email = user.email;
+  
+      // Check if user already exists in Firestore database
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+  
+      if (querySnapshot.empty) {
+        // Add the user to Firestore database if they don't exist
+        const newUserRef = await addDoc(usersRef, {
+          name: name,
+          email: email,
+          clubMembership: 0, // Set clubMembership to empty number
+          completedMissions: [], // Set completedMissions to empty array
+          pathId: 0, // Set pathId to empty number
+        });
+        console.log('New user added to Firestore with ID:', newUserRef.id);
+      } else {
+        console.log('User already exists in Firestore');
+      }
+  
       navigate('/Dashboard');
     } catch (error) {
       setError(error.message);
-      console.error('Google sign-in error: ', error.message);
+      console.error('Google sign-in error:', error.message);
     }
   };
+  
 
   // Return the JSX for rendering
   return (
@@ -125,7 +152,7 @@ const Login = () => {
                 bg="rgba(217, 217, 217, 0.1)"
                 color="white"
                 leftIcon={<img src="Google.png" alt="Google Icon" />}
-                onClick={handleGoogleSignIn}
+                onClick={handleGoogleLogin}
                 borderRadius='15px'
                 _hover={{
                   bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',

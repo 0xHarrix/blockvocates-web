@@ -4,7 +4,7 @@ import { app } from './firebaseConfig';
 import { Box, Text, Input, Stack, Button, Image, Link } from '@chakra-ui/react';
 import './styles/Login.css';
 import { useNavigate } from 'react-router-dom'; 
-import { collection, addDoc, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, orderBy, where } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
 const Signup = () => {
@@ -58,18 +58,25 @@ const handleGoogleSignIn = async () => {
     // Extract user's name and email from the profile
     const name = user.displayName;
     const email = user.email;
-    
-    // Add the user to Firestore database
-    const usersRef = collection(db, 'users');
-    const newUserRef = await addDoc(usersRef, {
-      name: name,
-      email: email,
-      clubMembership: 0, // Set clubMembership to empty number
-      completedMissions: [], // Set completedMissions to empty array
-      pathId: 0, // Set pathId to empty number
-    });
 
-    console.log('New user added to Firestore with ID:', newUserRef.id);
+    // Check if user already exists in Firestore database
+    const usersRef = collection(db, 'users');
+    const q = query(usersRef, where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      // Add the user to Firestore database if they don't exist
+      const newUserRef = await addDoc(usersRef, {
+        name: name,
+        email: email,
+        clubMembership: 0, // Set clubMembership to empty number
+        completedMissions: [], // Set completedMissions to empty array
+        pathId: 0, // Set pathId to empty number
+      });
+      console.log('New user added to Firestore with ID:', newUserRef.id);
+    } else {
+      console.log('User already exists in Firestore');
+    }
 
     navigate('/Dashboard');
   } catch (error) {
@@ -77,6 +84,7 @@ const handleGoogleSignIn = async () => {
     console.error('Google sign-in error:', error.message);
   }
 };
+
 
 
 
