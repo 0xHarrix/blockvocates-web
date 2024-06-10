@@ -1,8 +1,10 @@
+/* Login.css */
+
 @font-face {
   font-family: 'Poppins'; /* Name your custom font family */
   src: url('../../public/Poppins-Regular.ttf') format('ttf');
 }
-/* Login.css */
+
 .glassmorphism-container1 {
   width: 470px;
   height: 530px; /* Adjust the width as needed */
@@ -11,99 +13,77 @@
   border: 1px solid rgba(255, 255, 255, 0.125);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced box shadow */
   padding: 20px;
-  animation-name: slideIn;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in;
+  position: absolute;
+  top: 50%;
+  right: 5%;
 }
-.glassmorphism-container1:hover{
+
+.glassmorphism-container1:hover {
   transform: scale(1.03);
   transition: ease-in;
   transition-duration: 0.3s;
 }
-@keyframes slideIn {
-  from {
-    transform: translateX(-10%);
-    opacity: 0%;
-  }
-  to {
-    transform: translateX(0%);
-    opacity: 100%;
-  }
-}
-@keyframes slideIn1 {
-  from {
-    transform: translateX(10%);
-    opacity: 0%;
-  }
-  to {
-    transform: translateX(0%);
-    opacity: 100%;
-  }
-}
 
-.orb {
-  animation-name: slideIn;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in;
-}
-.orb:hover{
+.orb:hover {
   transform: scale(1.03);
   transition: ease-in-out;
   transition-duration: 0.3s;
 }
-.orb1 {
-  animation-name: slideIn1;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in;
+
+.glassmorphism-container1 form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-  
-  .glassmorphism-container form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .glassmorphism-container input,
-  .glassmorphism-container button {
-    width: 400px;
-    margin-top: 10px;
-  }
-  
-  .login-button:hover {
-    background-color: #f6b766;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  .screen{
-    height: 100vh;
-  }
-  
-  label{
-    color: white;
-  }
-  .Logintext{
-    color: white;
-    font-size: 35px;
-  }
-  .loginbutton{
-    background-color: (to right, #ff0000, #0000ff);
-    border-radius: 50px;
-  }
-  .signuptext{
-    color: #007AFF;
-  }
-  body{
-    font-family: 'Poppins';
-    overflow: hidden;
-  }
-  .tags{
-    font-size: 21px;
-  }
-  /* Dark mode scrollbar with sleek edges */
+.glassmorphism-container1 input,
+.glassmorphism-container1 button {
+  width: 400px;
+  margin-top: 10px;
+}
+
+.login-button:hover {
+  background-color: #f6b766;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.screen {
+  height: 100vh;
+  position: relative;
+}
+
+label {
+  color: white;
+}
+
+.Logintext {
+  color: white;
+  font-size: 35px;
+}
+
+.loginbutton {
+  background-color: (to right, #ff0000, #0000ff);
+  border-radius: 50px;
+}
+
+.signuptext {
+  color: #007AFF;
+}
+
+body {
+  font-family: 'Poppins';
+  overflow: hidden;
+}
+
+.tags {
+  font-size: 21px;
+}
+
+/* Dark mode scrollbar with sleek edges */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -119,4 +99,84 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #474747; /* Dark color for the scrollbar thumb on hover */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .glassmorphism-container1 {
+    width: 90%;
+    height: auto; /* Adjust height as needed */
+    padding: 20px;
+    right: 0;
+  }
+
+  .glassmorphism-container1 form {
+    width: 100%;
+  }
+
+  .glassmorphism-container1 input,
+  .glassmorphism-container1 button {
+    width: 100%;
+  }
+
+  .Logintext {
+    font-size: 28px;
+  }
+
+  .tags {
+    font-size: 18px;
+  }
+
+  .loginbutton {
+    font-size: 16px;
+  }
+
+  .signuptext {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glassmorphism-container1 {
+    width: 95%;
+    height: auto;
+    padding: 15px;
+    right: 0;
+  }
+
+  .glassmorphism-container1 form {
+    width: 100%;
+  }
+
+  .glassmorphism-container1 input,
+  .glassmorphism-container1 button {
+    width: 100%;
+  }
+
+  .Logintext {
+    font-size: 24px;
+  }
+
+  .tags {
+    font-size: 16px;
+  }
+
+  .loginbutton {
+    font-size: 14px;
+  }
+
+  .signuptext {
+    font-size: 16px;
+  }
+}
+
+.orb, .orb1 {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .orb, .orb1 {
+    display: none; /* Hide orbs on smaller screens for better layout */
+  }
 }

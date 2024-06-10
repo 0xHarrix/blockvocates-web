@@ -28,5 +28,46 @@ body{
   background-color: rgba(0, 0, 0, 0.18); /* Adjust the background color and opacity as needed */
   backdrop-filter: blur(10px); /* Apply the blur effect */
   z-index: 1000;
-  height: 110px; /* Ensure the navbar stays on top of other content */
+  height: 90px; /* Adjust the height of the navbar */
+}
+
+/* Adjust padding and margin for smaller screens */
+@media (max-width: 768px) {
+  .sticky-nav > .flex {
+    padding: 0 20px;
+  }
+}
+
+/* Style the hamburger icon */
+.img-hamburger {
+  cursor: pointer;
+}
+
+/* Style the dropdown menu */
+
+/* Style the dropdown menu */
+/* Style the dropdown container */
+.dropdown-menu {
+  position: absolute; /* Adjust the distance from the button */
+  right: 0;
+  background-color: black; /* Set the background color to black */
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  min-width: 120px; /* Set a minimum width for the dropdown menu */
+}
+
+/* Style links inside the dropdown menu */
+.dropdown-menu > a {
+  display: block; /* Display as block for full width */
+  color: white; /* Text color */
+  font-weight: bold; /* Bold text */
+  padding: 8px 12px; /* Padding inside each link */
+}
+
+/* Style buttons inside the dropdown menu */
+.dropdown-menu > button {
+  display: block; /* Display as block for full width */
+  margin-top: 8px; /* Margin between items */
 }

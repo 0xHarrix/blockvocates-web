@@ -14,7 +14,6 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Function to handle the login process
   const handleLogin = async (e) => {
     e.preventDefault();
     const auth = getAuth(app);
@@ -26,9 +25,9 @@ const Signup = () => {
       const newUserRef = await addDoc(usersRef, {
         name: name,
         email: email,
-        clubMembership: 0, // Set clubMembership to empty number
-        completedMissions: [], // Set completedMissions to empty array
-        pathId: 0, // Set pathId to empty number
+        clubMembership: 0,
+        completedMissions: [],
+        pathId: 0,
       });
   
       console.log('New user added to Firestore with ID:', newUserRef.id);
@@ -44,71 +43,64 @@ const Signup = () => {
     navigate('/Dashboard');
   };
 
-  // Function to handle Google sign-in
- // Function to handle Google sign-in
-// Function to handle Google sign-in
-const handleGoogleSignIn = async () => {
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider(); // Create GoogleAuthProvider instance
-  try {
-    const result = await signInWithPopup(auth, provider); // Open Google sign-in popup
-    const user = result.user;
-    console.log('User signed in with Google:', user);
-    
-    // Extract user's name and email from the profile
-    const name = user.displayName;
-    const email = user.email;
+  const handleGoogleSignIn = async () => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log('User signed in with Google:', user);
+      
+      const name = user.displayName;
+      const email = user.email;
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
 
-    // Check if user already exists in Firestore database
-    const usersRef = collection(db, 'users');
-    const q = query(usersRef, where('email', '==', email));
-    const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        const newUserRef = await addDoc(usersRef, {
+          name: name,
+          email: email,
+          clubMembership: 0,
+          completedMissions: [],
+          pathId: 0,
+        });
+        console.log('New user added to Firestore with ID:', newUserRef.id);
+      } else {
+        console.log('User already exists in Firestore');
+      }
 
-    if (querySnapshot.empty) {
-      // Add the user to Firestore database if they don't exist
-      const newUserRef = await addDoc(usersRef, {
-        name: name,
-        email: email,
-        clubMembership: 0, // Set clubMembership to empty number
-        completedMissions: [], // Set completedMissions to empty array
-        pathId: 0, // Set pathId to empty number
-      });
-      console.log('New user added to Firestore with ID:', newUserRef.id);
-    } else {
-      console.log('User already exists in Firestore');
+      navigate('/Dashboard');
+    } catch (error) {
+      setError(error.message);
+      console.error('Google sign-in error:', error.message);
     }
+  };
 
-    navigate('/Dashboard');
-  } catch (error) {
-    setError(error.message);
-    console.error('Google sign-in error:', error.message);
-  }
-};
-
-
-
-
-  // Return the JSX for rendering
   return (
     <div className='screen'>
       <Box display="flex" height='100vh'>
-        <Box>
-          <Image src='orbs.png' height='100vh' className='orb'></Image>
+        <Box display={{ base: 'none', md: 'block' }}>
+          <Image src='orbs.png' height='100vh' className='orb' />
         </Box>
-        <Image src='orb.png' position='absolute' left='90.8%' top='-3%' className='orb1'></Image>
         <Box
           className="glassmorphism-container1"
           position="absolute"
-          top="8%"
-          left="50%"
+          top={{ base: '10%', md: '5%' }}
+          right={{ base: '5%', md: '5%' }}
           display="flex"
           flexDirection="column"
           alignItems="center"
-          height="600px"
+          height={{ base: 'auto', md: '590px' }}
+          width={{ base: '90%', md: '470px' }}
+          p={5}
+          borderRadius="32px"
+          bg="linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2))"
+          boxShadow="0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1)"
         >
           <Text className='Logintext'>Sign Up</Text>
           <form onSubmit={handleLogin}>
-            <Stack>
+            <Stack spacing={3}>
               <label className="tags">Username</label>
               <Input
                 type="name"
@@ -117,15 +109,11 @@ const handleGoogleSignIn = async () => {
                 placeholder="Username"
                 variant="filled"
                 color="white"
-                width={'380px'}
-                _focus={{
-                  borderColor: '#00BAE2',
-                }}
-                bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
-                _hover={{
-                  bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-                }}
-                borderRadius='15px'
+                width="100%"
+                _focus={{ borderColor: '#00BAE2' }}
+                bg="rgba(0, 0, 0, 0.9)"
+                _hover={{ bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))' }}
+                borderRadius="15px"
               />
               <label className="tags">Email</label>
               <Input
@@ -135,17 +123,12 @@ const handleGoogleSignIn = async () => {
                 placeholder="Email"
                 variant="filled"
                 color="white"
-                width={'380px'}
-                _focus={{
-                  borderColor: '#00BAE2',
-                }}
-                bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
-                _hover={{
-                  bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-                }}
-                borderRadius='15px'
+                width="100%"
+                _focus={{ borderColor: '#00BAE2' }}
+                bg="rgba(0, 0, 0, 0.9)"
+                _hover={{ bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))' }}
+                borderRadius="15px"
               />
-
               <label className="tags">Password</label>
               <Input
                 type="password"
@@ -154,34 +137,27 @@ const handleGoogleSignIn = async () => {
                 placeholder="Password"
                 variant="filled"
                 color="white"
-                _focus={{
-                  borderColor: '#00BAE2',
-                }}
-                bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
-                _hover={{
-                  bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-                }}
-                borderRadius='15px'
+                width="100%"
+                _focus={{ borderColor: '#00BAE2' }}
+                bg="rgba(0, 0, 0, 0.9)"
+                _hover={{ bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))' }}
+                borderRadius="15px"
                 mb={5}
               />
-
               <Button
                 type="submit"
-                colorScheme="custom"
+                colorScheme="blue"
                 size="md"
                 borderRadius="10px"
                 bgGradient="linear(to-r, rgba(8, 110, 221, 0.6), #010C0F)"
                 fontFamily="'Black Han Sans', sans-serif"
                 className="loginbutton"
-                _hover={{
-                  filter: 'brightness(200%)', // Dimming effect on hover
-                  transition: 'filter 0.3s ease-in-out', // Smooth transition over 0.3 seconds
-                }}
+                _hover={{ filter: 'brightness(200%)' }}
+                transition="filter 0.3s ease-in-out"
               >
                 Sign Up
               </Button>
               <Image src='or.png' width='350px' height='22px' margin='auto' mt='20px'></Image>
-
               <Button
                 variant="solid"
                 bg="rgba(217, 217, 217, 0.1)"
@@ -191,8 +167,8 @@ const handleGoogleSignIn = async () => {
                 borderRadius='15px'
                 _hover={{
                   bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-                  filter: 'brightness(85%)', // Dimming effect on hover
-                  opacity: 0.9, // Reduce opacity on hover
+                  filter: 'brightness(85%)',
+                  opacity: 0.9,
                   transition: 'filter 0.4s ease, opacity 0.4s ease',
                 }}
               >
@@ -201,7 +177,9 @@ const handleGoogleSignIn = async () => {
             </Stack>
           </form>
           {error && <Text color="red.500" mt={2}>{error}</Text>}
-          <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>Already have an account? <span className='signuptext'>Login</span></Link>
+          <Link onClick={navigateToSignUp} color="white" fontWeight="bold" mt={10}>
+            Already have an account? <span className='signuptext'>Login</span>
+          </Link>
         </Box>
       </Box>
     </div>

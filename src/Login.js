@@ -76,23 +76,23 @@ const Login = () => {
   // Return the JSX for rendering
   return (
     <div className='screen'>
-      <Box display="flex" height='100vh'>
+      <Box display={{ base: "block", md: "flex" }} height='100vh'>
         <Box>
-          <Image src='orbs.png' height='100vh' className='orb'></Image>
+          <Image src='orbs.png' height='100vh' className='orb' display={{ base: "none", md: "block" }} />
         </Box>
-        <Image src='orb.png' position='absolute' left='90.8%' top='-3%' className='orb1'></Image>
+        
         <Box
           className="glassmorphism-container1"
           position="absolute"
-          top="12%"
-          left="50%"
+          top={{ base: "10%", md: "12%" }}
+          left={{ base: "5%", md: "60%" }}
           display="flex"
           flexDirection="column"
           alignItems="center"
         >
           <Text className='Logintext'>Login</Text>
           <form onSubmit={handleLogin}>
-            <Stack>
+            <Stack spacing={4}>
               <label className="tags">Email</label>
               <Input
                 type="email"
@@ -104,14 +104,12 @@ const Login = () => {
                 _focus={{
                   borderColor: '#00BAE2',
                 }}
-                bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
+                bg="rgba(0, 0, 0, 0.9)"
                 _hover={{
                   bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
                 }}
                 borderRadius='15px'
               />
-
-
               <label className="tags">Password</label>
               <Input
                 type="password"
@@ -123,13 +121,13 @@ const Login = () => {
                 _focus={{
                   borderColor: '#00BAE2',
                 }}
-                bg="rgba(0, 0, 0, 0.9)" // Set the background color to black with 90% opacity
+                bg="rgba(0, 0, 0, 0.9)"
                 _hover={{
                   bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
                 }}
                 borderRadius='15px'
               />
-              <Link ml='275px' color='#007AFF'>Forgot Password?</Link>
+              <Link ml={{ base: 'auto', md: '275px' }} color='#007AFF'>Forgot Password?</Link>
               <Button
                 type="submit"
                 colorScheme="custom"
@@ -139,14 +137,13 @@ const Login = () => {
                 fontFamily="'Black Han Sans', sans-serif"
                 className="loginbutton"
                 _hover={{
-                  filter: 'brightness(200%)', // Dimming effect on hover
-                  transition: 'filter 0.3s ease-in-out', // Smooth transition over 0.3 seconds
+                  filter: 'brightness(200%)',
+                  transition: 'filter 0.3s ease-in-out',
                 }}
               >
                 Login
               </Button>
-              <Image src='or.png' width='350px' height='22px' margin='auto' mt='20px'></Image>
-
+              <Image src='or.png' width='350px' height='22px' margin='auto' mt='20px' display={{ base: "none", md: "block" }} />
               <Button
                 variant="solid"
                 bg="rgba(217, 217, 217, 0.1)"
@@ -156,8 +153,8 @@ const Login = () => {
                 borderRadius='15px'
                 _hover={{
                   bgGradient: 'linear(to-r, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))',
-                  filter: 'brightness(85%)', // Dimming effect on hover
-                  opacity: 0.9, // Reduce opacity on hover
+                  filter: 'brightness(85%)',
+                  opacity: 0.9,
                   transition: 'filter 0.4s ease, opacity 0.4s ease',
                 }}
               >

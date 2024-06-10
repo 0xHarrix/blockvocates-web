@@ -1,50 +1,93 @@
+/* Font Face */
 @font-face {
-    font-family: 'DM Sans'; /* Name your custom font family */
-    src: url('../../public/DMSans_18pt-Regular.ttf') format('ttf');
-  }
-  @font-face {
-    font-family: 'Montserrat'; /* Name your custom font family */
-    src: url('../../public/Montserrat-Regular.ttf') format('ttf');
-  }
-  
-  .body {
-    background-image: url('../../public/bg.png');
-    background-size: cover; /* Fit the background image to cover the entire viewport */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
-    /* height: 100vh; */ /* Remove or comment out this line */
-    min-height: 100vh; /* Set a minimum height to ensure content visibility */
-    background-blend-mode: screen; /* Apply the darken blend mode */
+  font-family: 'DM Sans';
+  src: url('../../public/DMSans_18pt-Regular.ttf') format('ttf');
 }
 
-body{
-    overflow-y:auto;
-    font-family: 'Montserrat', sans-serif;
-}
-.body2 {
-  background-image: url('../../public/bg.png');
-  background-size: cover; /* Fit the background image to cover the entire viewport */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent background image from repeating */
-  /* height: 100vh; */ /* Remove or comment out this line */
-  min-height: 100vh; /* Set a minimum height to ensure content visibility */
-  background-blend-mode: screen; 
-  font-family: 'Montserrat', sans-serif;
-}
-.container.loaded .body,
-.container.loaded .body2 {
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
-  font-family: 'Montserrat', sans-serif;
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../public/Montserrat-Regular.ttf') format('ttf');
 }
 
-.text1{
+/* Body Styles */
+body {
+  overflow-y: auto;
   font-family: 'Montserrat', sans-serif;
 }
 
 .body,
 .body2 {
-  opacity: 0;
-  font-family: 'Montserrat', sans-serif;
+  background-image: url('../../public/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  padding: 20px;
 }
 
+.container.loaded .body,
+.container.loaded .body2 {
+  animation: fadeIn 1s ease-in-out;
+  opacity: 1;
+}
+
+.text1 {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.glassbox {
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: relative;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  width: 260px;
+  height: 260px;
+  margin: 10px;
+  background-size: cover;
+}
+
+.glassbox:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.glassbox text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .glassbox {
+    width: 300px;
+    height: 300px;
+  }
+
+  .body2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
