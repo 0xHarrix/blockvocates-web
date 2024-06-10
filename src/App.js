@@ -18,6 +18,7 @@ import MissionCompletionPage from './MissionCompletion';
 import MissionVerification from './MissionVerification';
 import Checkout from './Checkout';
 import Mission1Page from './Mission1Page';
+import MissionManager from './MissionManager';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path='/MissionVerification' element={<MissionVerification />} />
           <Route path='/Checkout' element={<Checkout />} />
           <Route path='/Mission1/*' element={<Mission1Page />} />
+          <Route path='/MissionManager' element={<MissionManager/>}/>
         </Routes>
       </Router>
     </ChakraProvider>

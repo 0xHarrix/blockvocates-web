@@ -99,6 +99,22 @@ const cards = [
       "M8: Summanzing Learniings.",
     ],
   },
+  {
+    id: 6,
+    title: "DEVELOPER",
+    description: "Developers are the backbone of the blockchain industry - shipping and moulding the dreams of a decentralized, distributed future. The DEVELOPER journey will teach you the fundamentals of blockchain, how you can get started with building Decentralized Applications and eventually launch your own Dapp!",
+    image: "Developer.png",
+    modules: [
+      "M1: Create your Identity!",
+      "M2: Read, Write, Own",
+      "M3: Understanding the world of Web3 Development",
+      "M4: Building and joining Development Communities",
+      "M5: Exploring and Using Web3 Development Platforms.",
+      "M6: Web3 Developer Tools",
+      "M7: Launch a Dapp!",
+      "M8: Summarizing Learnings.",
+    ],
+  },
 ];
 
 function PreviewPage() {

@@ -141,7 +141,7 @@ const DashboardOne = () => {
           picked)
         </Text>
         <Flex justifyContent="center" mt={7}>
-          {["Crypto Trader", "Designer", "Developer", "Community", "Marketing"].map((role, index) => (
+          {["Crypto Trader", "Community Builder" , "Designer", "Founder", "Musician", "Developer"].map((role, index) => (
             <Box
               key={index}
               className="glassbox"
