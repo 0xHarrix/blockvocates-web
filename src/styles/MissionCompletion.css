@@ -1,0 +1,39 @@
+/* MissionCompletion.css */
+
+/* Mission container styles */
+.mission-container {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping on small screens */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    justify-content: flex-start; /* Adjust alignment */
+  }
+  
+  /* Mission card styles */
+  .mission-card {
+    flex: 0 0 auto; /* Maintain initial size */
+    width: 170px; /* Increased width to accommodate content */
+    margin-right: 10px; /* Adjust margin */
+  }
+  
+  /* Glassmorphism container styles */
+  .glassmorphism-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px; /* Decreased padding */
+    border-radius: 10px; /* Adjust border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 607px) {
+    .mission-container {
+      flex-wrap: wrap; /* Allow wrapping on small screens */
+      justify-content: center; /* Center align items */
+    }
+  
+    .mission-card {
+      width: calc(50% - 20px); /* 50% width with margin */
+      margin: 10px; /* Adjust margin */
+    }
+  }
+  

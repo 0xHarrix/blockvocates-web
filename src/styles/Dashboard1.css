@@ -1,0 +1,132 @@
+/* Background styles */
+.bg {
+    background-image: url('../../public/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+  
+  /* Ensuring the background covers the entire viewport and is fixed */
+  .bg1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../public/bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  
+  /* Container styles */
+  .container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Glassbox styles */
+  .glassbox {
+    width: 100%;
+    max-width: 550px;
+    height: 200px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    animation-name: slideIn;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    text-align: center;
+    margin: 10px;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .glassbox:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Glassbox small variant */
+  .glassbox-small {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    animation-name: slideIn;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    text-align: center;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+  
+  /* Fade-in animation */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+    opacity: 1;
+  }
+  
+  /* Keyframes */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .glassbox {
+      max-width: 100%;
+      height: auto;
+      padding: 10px;
+      margin: 5px;
+    }
+    
+    .glassbox-small {
+      max-width: 100%;
+      height: auto;
+      padding: 10px;
+      margin: 5px;
+    }
+  
+    .fade-in {
+      animation-duration: 0.3s;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .glassbox {
+      max-width: 100%;
+      height: auto;
+      padding: 10px;
+      margin: 5px;
+    }
+    
+    .glassbox-small {
+      max-width: 100%;
+      height: auto;
+      padding: 10px;
+      margin: 5px;
+      display: flex; /* Display vertically on mobile */
+      flex-direction: column; /* Arrange items vertically */
+      justify-content: center; /* Center align items */
+      align-items: center; /* Center align items */
+    }
+  
+    .fade-in {
+      animation-duration: 0.3s;
+    }
+  }

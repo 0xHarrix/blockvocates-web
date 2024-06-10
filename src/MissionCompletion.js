@@ -13,6 +13,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { CheckCircleIcon, TimeIcon, CheckIcon } from '@chakra-ui/icons';
+import './styles/MissionCompletion.css'; // Import the CSS file
 
 const MissionCompletion = () => {
   const [missions, setMissions] = useState([]);
@@ -144,10 +145,10 @@ const MissionCompletion = () => {
       <Heading as="h1" size="lg" color="#FFF" mb={6}>
         Mission Completion
       </Heading>
-      <HStack spacing={4} overflowX="auto">
+      <HStack spacing={4} overflowX="auto" className="mission-container">
         {missions.length > 0 ? (
           missions.map((mission) => (
-            <VStack key={mission.id} spacing={4}>
+            <VStack key={mission.id} spacing={4} className="mission-card">
               <Box
                 bg="rgba(255, 255, 255, 0.1)"
                 backdropFilter="blur(10px)"

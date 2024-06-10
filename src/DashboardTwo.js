@@ -5,8 +5,8 @@ import { Box, Heading, Flex, Text, Spinner, useToast } from "@chakra-ui/react";
 import { db } from "./firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
-import "./styles/Dashboard.css";
 import MissionCompletion from "./MissionCompletion";
+import "./styles/Dashboard1.css"; // Import the CSS file
 
 const DashboardTwo = () => {
   const [userName, setUserName] = useState("");
@@ -92,7 +92,7 @@ const DashboardTwo = () => {
       try {
         if (userClubId) {
           setLoadingPathName(true);
-          console.log("Path Id : ",userPathId);
+          console.log("Path Id : ", userPathId);
           const pathsCollection = collection(db, "paths");
           const pathDoc = query(pathsCollection, where("pathId", "==", userPathId));
           const pathSnap = await getDocs(pathDoc);
@@ -120,7 +120,7 @@ const DashboardTwo = () => {
       <NavBar />
       <Box>
         {loading ? (
-          <Flex justifyContent="center" alignItems="center" minHeight="100vh" paddingBottom={200}>
+          <Flex justifyContent="center" alignItems="center" minHeight="100vh" pb={200}>
             <Spinner size="xl" color="blue.500" />
           </Flex>
         ) : (
@@ -131,8 +131,8 @@ const DashboardTwo = () => {
           </div>
         )}
 
-        <Flex justifyContent="center" alignItems="center" mt={10}>
-          <Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
+        <Flex justifyContent="center" alignItems="center" mt={10} wrap="wrap" >
+          <Box className="glassbox-small" p={4} textAlign="center" mx={2}>
             <Flex direction="column" alignItems="center">
               <Text fontSize="xl" color="white" mt={6} textAlign="center">
                 {clubName}
@@ -146,7 +146,7 @@ const DashboardTwo = () => {
           {loadingPathName ? (
             <Spinner size="sm" color="blue.500" />
           ) : (
-            <Box className="glassbox-small" padding="4" textAlign="center" marginX={2}>
+            <Box className="glassbox-small" p={4} textAlign="center" mx={2}>
               <Flex direction="column" alignItems="center">
                 <Text fontSize="xl" color="white" mt={6} textAlign="center">
                   {pathName}
