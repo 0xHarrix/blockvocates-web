@@ -131,13 +131,13 @@ const DashboardTwo = () => {
           </div>
         )}
 
-        <Flex justifyContent="center" alignItems="center" mt={10} wrap="wrap" >
-          <Box className="glassbox-small" p={4} textAlign="center" mx={2}>
+        <Flex justifyContent="center" alignItems="center" mt={10} wrap="wrap">
+          <Box className="glassbox-small1" p={4} textAlign="center" mx={2}>
             <Flex direction="column" alignItems="center">
-              <Text fontSize="xl" color="white" mt={6} textAlign="center">
+              <Text fontSize="xl" color="white" mt={14} textAlign="center">
                 {clubName}
               </Text>
-              <Text fontSize="md" color="white" mt={2} textAlign="center">
+              <Text fontSize="md" color="white" mt={14} textAlign="center">
                 Club Number: 00{userClubId}
               </Text>
             </Flex>
@@ -146,7 +146,7 @@ const DashboardTwo = () => {
           {loadingPathName ? (
             <Spinner size="sm" color="blue.500" />
           ) : (
-            <Box className="glassbox-small" p={4} textAlign="center" mx={2}>
+            <Box className="glassbox-small1" p={4} textAlign="center" mx={2}>
               <Flex direction="column" alignItems="center">
                 <Text fontSize="xl" color="white" mt={6} textAlign="center">
                   {pathName}

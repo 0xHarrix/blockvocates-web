@@ -43,6 +43,7 @@ const MissionCompletion = () => {
 
               setMissions(missionsData);
               setLoading(false);
+              console.log(missions)
             } else {
               console.error('No user found with this email.');
               setLoading(false);
