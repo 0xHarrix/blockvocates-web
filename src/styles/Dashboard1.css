@@ -31,7 +31,7 @@
   
   /* Glassbox styles */
   .glassbox {
-    width: 100%;
+    width: 10%;
     max-width: 550px;
     height: 200px;
     background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
@@ -54,9 +54,9 @@
   }
   
   /* Glassbox small variant */
-  .glassbox-small {
-    width: 100%;
-    height: 150px;
+  .glassbox-small1 {
+    width: 35%;
+    height: 230px;
     background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
     border-radius: 32px;
     border: 1px solid rgba(255, 255, 255, 0.125);
