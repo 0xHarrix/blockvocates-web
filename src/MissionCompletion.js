@@ -132,6 +132,9 @@ const MissionCompletion = () => {
     }
   };
 
+
+
+
   if (loading) {
     return (
       <Center mt={6}>
@@ -168,7 +171,7 @@ const MissionCompletion = () => {
                   Mission Completed
                 </Button>
               ) : (
-                <Button colorScheme="blue" mt="4" onClick={() => navigate(`/Mission1`)}>Open Mission</Button>
+                <Button colorScheme="blue" mt="4" onClick={() => navigate(`/${mission.missionName.replace(/ /g,'')}`)}>Open Mission</Button>
               )}
             </VStack>
           ))

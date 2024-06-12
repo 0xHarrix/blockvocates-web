@@ -131,7 +131,7 @@ const DashboardTwo = () => {
           </div>
         )}
 
-        <Flex justifyContent="center" alignItems="center" mt={10} wrap="wrap" >
+        <Flex justifyContent="center" alignItems="center" mt={10}  >
           <Box className="glassbox-small" p={4} textAlign="center" mx={2}>
             <Flex direction="column" alignItems="center">
               <Text fontSize="xl" color="white" mt={6} textAlign="center">
