@@ -24,7 +24,7 @@ const Step1 = ({ nextStep }) => {
           color="white"
         >
           <Heading as="h3" size="xl" mb="3">
-            Mission 1: Read, Write, Own!
+            Mission 2: Read, Write, Own!
           </Heading>
           <Text fontSize="lg" mb="6">
           Watch this introductory video to understand what is Read, Write, Own, the differences between Web1, Web2 and Web3 and details about completing this mission.

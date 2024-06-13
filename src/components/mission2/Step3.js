@@ -29,8 +29,11 @@ const Step3 = ({ nextStep }) => {
           color="white"
         >
           <Heading as="h3" size={isMobile ? "lg" : "xl"} mb="3">
-            Step 3 : Speech on Blockchain Journey
+           Speech on Blockchain Journey
           </Heading>
+          <Text fontSize={isMobile ? "md" : "lg"} mb="8">
+            The Speech should be 4-6 Minutes
+          </Text>
           <Text fontSize={isMobile ? "md" : "lg"} mb="6">
             Introduction: What is the identity you chose and why? What is your motivation behind joining Blockvocates?
           </Text>

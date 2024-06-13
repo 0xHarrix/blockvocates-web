@@ -28,16 +28,10 @@ const Step2 = ({ nextStep }) => {
           color="white"
         >
           <Heading as="h3" size={isMobile ? "lg" : "xl"} mb="3">
-            Read, Write, Own: A Manifesto for a Better Internet
+            Buy a copy of Read, Write, Own by Chris Dixon.
           </Heading>
           <Text fontSize={isMobile ? "md" : "lg"} mb="6">
-            Chris Dixon's book, "Read, Write, Own," offers a compelling vision of where the internet should go and how to get there. The book explores the history of the internet and how it has evolved into the current state, where a few large corporations control the majority of the online space.
-          </Text>
-          <Text fontSize={isMobile ? "md" : "lg"} mb="6">
-            Dixon argues that the dream of a creative, entrepreneurial internet doesn't have to die and can be saved with blockchain networks. He separates this movement from cryptocurrency speculation, calling it "the computer vs the casino."
-          </Text>
-          <Text fontSize={isMobile ? "md" : "lg"} mb="6">
-            The book provides a vision for a better internet and a playbook to navigate and build the future. It is a must-read for anyone who wants to understand where we've been and where we're going.
+            You can purchase the book here
           </Text>
           <Button
             colorScheme="teal"
@@ -51,6 +45,9 @@ const Step2 = ({ nextStep }) => {
           >
             Purchase the Book
           </Button>
+          <Text fontSize={isMobile ? "md" : "lg"} mb="6">
+            Alternatively you can also get the book for free with an Audible Membership
+          </Text>
           <Button
             colorScheme="teal"
             size={isMobile ? "md" : "lg"}
