@@ -181,7 +181,7 @@ function PreviewPage() {
       });
 
       console.log("Path selected successfully.");
-      navigate("/Dashboardtwo");
+      navigate("/Dashboard");
     } catch (error) {
       console.error("Error selecting path:", error);
       setLoading(false);
