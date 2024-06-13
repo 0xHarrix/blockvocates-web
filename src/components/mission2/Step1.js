@@ -24,10 +24,10 @@ const Step1 = ({ nextStep }) => {
           color="white"
         >
           <Heading as="h3" size="xl" mb="3">
-            Mission 1: Understand the Basics!
+            Mission 1: Read, Write, Own!
           </Heading>
           <Text fontSize="lg" mb="6">
-            Watch this introductory video to understand the basics of the USMLE Step 1 exam, including its purpose, content outline, and changes to the exam format:
+          Watch this introductory video to understand what is Read, Write, Own, the differences between Web1, Web2 and Web3 and details about completing this mission.
           </Text>
           <Box
             mt="4"
@@ -43,14 +43,6 @@ const Step1 = ({ nextStep }) => {
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '90%' }}
             />
           </Box>
-          <Text fontSize="lg" mb="6">
-            After watching the video, you will be able to:
-            <ul>
-              <li>Understand the purpose and content outline of the USMLE Step 1 exam</li>
-              <li>Know about the changes to the exam format, including the shift to a pass/fail scoring system</li>
-              <li>Prepare for the exam by focusing on the relevant topics and competencies</li>
-            </ul>
-          </Text>
         </Box>
         <Button
           colorScheme="teal"
