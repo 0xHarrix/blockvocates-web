@@ -227,8 +227,8 @@ const Home = () => {
                   </Text>
                   <Text color="white" fontSize="lg" fontWeight="medium">
                     60000 $VOCATE tokens in Rewards
-                  </Text>
-                  <Checkout />
+                   </Text>
+                  {/*<Checkout /> */}
                 </Box>
               </Flex>
             </Box>
