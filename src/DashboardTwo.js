@@ -7,6 +7,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDocs, collection, where, query } from "firebase/firestore";
 import MissionCompletion from "./MissionCompletion";
 import "./styles/Dashboard1.css"; // Import the CSS file
+import ConnectWallet from "./ConnectWallet";
 
 const DashboardTwo = () => {
   const [userName, setUserName] = useState("");
@@ -118,7 +119,7 @@ const DashboardTwo = () => {
   return (
     <div className="bg">
       <NavBar />
-      <Box>
+      <Box >
         {loading ? (
           <Flex justifyContent="center" alignItems="center" minHeight="100vh" pb={200}>
             <Spinner size="xl" color="blue.500" />
@@ -154,11 +155,24 @@ const DashboardTwo = () => {
               </Flex>
             </Box>
           )}
+          
         </Flex>
-
-        <Flex justifyContent="center" mt={3}>
+     
+        
+        
+        <Box display="flex" justifyContent="center" mt={3}>
           <MissionCompletion />
-        </Flex>
+        </Box>
+
+        <Box display="flex" flexDirection="column" justifyContent="center" mt={3}>
+        <Heading as="h1" size="xl" color="#FFF" textAlign="center" mt={3}>
+              Connect Your <span style={{ color: "#00BAE2" }}>Wallet</span> and Collect <span style={{ color: "#00BAE2" }}>Rewards</span>
+            </Heading>
+        </Box>
+        <Box display="flex" justifyContent="center" >
+        <ConnectWallet />
+        </Box>
+        
       </Box>
     </div>
   );

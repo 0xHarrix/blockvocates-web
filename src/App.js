@@ -20,6 +20,7 @@ import Checkout from './Checkout';
 import Mission1Page from './Mission1Page';
 import Mission2Page from './Mission2Page';
 import MissionManager from './MissionManager';
+import ConnectWallet from './ConnectWallet';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path='/Mission1/*' element={<Mission1Page />} />
           <Route path='/Mission2/*' element={<Mission2Page/>}/>
           <Route path='/MissionManager' element={<MissionManager/>}/>
+          <Route path='/ConnectWallet' element={<ConnectWallet/>}/>
         </Routes>
       </Router>
     </ChakraProvider>

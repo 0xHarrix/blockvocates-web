@@ -1,22 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Flex, Button, Link, Image, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebaseConfig';
+import { auth, db } from '../firebaseConfig';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 const NavBar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [balance, setBalance] = useState(0); // Initialize balance state
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
+    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        // Fetch user data including balance
+        const userId = currentUser.email;
+        const userQuery = query(collection(db, 'users'), where('email', '==', userId));
+        const userSnapshot = await getDocs(userQuery);
+
+        if (!userSnapshot.empty) {
+          const userData = userSnapshot.docs[0].data();
+          setBalance(userData.balance || 0); // Set balance from user data
+        }
       } else {
         setUser(null);
+        setBalance(0); // Reset balance if no user is logged in
       }
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -29,6 +42,14 @@ const NavBar = () => {
     }
   };
 
+  // Function to format balance to k format
+  const formatBalance = (balance) => {
+    if (balance >= 1000) {
+      return `${Math.floor(balance / 1000)}K`; // Display in k format without decimals
+    } else {
+      return balance.toString(); // Display as is if less than 1000
+    }
+  };
   return (
     <Box className="sticky-nav">
       <Flex align="center" justifyContent="space-between" paddingY={4}>
@@ -66,6 +87,9 @@ const NavBar = () => {
           >
             MY ACCOUNT
           </Link>
+          <Text color="white" fontWeight="bold">
+            BALANCE: {formatBalance(balance)} {/* Display formatted balance */}
+          </Text>
         </Flex>
         {user ? (
           <Button onClick={handleLogout} color="black" marginRight={4}>
@@ -116,6 +140,9 @@ const NavBar = () => {
           >
             MY ACCOUNT
           </Link>
+          <Text color="white" fontWeight="bold" mt={4}>
+            BALANCE: {formatBalance(balance)} {/* Display formatted balance */}
+          </Text>
           {user ? (
             <Button onClick={handleLogout} color="" mt={4}>
               Logout

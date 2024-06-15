@@ -172,7 +172,7 @@ const MissionCompletion = () => {
                   Mission Completed
                 </Button>
               ) : (
-                <Button colorScheme="blue" mt="4" onClick={() => navigate(`/${mission.missionName.replace(/ /g,'')}`)}>Open Mission</Button>
+                <Button  bg="#00BAE2" mt="4" onClick={() => navigate(`/${mission.missionName.replace(/ /g,'')}`)}>Open Mission</Button>
               )}
             </VStack>
           ))
