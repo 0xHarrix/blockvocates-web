@@ -168,6 +168,70 @@ const Home = () => {
               </Box>
             </Flex>
           </Box>
+          <Heading
+            as="h1"
+            size={{ base: "lg", md: "xl" }}
+            color="#FFF"
+            textAlign="center"
+            fontFamily={"Montserrat"}
+            marginTop="50px"
+          >
+            Six Customized  <span style={{ color: "#00BAE2" }}>Journeys </span>for your chosen Career Goals
+           
+          </Heading>
+          <Flex
+          justifyContent="center"
+          mt={7}
+          flexWrap="wrap"
+          px={{ base: 5, md: 0 }}
+        >
+          {[
+            "Crypto Trader",
+            "Community Builder",
+            "Designer",
+            "Founder",
+            "Musician",
+            "Developer",
+          ].map((role, index) => (
+            <Box
+              key={index}
+              className="glassbox"
+              display="flex"
+              flexDirection="column"
+              justifyContent="flex-end"
+              p="6"
+              borderRadius="16px"
+              border="1px solid rgba(255, 255, 255, 0.125)"
+              boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
+              position="relative"
+              cursor="pointer"
+              backdropFilter="blur(16px) saturate(180%)"
+              WebkitBackdropFilter="blur(16px) saturate(180%)"
+              width={{ base: "100%", sm: "45%", md: "30%", lg: "200px" }}
+              height="200px"
+              m="10px"
+              backgroundImage={`linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('${role.replace(
+                " ",
+                "-"
+              )}.png')`}
+              backgroundPosition="center"
+              backgroundSize="cover"
+              transition="transform 0.3s ease-in-out"
+              _hover={{ transform: "scale(1.05)" }}
+              onClick={() => navigate('/PreviewPage')}
+            >
+              <Text
+                color="white"
+                fontSize="lg"
+                textAlign="center"
+                fontWeight={700}
+                mb="-14px"
+              >
+                {role}
+              </Text>
+            </Box>
+          ))}
+        </Flex>
         </Box>
       </div>
       <div className="body2">

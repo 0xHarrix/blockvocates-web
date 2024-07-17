@@ -239,6 +239,7 @@ function PreviewPage() {
               _hover={{ bg: "#0597B7" }}
               _active={{ bg: "#008EAF" }}
               marginBottom={-2}
+              isDisabled={userData && userData.clubMembership === 0}
             >
               Select
             </Button>
