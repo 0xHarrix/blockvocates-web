@@ -20,6 +20,9 @@ import Checkout from './Checkout';
 import Mission1Page from './Mission1Page';
 import Mission2Page from './Mission2Page';
 import MissionManager from './MissionManager';
+import Journeys from './Journeys';
+import KeralaBlockvocates from './KeralaBlockvocates';
+import OmanBlockvocates from './OmanBlockvocates';
 
 function App() {
   return (
@@ -43,6 +46,9 @@ function App() {
           <Route path='/Mission1/*' element={<Mission1Page />} />
           <Route path='/Mission2/*' element={<Mission2Page/>}/>
           <Route path='/MissionManager' element={<MissionManager/>}/>
+          <Route path='/Journeys' element={<Journeys/>}/>
+          <Route path='/KeralaBlockvocates' element={<KeralaBlockvocates/>}/>
+          <Route path='/OmanBlockvocates' element={<OmanBlockvocates/>}/>
         </Routes>
       </Router>
     </ChakraProvider>

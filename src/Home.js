@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
-import { Box, Heading, Input, Text, Flex, Button } from "@chakra-ui/react";
-import "./styles/Home.css";
+import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import Checkout from "./Checkout";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import "./styles/Home.css";
+import Journeys from "./Journeys";
 
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const navigate = useNavigate();
   const [location, setLocation] = useState("");
+  const [clubs, setClubs] = useState([]);
+  const navigate = useNavigate();
+  const db = getFirestore();
 
   useEffect(() => {
     // Simulate loading delay with setTimeout
@@ -19,15 +22,30 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    // Fetch clubs from Firestore
+    const fetchClubs = async () => {
+      const querySnapshot = await getDocs(collection(db, "clubs"));
+      const clubsData = querySnapshot.docs.map((doc) => doc.data().clubName);
+      setClubs(clubsData);
+    };
+    fetchClubs();
+  }, [db]);
+
   const handleSearch = () => {
     // Navigate to ClubSearch with location data
     navigate("/ClubSearch", { state: { location } });
   };
+
+  const handleClubClick = (club) => {
+    // Navigate to the specific club page
+    navigate(`/${club.replace(/\s+/g, '')}`);
+  };
+
   return (
     <div className={`container ${isLoaded ? "loaded" : ""}`}>
-              <NavBar/>
+      <NavBar />
       <div className="body">
-
         <Box padding={"0px"} className="text1">
           <Heading
             as="h1"
@@ -179,59 +197,7 @@ const Home = () => {
             Six Customized  <span style={{ color: "#00BAE2" }}>Journeys </span>for your chosen Career Goals
            
           </Heading>
-          <Flex
-          justifyContent="center"
-          mt={7}
-          flexWrap="wrap"
-          px={{ base: 5, md: 0 }}
-        >
-          {[
-            "Crypto Trader",
-            "Community Builder",
-            "Designer",
-            "Founder",
-            "Musician",
-            "Developer",
-          ].map((role, index) => (
-            <Box
-              key={index}
-              className="glassbox"
-              display="flex"
-              flexDirection="column"
-              justifyContent="flex-end"
-              p="6"
-              borderRadius="16px"
-              border="1px solid rgba(255, 255, 255, 0.125)"
-              boxShadow="0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05)"
-              position="relative"
-              cursor="pointer"
-              backdropFilter="blur(16px) saturate(180%)"
-              WebkitBackdropFilter="blur(16px) saturate(180%)"
-              width={{ base: "100%", sm: "45%", md: "30%", lg: "200px" }}
-              height="200px"
-              m="10px"
-              backgroundImage={`linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)), url('${role.replace(
-                " ",
-                "-"
-              )}.png')`}
-              backgroundPosition="center"
-              backgroundSize="cover"
-              transition="transform 0.3s ease-in-out"
-              _hover={{ transform: "scale(1.05)" }}
-              onClick={() => navigate('/PreviewPage')}
-            >
-              <Text
-                color="white"
-                fontSize="lg"
-                textAlign="center"
-                fontWeight={700}
-                mb="-14px"
-              >
-                {role}
-              </Text>
-            </Box>
-          ))}
-        </Flex>
+          <Journeys/>
         </Box>
       </div>
       <div className="body2">
@@ -256,7 +222,31 @@ const Home = () => {
             community
           </Heading>
           <Flex justifyContent="center" alignItems="center" flexWrap="wrap">
-            <Box justifyContent="center" mt={120} ml={{ base: 0, md: 20 }}>
+            <Box justifyContent="center" ml={{ base: 0, md: 20 }} textAlign="center">
+              {clubs.length > 0 ? (
+                clubs.map((club, index) => (
+                  <Heading
+                    as="h1"
+                    key={index}
+                    size={{ base: "lg", md: "xl" }}
+                    color="#FFF"
+                    textAlign="center"
+                    fontFamily={"Montserrat"}
+                    marginBottom="10px"
+                    _hover={{
+                      color: "#00BAE2",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleClubClick(club)}
+                  >
+                    {club}
+                  </Heading>
+                ))
+              ) : (
+                <Text color="white" fontSize="xl" textAlign="center" mb={4}>
+                  No clubs available
+                </Text>
+              )}
               <Flex
                 direction="column"
                 align="center"
@@ -287,11 +277,13 @@ const Home = () => {
                     mb={4}
                   >
                     60$ for 6 months (10$/Month) - for Selected Scholars
-                    (Original Price 25,000$ for 6 months or 4,200$/Month)
+                    <Text as="span" fontSize="sm" mt={4} fontStyle="italic" display="block">
+                      (Original Price 25,000$ for 6 months or 4,200$/Month)
+                    </Text>
                   </Text>
-                  <Text color="white" fontSize="lg" fontWeight="medium">
+                  <Text color="#00BAE2" fontSize={{ base: "md", md: "2xl" }} fontWeight="semibold" mb={4}>
                     60000 $VOCATE tokens in Rewards
-                   </Text>
+                  </Text>
                   {/*<Checkout /> */}
                 </Box>
               </Flex>
@@ -301,6 +293,6 @@ const Home = () => {
       </div>
     </div>
   );
-};  
+};
 
 export default Home;

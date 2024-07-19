@@ -1,0 +1,65 @@
+.journeys-bg {
+    background-color: #121212;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .journey-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .journey-card:hover {
+    background-color: #3a3a3a;
+  }
+  
+  .journey-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .journey-details {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  .module-card {
+    background-color: #333333;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 5px;
+    width: 48%;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .module-title {
+    font-weight: bold;
+    color: #00bae2;
+  }
+  
+  .module-description {
+    color: #e0e0e0;
+  }
+  
+  @media (max-width: 600px) {
+    .module-card {
+      width: 100%;
+    }
+  }
+  
