@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Button, Link, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Button, Link, Image } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebaseConfig';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
@@ -42,6 +42,7 @@ const NavBar = () => {
         <Button
           onClick={() => setShowMenu(!showMenu)}
           color="black"
+          bg={['white', 'white', 'transparent', 'transparent']} 
           display={['flex', 'flex', 'none', 'none']}
           marginRight={4}
           ml="auto"
@@ -54,7 +55,13 @@ const NavBar = () => {
           flexGrow={1}
           display={['none', 'none', 'flex', 'flex']}
         >
-          <Link color="white" fontWeight="bold" mr={20} onClick={() => navigate('/')} _hover={{ color: '#00BAE2' }}>
+          <Link
+            color="white"
+            fontWeight="bold"
+            mr={20}
+            onClick={() => navigate('/')}
+            _hover={{ color: 'white' }} // Keeps the text white on hover as well
+          >
             HOME
           </Link>
           <Link
@@ -62,17 +69,29 @@ const NavBar = () => {
             fontWeight="bold"
             mr={20}
             onClick={() => navigate('/Dashboard')}
-            _hover={{ color: '#00BAE2' }}
+            _hover={{ color: 'white' }} // Keeps the text white on hover as well
           >
             MY ACCOUNT
           </Link>
         </Flex>
         {user ? (
-          <Button onClick={handleLogout} color="black" marginRight={4}>
+          <Button
+            onClick={handleLogout}
+            bg="white" // Background color for mobile
+            color="black"
+            mr={2}
+            _hover={{ bg: 'white', color: 'black' }} // Ensures consistent color
+          >
             Logout
           </Button>
         ) : (
-          <Button onClick={() => navigate('/Login')} color="black" marginRight={4}>
+          <Button
+            onClick={() => navigate('/Login')}
+            bg="white" // Background color for mobile
+            color="black"
+            mr={2}
+            _hover={{ bg: 'white', color: 'black' }} // Ensures consistent color
+          >
             Login
           </Button>
         )}
@@ -100,7 +119,7 @@ const NavBar = () => {
               navigate('/');
               setShowMenu(false);
             }}
-            _hover={{ color: '#00BAE2' }}
+            _hover={{ color: 'white' }} // Keeps the text white on hover as well
           >
             HOME
           </Link>
@@ -112,16 +131,28 @@ const NavBar = () => {
               navigate('/Dashboard');
               setShowMenu(false);
             }}
-            _hover={{ color: '#00BAE2' }}
+            _hover={{ color: 'white' }} // Keeps the text white on hover as well
           >
             MY ACCOUNT
           </Link>
           {user ? (
-            <Button onClick={handleLogout} color="" mt={4}>
+            <Button
+              onClick={handleLogout}
+              bg="white" // Background color for mobile
+              color="black"
+              mt={4}
+              _hover={{ bg: 'white', color: 'black' }} // Ensures consistent color
+            >
               Logout
             </Button>
           ) : (
-            <Button onClick={() => navigate('/Login')} color="black" mt={4}>
+            <Button
+              onClick={() => navigate('/Login')}
+              bg="white" // Background color for mobile
+              color="black"
+              mt={4}
+              _hover={{ bg: 'white', color: 'black' }} // Ensures consistent color
+            >
               Login
             </Button>
           )}
