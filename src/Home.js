@@ -238,8 +238,8 @@ const Home = () => {
             Learn <span style={{ color: "#00BAE2" }}>Web3</span> with a
             community
           </Heading>
-          <Flex justifyContent="center" alignItems="center" flexWrap="wrap">
-            <Box justifyContent="center" ml={{ base: 0, md: 20 }} textAlign="center">
+          <Flex marginTop="20px" justifyContent="center" alignItems="center" flexWrap="wrap">
+            <Box justifyContent="center" textAlign="center">
               {clubs.length > 0 ? (
                 clubs.map((club, index) => (
                   <Heading
