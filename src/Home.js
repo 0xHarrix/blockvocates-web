@@ -299,7 +299,7 @@ const Home = () => {
                     </Text>
                   </Text>
                   <Text color="#00BAE2" fontSize={{ base: "md", md: "2xl" }} fontWeight="semibold" mb={4}>
-                    60000 $VOCATE tokens in Rewards
+                    6000 $VOCATE tokens in Rewards
                   </Text>
                   {<Checkout /> }
                 </Box>

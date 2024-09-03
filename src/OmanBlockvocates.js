@@ -53,7 +53,7 @@ const OmanBlockvocates = () => {
                 </Text>
               </Text>
               <Text color="#00BAE2" fontSize={{ base: "md", md: "2xl" }} fontWeight="semibold" >
-                60000 $VOCATE tokens in Rewards
+                6000 $VOCATE tokens in Rewards
               </Text>
               <Checkout/>
             </Box>
