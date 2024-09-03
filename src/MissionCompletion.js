@@ -40,7 +40,7 @@ const MissionCompletion = () => {
                 id: doc.id,
                 ...doc.data()
               }));
-
+              
               setMissions(missionsData);
               setLoading(false);
               console.log(missions)

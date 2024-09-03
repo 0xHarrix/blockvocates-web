@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth"; // Import Firebase Auth
 import "./styles/Home.css";
 import Journeys from "./Journeys";
 
@@ -10,8 +11,10 @@ const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [location, setLocation] = useState("");
   const [clubs, setClubs] = useState([]);
+  const [user, setUser] = useState(null); // State to store user authentication status
   const navigate = useNavigate();
   const db = getFirestore();
+  const auth = getAuth(); // Get Firebase Auth instance
 
   useEffect(() => {
     // Simulate loading delay with setTimeout
@@ -32,14 +35,28 @@ const Home = () => {
     fetchClubs();
   }, [db]);
 
+  useEffect(() => {
+    // Monitor authentication status
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user); // Set user state based on authentication status
+    });
+
+    return () => unsubscribe(); // Cleanup listener on component unmount
+  }, [auth]);
+
   const handleSearch = () => {
     // Navigate to ClubSearch with location data
     navigate("/ClubSearch", { state: { location } });
   };
 
   const handleClubClick = (club) => {
-    // Navigate to the specific club page
-    navigate(`/${club.replace(/\s+/g, '')}`);
+    if (!user) {
+      // Show alert if the user is not authenticated
+      alert("Please register or log in to access club details.");
+    } else {
+      // Navigate to the specific club page if the user is logged in
+      navigate(`/${club.replace(/\s+/g, "")}`);
+    }
   };
 
   return (
@@ -247,7 +264,7 @@ const Home = () => {
                   No clubs available
                 </Text>
               )}
-              <Flex
+             {/* <Flex
                 direction="column"
                 align="center"
                 padding="20px"
@@ -284,9 +301,9 @@ const Home = () => {
                   <Text color="#00BAE2" fontSize={{ base: "md", md: "2xl" }} fontWeight="semibold" mb={4}>
                     60000 $VOCATE tokens in Rewards
                   </Text>
-                  {/*<Checkout /> */}
+                  {<Checkout /> }
                 </Box>
-              </Flex>
+              </Flex> */}
             </Box>
           </Flex>
         </Box>
